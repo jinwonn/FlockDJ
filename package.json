@@ -7,16 +7,20 @@
     "build": "webpack --mode production",
     "start": "npm run build && node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "nodemon src/server/index.js",
+    "server": "nodemon src/server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "pg": "^7.6.1",
+    "pg-hstore": "^2.3.2",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "sequelize": "^4.41.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
