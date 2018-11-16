@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/app.css';
+import '../styles/main.css';
 import ReactImage from '../assets/react.png';
 
 export default class Main extends Component {
