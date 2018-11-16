@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './app.css';
-import ReactImage from './react.png';
+import '../styles/app.css';
+import ReactImage from '../assets/react.png';
 
-export default class App extends Component {
+export default class Main extends Component {
   state = { username: null };
 
   componentDidMount() {
