@@ -11,12 +11,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      oauth: {
-        type: Sequelize.STRING
-      },
-      profilePic: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
