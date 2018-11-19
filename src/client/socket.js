@@ -9,5 +9,16 @@ export default function () {
     console.log(err)
   })
 
+  function join(roomName, cb) {
+    socket.emit('join', roomName, cb)
+  }
+
+  function leave(roomName, cb) {
+    socket.emit('leave', roomName, cb)
+  }
+
+  function getRooms(cb) {
+    socket.emit('rooms', null, cb)
+  }
 }
 
