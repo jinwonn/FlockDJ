@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import '../styles/main.css';
 import ReactImage from '../assets/react.png';
+import socket from '../socket';
 
 export default class Main extends Component {
-  state = { username: null };
+  constructor(props, context) {
+    super(props, context)
+
+    this.state = {
+      username: null,
+      client: socket()
+    }
+  }
 
   componentDidMount() {
     fetch('/api/getUsername')

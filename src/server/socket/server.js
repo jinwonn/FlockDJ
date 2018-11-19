@@ -2,12 +2,11 @@ const server = require('http').createServer()
 const io = require('socket.io')(server)
 
 io.on('connection', function (client) {
-
-  console.log('client connected...', client.id)
-
+  
+  console.log('client.id connected:', client.id)
 
   client.on('disconnect', function () {
-    console.log('client disconnect...', client.id)
+    console.log('client.id disconnected:', client.id)
   })
 
   client.on('error', function (err) {
@@ -16,7 +15,4 @@ io.on('connection', function (client) {
   })
 })
 
-server.listen(3000, function (err) {
-  if (err) throw err
-  console.log('listening on port 3000')
-})
+server.listen(3000, console.log('listening on port 3000'))
