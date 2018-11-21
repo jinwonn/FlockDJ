@@ -6,7 +6,9 @@ export default class Room extends Component {
   render() {
 
     return (
+      <div>
       <div>hello this is a room</div>
+      </div>
     );
   }
 }
