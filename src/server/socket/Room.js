@@ -1,25 +1,14 @@
-module.exports = function ({ name, image }) {
+module.exports = function ({ name}) {
   const members = new Map()
   
-  function addUser(client) {
-    members.set(client.id, client)
-  }
-
-  function removeUser(client) {
-    members.delete(client.id)
-  }
-
   function serialize() {
     return {
       name,
-      numMembers: members.size
+      numberofMembers: members.size
     }
   }
 
   return {
-    broadcastMessage,
-    addUser,
-    removeUser,
     serialize
   }
 }
