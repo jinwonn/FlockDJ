@@ -63,7 +63,6 @@ export default class Main extends Component {
       messages: [],
       getPlaylistTracks: getPlaylistTracks,// messages coming from the server will be stored here as they arrive
     }
-    }
 
     this.onEnterRoom = this.onEnterRoom.bind(this)
     this.onLeaveRoom = this.onLeaveRoom.bind(this)
