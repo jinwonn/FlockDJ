@@ -6,6 +6,7 @@ import '../styles/main.css';
 import Room from './Room.jsx';
 import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
+import RoomsList from './components/RoomsList.jsx';
 
 
 function getPlaylistTracks(PlaylistUri) {
@@ -78,6 +79,7 @@ export default class Main extends Component {
   }
 
   onEnterRoom(roomName, onEnterSuccess) {
+    console.log("entering room")
     return this.state.client.join(roomName, (err, chatHistory) => {
       if (err)
         return console.error(err)
@@ -144,13 +146,50 @@ export default class Main extends Component {
       <div>
         <Navbar/>
         <BrowserRouter>
+        { !this.state.rooms ? (<div> wait.</div>)
+                : (
           <Switch>
+            <Route
+              exact
+              path="/"
+              render={
+                props => (
+                  <RoomsList
+                    user={this.state.user}
+                    rooms={this.state.rooms}
+                    // onChangeUser={() => props.history.push('/user')}
+                    onEnterRoom={
+                      roomName => this.onEnterRoom(
+                        roomName,
+                        // () => props.history.push('/user'),
+                        chatHistory => props.history.push({
+                          pathname: roomName,
+                          state: { chatHistory }
+                        })
+                      )
+                    }
+                  />
+                )
+              }
+            />
             <Route exact path={`/${this.state.username}`} component={Room} />
             <Link to={`/${this.state.username}`}><button>Show the Room</button></Link>
+            {
+              this.state.rooms.map(room => (
+                <Route
+                  key={room.name}
+                  exact
+                  path={`/${room.name}`}
+                  render={
+                    props => this.renderRoom(room, props)
+                  }
+                />
+              ))
+            }
           </Switch>
+                )
+        }
         </BrowserRouter>
-        <button type="submit" onClick={() => { this.onEnterRoom("Rock") }}>On Enter a room</button>
-        <button type="submit" onClick={() => { this.onLeaveRoom("Rock") }}>On Leave a room</button>
       </div>
     );
   }

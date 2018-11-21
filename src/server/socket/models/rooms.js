@@ -7,6 +7,15 @@ module.exports = [
   },
   {
     name: 'Dance'
+  },
+  {
+    name: 'Landens Landing'
+  },
+  {
+    name: 'Adi di di di'
+  },
+  {
+    name: 'Jai-Fi'
   }
 ]
 
