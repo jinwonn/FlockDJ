@@ -7,6 +7,7 @@ import Room from './Room.jsx';
 import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 
+
 function getPlaylistTracks(PlaylistUri) {
     fetch(`https://api.spotify.com/v1/playlists/${PlaylistUri}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
       {
@@ -31,16 +32,19 @@ function getPlaylistTracks(PlaylistUri) {
     )
 }
 
-export default class Main extends Component {
 
+
+export default class Main extends Component {
   constructor(props, context) {
     super(props, context)
+
 
     this.state = {
       username: "test",
       user: null,
       isRegisterInProcess: false,
       client: socket(),
+
       rooms: null,
       roomID: null,
       roomName: null,
@@ -138,6 +142,7 @@ export default class Main extends Component {
   render() {
     const { username } = this.state;
     this.state.getPlaylistTracks('6C92HETt370wqh8DQ28Xx7');
+
     return (
       <div>
         <Navbar/>

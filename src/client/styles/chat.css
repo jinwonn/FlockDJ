@@ -1,0 +1,16 @@
+
+.chatbar-message{
+	text-align: left;
+	width: 90%;
+	margin: 10px;
+	
+}
+.chat-bar{
+	text-align: left;
+	
+}
+
+.chatbar-box{
+	width: 100%;
+	border: solid 1px black;
+}
