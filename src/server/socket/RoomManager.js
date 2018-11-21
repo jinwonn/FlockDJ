@@ -9,12 +9,22 @@ module.exports = function () {
     ])
   )
 
+  function removeClient(client) {
+    rooms.forEach(c => c.removeUser(client))
+  }
+
+  function getRoomByName(roomName) {
+    return rooms.get(roomName)
+  }
+
   function serializeRooms() {
-    console.log("rooms from models", Rooms)
+    console.log("rooms from models", rooms.values())
     return Array.from(rooms.values()).map(c => c.serialize())
   }
 
   return {
+    removeClient,
+    getRoomByName,
     serializeRooms
   }
 }

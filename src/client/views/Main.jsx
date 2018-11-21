@@ -10,7 +10,7 @@ export default class Main extends Component {
     super(props, context)
 
     this.state = {
-      username: null,
+      username: "test",
       client: socket(),
       rooms: null
     }
@@ -34,8 +34,8 @@ export default class Main extends Component {
       <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/room" component={Room} />
-            <Link to="/room"><button>Show the Room</button></Link>
+            <Route exact path={`/${this.state.username}`} component={Room} />
+            <Link to={`/${this.state.username}`}><button>Show the Room</button></Link>
           </Switch>
         </BrowserRouter>
       </div>
