@@ -90,7 +90,6 @@ export default class Main extends Component {
     return (
       <div>
         <Navbar/>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
         <BrowserRouter>
           <Switch>
             <Route exact path={`/${this.state.username}`} component={Room} />
