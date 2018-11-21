@@ -21,6 +21,7 @@ export default class Room extends Component {
 
 
     return (
+
       <div className= 'room'>
 	      hello this is a room
 	      <div className= 'chat-section'>
