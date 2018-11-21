@@ -11,15 +11,35 @@ export default class Main extends Component {
 
     this.state = {
       username: "test",
+      user: null,
+      isRegisterInProcess: false,
       client: socket(),
       rooms: null
     }
 
+    this.onEnterRoom = this.onEnterRoom.bind(this)
+    this.onLeaveRoom = this.onLeaveRoom.bind(this)
     this.getRooms = this.getRooms.bind(this)
+    this.register = this.register.bind(this)
 
     console.log('initial state:', this.state)
     this.getRooms();
+  }
 
+  onEnterRoom(roomName, onEnterSuccess) {
+    return this.state.client.join(roomName, (err, chatHistory) => {
+      if (err)
+        return console.error(err)
+      return onEnterSuccess(chatHistory)
+    })
+  }
+
+  onLeaveRoom(roomName, onLeaveSuccess) {
+    this.state.client.leave(roomName, (err) => {
+      if (err)
+        return console.error(err)
+      return onLeaveSuccess()
+    })
   }
 
   getRooms() {
@@ -27,6 +47,42 @@ export default class Main extends Component {
       this.setState({ rooms })
       console.log("state with rooms:", this.state)
     })
+  }
+
+  register(name) {
+    const onRegisterResponse = user => this.setState({ isRegisterInProcess: false, user })
+    this.setState({ isRegisterInProcess: true })
+    this.state.client.register(name, (err, user) => {
+      if (err) return onRegisterResponse(null)
+      return onRegisterResponse(user)
+    })
+  }
+
+  renderRoom(room, { history }) {
+    const { chatHistory } = history.location.state
+
+    return (
+      <Room
+        room={room}
+        chatHistory={chatHistory}
+        user={this.state.user}
+        onLeave={
+          () => this.onLeaveRoom(
+            room.name,
+            () => history.push('/')
+          )
+        }
+        onSendMessage={
+          (message, cb) => this.state.client.message(
+            room.name,
+            message,
+            cb
+          )
+        }
+        registerHandler={this.state.client.registerHandler}
+        unregisterHandler={this.state.client.unregisterHandler}
+      />
+    )
   }
 
   render() {
@@ -38,6 +94,8 @@ export default class Main extends Component {
             <Link to={`/${this.state.username}`}><button>Show the Room</button></Link>
           </Switch>
         </BrowserRouter>
+        <button type="submit" onClick={() => { this.onEnterRoom("Rock") }}>On Enter a room</button>
+        <button type="submit" onClick={() => { this.onLeaveRoom("Rock") }}>On Leave a room</button>
       </div>
     );
   }

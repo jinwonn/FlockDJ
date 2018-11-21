@@ -1,6 +1,19 @@
 module.exports = function ({ name }) {
   const members = new Map()
-  
+  let chatHistory = []
+
+  function broadcastMessage(message) {
+    members.forEach(m => m.emit('message', message))
+  }
+
+  function addEntry(entry) {
+    chatHistory = chatHistory.concat(entry)
+  }
+
+  function getChatHistory() {
+    return chatHistory.slice()
+  }
+
   function addUser(client) {
     console.log("adding user to room:", client.id)
     members.set(client.id, client)
@@ -19,6 +32,9 @@ module.exports = function ({ name }) {
   }
 
   return {
+    broadcastMessage,
+    addEntry,
+    getChatHistory,
     addUser,
     removeUser,
     serialize

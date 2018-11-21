@@ -10,18 +10,25 @@ const roomManager = RoomManager()
 
 io.on('connection', function (client) {
   const {
+    handleRegister,
     handleJoin,
     handleLeave,
+    handleMessage,
     handleGetRooms,
+    handleGetAvailableUsers,
     handleDisconnect
   } = makeHandlers(client, clientManager, roomManager)
 
   console.log('client.id connected:', client.id)
   clientManager.addClient(client)
 
+  client.on('register', handleRegister)
+
   client.on('join', handleJoin)
 
   client.on('leave', handleLeave)
+
+  client.on('message', handleMessage)
 
   client.on('rooms', handleGetRooms)
 

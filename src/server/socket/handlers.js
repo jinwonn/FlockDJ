@@ -10,26 +10,21 @@ function makeHandleEvent(client, clientManager, roomManager) {
 
   function ensureValidRoom(roomName) {
     return Promise.all([
-      ensureExists(
+      (roomName) => {  return ensureExists(
         () => roomManager.getRoomByName(roomName),
         `invalid room name: ${roomName}`
-      )
+      )}
     ])
       .then(([room, user]) => Promise.resolve({ room, user }))
   }
 
-  function handleEvent(roomName) {
-  // function handleEvent(roomName, createEntry) {
+  function handleEvent(roomName, createEntry) {
     return ensureValidRoom(roomName)
-      .then(function ({ room }) {
-      // .then(function ({ room, user }) {
-        // // append event to room history
-        // const entry = { user, ...createEntry() }
-        // room.addEntry(entry)
+      .then(function ({ room, user }) {
+        const entry = { user, ...createEntry() }
+        room.addEntry(entry)
 
-        // // notify other clients in room
-        // room.broadcastMessage({ chat: roomName, ...entry })
-        // console.log("handling event", room)
+        room.broadcastMessage({ chat: roomName, ...entry })
         return room
       })
   }
@@ -39,6 +34,13 @@ function makeHandleEvent(client, clientManager, roomManager) {
 
 module.exports = function (client, clientManager, roomManager) {
   const handleEvent = makeHandleEvent(client, clientManager, roomManager)
+
+  function handleRegister(userName, callback) {
+    const user = "username"
+    clientManager.registerClient(client, user)
+
+    return callback(null, user)
+  }
 
   function handleJoin(roomName, callback) {
     const createEntry = () => ({ event: `joined ${roomName}` })
@@ -62,6 +64,14 @@ module.exports = function (client, clientManager, roomManager) {
       .catch(callback)
   }
 
+  function handleMessage({ roomName, message } = {}, callback) {
+    const createEntry = () => ({ message })
+
+    handleEvent(roomName, createEntry)
+      .then(() => callback(null))
+      .catch(callback)
+  }
+
   function handleGetRooms(_, callback) {
     return callback(null, roomManager.serializeRooms())
   }
@@ -72,8 +82,10 @@ module.exports = function (client, clientManager, roomManager) {
   }
 
   return {
+    handleRegister,
     handleJoin,
     handleLeave,
+    handleMessage,
     handleGetRooms,
     handleDisconnect
   }
