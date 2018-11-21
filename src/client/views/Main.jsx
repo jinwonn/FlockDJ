@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import '../styles/main.css';
 import ReactImage from '../assets/react.png';
 import Room from './Room.jsx';
+import Navbar from './components/NavBar.jsx';
 
 export default class Main extends Component {
   state = { username: null };
@@ -18,6 +19,7 @@ export default class Main extends Component {
     const { username } = this.state;
     return (
       <div>
+        <Navbar/>
         {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
       <BrowserRouter>
         <Switch>
