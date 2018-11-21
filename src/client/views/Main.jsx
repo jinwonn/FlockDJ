@@ -137,8 +137,6 @@ export default class Main extends Component {
                 )
         }
         </BrowserRouter>
-        <button type="submit" onClick={() => { this.onEnterRoom("Rock") }}>On Enter a room</button>
-        <button type="submit" onClick={() => { this.onLeaveRoom("Rock") }}>On Leave a room</button>
       </div>
     );
   }
