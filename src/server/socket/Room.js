@@ -3,8 +3,11 @@ module.exports = function ({ name }) {
   let chatHistory = []
 
   function broadcastMessage(message) {
-    ("broadcasting: (", message, ") to ", members)
+
+    console.log("broadcasting: (", message, ") to ", members)
+    console.log("broadcasting message to all users in the room")
     members.forEach(m => m.emit('message', message))
+
   }
 
   function addEntry(entry) {

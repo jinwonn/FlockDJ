@@ -11,6 +11,7 @@ export default class Room extends Component {
 		this.state = {
 			chatHistory,
 			username: null
+			
 		}
 	}
 
@@ -40,7 +41,7 @@ export default class Room extends Component {
 				<div>{JSON.stringify(this.state)}</div>
 	      <div className= 'chat-section'>
 	      	Welcome to flock dj chat
-	      	<Chat user={this.state.username}/>
+	      	<Chat user={this.state.username} room={this.state.roomname}/>
 	      </div>
       </div>
     );

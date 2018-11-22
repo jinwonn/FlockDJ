@@ -78,7 +78,7 @@ module.exports = function (client, clientManager, roomManager) {
 
   function handleMessage({ roomName, message } = {}, callback) {
     const createEntry = () => ({ message })
-
+    console.log("message recieved")
     handleEvent(roomName, createEntry)
       .then(() => callback(null))
       .catch(callback)
