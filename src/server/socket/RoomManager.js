@@ -14,9 +14,10 @@ module.exports = function () {
   }
 
   function getRoomByName(roomName) {
-    console.log("getRoomByName from roommanager finding:", roomName)
-    console.log("from:", rooms)
-    return rooms.get(roomName)
+    console.log("getRoomByName from roommanager finding:", roomName, "from rooms")
+    const room = rooms.get(roomName)
+    console.log("found room")
+    return room
   }
 
   function serializeRooms() {

@@ -9,25 +9,20 @@ function makeHandleEvent(client, clientManager, roomManager) {
   }
 
   function ensureValidRoom(roomName) {
-    return Promise.all([
-      (roomName) => {  return ensureExists(
-        () => roomManager.getRoomByName(roomName),
-        `invalid room name: ${roomName}`
-      )}
-    ])
-      .then(([room, user]) => Promise.resolve({ room, user }))
+    room = roomManager.getRoomByName(roomName)
+    return room
   }
 
   function handleEvent(roomName, createEntry) {
-    return ensureValidRoom(roomName)
-      .then(function ({ room, user }) {
-        const entry = { user, ...createEntry() }
-        console.log("entry", entry)
-        room.addEntry(entry)
-        console.log("entry from handle function", entry)
-        room.broadcastMessage({ chat: roomName, ...entry })
-        return room
-      })
+    console.log("handling event:", createEntry, ". for room: ", roomName)
+    const user = "username"
+    const room = ensureValidRoom(roomName)
+    const entry = { user, ...createEntry() }
+    const messageforBroadcast = { chat: roomName, ...entry }
+    room.addEntry(entry)
+    console.log("msg fr brdcst", messageforBroadcast)
+    room.broadcastMessage(messageforBroadcast)
+    return room 
   }
 
   return handleEvent
@@ -47,15 +42,12 @@ module.exports = function (client, clientManager, roomManager) {
     console.log("handling join to", roomName)
     const createEntry = () => ({ event: `joined ${roomName}` })
     console.log("entry to send:", createEntry)
-
     handleEvent(roomName, createEntry)
-      .then(function (room) {
-        console.log("room:",room)
-        room.addUser(client)
-        console.log("room:",room)
-        callback(null, room.getChatHistory())
-      })
-      .catch(callback)
+    const room = roomManager.getRoomByName(roomName)
+    // console.log("room:",room)
+    room.addUser(client)
+    // console.log("room:",room)
+    room.getChatHistory()
   }
 
   function handleLeave(roomName, callback) {

@@ -158,7 +158,7 @@ export default class Main extends Component {
                             pathname: roomName,
                             state: { chatHistory }
                           },
-                          console.log(chatHistory))
+                          console.log("chathistory", chatHistory))
                         )
                       }
                     />
