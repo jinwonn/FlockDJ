@@ -118,6 +118,7 @@ export default class Main extends Component {
     return (
       <Room
         room={room}
+        roomname= {room.name}
         chatHistory={chatHistory}
         user={this.state.user}
         onLeave={

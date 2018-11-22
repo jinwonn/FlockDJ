@@ -14,41 +14,42 @@ export default class Chat extends Component {
             client: socket()
     	}
     	this.addMessage = this.addMessage.bind(this);
+        
     }
 
     componentDidMount(){
       
-        
+
       
     }
 
 	addMessage(message){
-		let newMessage = {
-			type: 'postMessage',
-        	id: null,
-        	username: this.props.user,
-        	content: message,
-        	color: null
-		}
+		// let newMessage = {
+		// 	type: 'postMessage',
+  //       	id: null,
+  //       	username: this.props.user,
+  //       	content: message,
+  //       	color: null
+		// }
         let roomName = this.props.room;
-		console.log(newMessage)
-        this.state.client.message(roomName,newMessage)
+		console.log(message)
+        this.state.client.message(roomName,message)
         this.setState({
-                messages: this.state.messages.concat(newMessage)
+                messages: this.state.messages.concat(message)
             });
             
 	}
 
-    recieveMessage(){
-        var socket = io('http://localhost/')
-        socket.on('message', function(msg){
-            if (msg.type == 'postMessage'){
-               this.setState({
-                    messages: this.state.messages.concat(msg)
-                }) 
-            }
-        })
-    }
+    // recieveMessage(){
+    //     var socket = io('http://localhost/')
+    //     socket.on('message', function(msg){
+    //         if (msg.type == 'postMessage'){
+    //            this.setState({
+    //                 messages: this.state.messages.concat(msg)
+    //             }) 
+    //         }
+    //     })
+    // }
 
 	render() {
  

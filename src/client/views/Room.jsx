@@ -10,7 +10,8 @@ export default class Room extends Component {
 		
 		this.state = {
 			chatHistory,
-			username: null
+			username: null,
+			roomname: this.props.roomname
 			
 		}
 	}
