@@ -9,20 +9,26 @@ function makeHandleEvent(client, clientManager, roomManager) {
   }
 
   function ensureValidRoom(roomName) {
+    const user = "test user"
+    const room = roomManager.getRoomByName(roomName)
+    console.log("ensureValidRoom received", roomName)
     return Promise.all([
-      (roomName) => {  return ensureExists(
-        () => roomManager.getRoomByName(roomName),
-        `invalid room name: ${roomName}`
-      )}
-    ])
+      // ((roomName) => {  
+      //   return ensureExists(
+      //   () => roomManager.getRoomByName(roomName),
+      //   `invalid room name: ${roomName}`
+      // )})
+    room , user])
       .then(([room, user]) => Promise.resolve({ room, user }))
   }
 
   function handleEvent(roomName, createEntry) {
+    console.log("handling event for", roomName)
     return ensureValidRoom(roomName)
       .then(function ({ room, user }) {
         const entry = { user, ...createEntry() }
         console.log("entry", entry)
+        console.log("room",room)
         room.addEntry(entry)
         console.log("entry from handle function", entry)
         room.broadcastMessage({ chat: roomName, ...entry })
