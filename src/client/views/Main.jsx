@@ -39,7 +39,7 @@ export default class Main extends Component {
 
     this.state = {
       username: "test",
-      user: null,
+      user: "dan",
       isRegisterInProcess: false,
       client: socket(),
       rooms: null,
@@ -75,10 +75,10 @@ export default class Main extends Component {
   }
 
   onEnterRoom(roomName, onEnterSuccess) {
-    console.log("entering room")
-    return this.state.client.join(roomName, (err, chatHistory) => {
-      if (err)
-        return console.error(err)
+    console.log("entering room", roomName)
+    return this.state.client.join(roomName, (chatHistory) => {
+      // if (err)
+      //   return console.error("err")
       return onEnterSuccess(chatHistory)
     })
   }
@@ -108,8 +108,9 @@ export default class Main extends Component {
   }
 
   renderRoom(room, { history }) {
+    console.log("rendering room", room)
     const { chatHistory } = history.location.state
-
+    
     return (
       <Room
         room={room}
@@ -131,58 +132,51 @@ export default class Main extends Component {
         registerHandler={this.state.client.registerHandler}
         unregisterHandler={this.state.client.unregisterHandler}
       />
-    )
+    );
   }
 
   render() {
-    const { username } = this.state;
     this.state.getPlaylistTracks('6C92HETt370wqh8DQ28Xx7');
     return (
       <div>
         <Navbar/>
-        <BrowserRouter>
-        { !this.state.rooms ? (<div> wait.</div>)
-                : (
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={
-                props => (
-                  <RoomsList
-                    user={this.state.user}
-                    rooms={this.state.rooms}
-                    // onChangeUser={() => props.history.push('/user')}
-                    onEnterRoom={
-                      roomName => this.onEnterRoom(
-                        roomName,
-                        // () => props.history.push('/user'),
-                        chatHistory => props.history.push({
-                          pathname: roomName,
-                          state: { chatHistory }
-                        })
-                      )
-                    }
+        <BrowserRouter user={this.state.user}>
+          { !this.state.rooms ? (<div> wait.</div>): (
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={
+                  props => (
+                    <RoomsList
+                      user={this.state.user}
+                      rooms={this.state.rooms}
+                      onEnterRoom={
+                        roomName => this.onEnterRoom(
+                          roomName,
+                          chatHistory => props.history.push({
+                            pathname: roomName,
+                            state: { chatHistory }
+                          },
+                          console.log("chatHistory:", chatHistory))
+                        )
+                      }
+                    />
+                  )
+                }
+              />
+              {
+                this.state.rooms.map(room => (
+                  <Route
+                    key={room.name}
+                    exact
+                    path={`/${room.name}`}
+                    render={props => this.renderRoom(room, props)}
                   />
-                )
+                ))
               }
-            />
-            <Route exact path={`/${this.state.username}`} component={Room} />
-            <Link to={`/${this.state.username}`}><button>Show the Room lalala</button></Link>
-            {
-              this.state.rooms.map(room => (
-                <Route
-                  key={room.name}
-                  exact
-                  path={`/${room.name}`}
-                  render={
-                    props => this.renderRoom(room, props)
-                  }
-                />
-              ))
-            }
-          </Switch>
-                )
+            </Switch>
+          )
         }
         </BrowserRouter>
       </div>
