@@ -14,10 +14,14 @@ export default class Room extends Component {
 			roomname: this.props.roomname
 			
 		}
+
+		this.onMessageReceived = this.onMessageReceived.bind(this)
+		this.updateChatHistory = this.updateChatHistory.bind(this)
 	}
 
 	componentDidMount() {
 		this.props.registerHandler(this.onMessageReceived)
+		
     fetch('/api/getUsername')
       .then(res => res.json())
       .then(user => this.setState({ username: user.username }));
