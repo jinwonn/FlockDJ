@@ -1,29 +1,36 @@
 function makeHandleEvent(client, clientManager, roomManager) {
-  function ensureExists(getter, rejectionMessage) {
-    return new Promise(function (resolve, reject) {
-      const res = getter()
-      return res
-        ? resolve(res)
-        : reject(rejectionMessage)
-    })
-  }
+  // function ensureExists(getter, rejectionMessage) {
+  //   return new Promise(function (resolve, reject) {
+  //     const res = getter()
+  //     return res
+  //       ? resolve(res)
+  //       : reject(rejectionMessage)
+  //   })
+  // }
 
   function ensureValidRoom(roomName) {
+    const user = "test user"
+    const room = roomManager.getRoomByName(roomName)
+    console.log("ensureValidRoom received", roomName)
     return Promise.all([
-      (roomName) => {  return ensureExists(
-        () => roomManager.getRoomByName(roomName),
-        `invalid room name: ${roomName}`
-      )}
-    ])
+      // ((roomName) => {  
+      //   return ensureExists(
+      //   () => roomManager.getRoomByName(roomName),
+      //   `invalid room name: ${roomName}`
+      // )})
+    room , user])
       .then(([room, user]) => Promise.resolve({ room, user }))
   }
 
   function handleEvent(roomName, createEntry) {
+    console.log("handling event for", roomName)
     return ensureValidRoom(roomName)
       .then(function ({ room, user }) {
         const entry = { user, ...createEntry() }
+        console.log("entry", entry)
+        // console.log("room",room)
         room.addEntry(entry)
-
+        console.log("entry from handle function", entry)
         room.broadcastMessage({ chat: roomName, ...entry })
         return room
       })
@@ -43,12 +50,17 @@ module.exports = function (client, clientManager, roomManager) {
   }
 
   function handleJoin(roomName, callback) {
+    console.log("handling join to", roomName)
     const createEntry = () => ({ event: `joined ${roomName}` })
+    console.log("entry to send:", createEntry)
 
     handleEvent(roomName, createEntry)
       .then(function (room) {
+        // console.log("room:",room)
         room.addUser(client)
-        callback(null, room.getChatHistory())
+        // console.log("room:",room)
+        // callback(null, room.getChatHistory())
+        callback(room.getChatHistory())
       })
       .catch(callback)
   }

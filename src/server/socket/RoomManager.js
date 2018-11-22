@@ -14,11 +14,12 @@ module.exports = function () {
   }
 
   function getRoomByName(roomName) {
+    console.log("getRoomByName from roommanager finding:", roomName)
     return rooms.get(roomName)
   }
 
   function serializeRooms() {
-    console.log("rooms from models", rooms.values())
+    console.log("serializing rooms")
     return Array.from(rooms.values()).map(c => c.serialize())
   }
 
