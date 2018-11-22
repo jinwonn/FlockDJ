@@ -13,7 +13,7 @@ const scopes            = ['user-read-private', 'user-read-email', 'user-modify-
 const spotify           = new SpotifyAPI({ clientId, clientSecret, redirectUri });
 
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(cookieParser());
 
 app.use(express.static('dist'));
