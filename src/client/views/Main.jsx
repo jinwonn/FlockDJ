@@ -168,7 +168,7 @@ export default class Main extends Component {
               }
             />
             <Route exact path={`/${this.state.username}`} component={Room} />
-            <Link to={`/${this.state.username}`}><button>Show the Room</button></Link>
+            <Link to={`/${this.state.username}`}><button>Show the Room lalala</button></Link>
             {
               this.state.rooms.map(room => (
                 <Route
