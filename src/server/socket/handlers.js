@@ -1,12 +1,12 @@
 function makeHandleEvent(client, clientManager, roomManager) {
-  function ensureExists(getter, rejectionMessage) {
-    return new Promise(function (resolve, reject) {
-      const res = getter()
-      return res
-        ? resolve(res)
-        : reject(rejectionMessage)
-    })
-  }
+  // function ensureExists(getter, rejectionMessage) {
+  //   return new Promise(function (resolve, reject) {
+  //     const res = getter()
+  //     return res
+  //       ? resolve(res)
+  //       : reject(rejectionMessage)
+  //   })
+  // }
 
   function ensureValidRoom(roomName) {
     const user = "test user"
@@ -28,7 +28,7 @@ function makeHandleEvent(client, clientManager, roomManager) {
       .then(function ({ room, user }) {
         const entry = { user, ...createEntry() }
         console.log("entry", entry)
-        console.log("room",room)
+        // console.log("room",room)
         room.addEntry(entry)
         console.log("entry from handle function", entry)
         room.broadcastMessage({ chat: roomName, ...entry })
@@ -56,10 +56,11 @@ module.exports = function (client, clientManager, roomManager) {
 
     handleEvent(roomName, createEntry)
       .then(function (room) {
-        console.log("room:",room)
+        // console.log("room:",room)
         room.addUser(client)
-        console.log("room:",room)
-        callback(null, room.getChatHistory())
+        // console.log("room:",room)
+        // callback(null, room.getChatHistory())
+        callback(room.getChatHistory())
       })
       .catch(callback)
   }

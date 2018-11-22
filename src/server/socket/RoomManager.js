@@ -15,7 +15,6 @@ module.exports = function () {
 
   function getRoomByName(roomName) {
     console.log("getRoomByName from roommanager finding:", roomName)
-    console.log("from:", rooms)
     return rooms.get(roomName)
   }
 
