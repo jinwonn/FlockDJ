@@ -7,7 +7,9 @@ module.exports = function ({ name }) {
   }
 
   function addEntry(entry) {
+    console.log("adding entry", entry)
     chatHistory = chatHistory.concat(entry)
+    console.log(chatHistory)
   }
 
   function getChatHistory() {

@@ -22,8 +22,9 @@ function makeHandleEvent(client, clientManager, roomManager) {
     return ensureValidRoom(roomName)
       .then(function ({ room, user }) {
         const entry = { user, ...createEntry() }
+        console.log("entry", entry)
         room.addEntry(entry)
-
+        console.log("entry from handle function", entry)
         room.broadcastMessage({ chat: roomName, ...entry })
         return room
       })
@@ -43,11 +44,15 @@ module.exports = function (client, clientManager, roomManager) {
   }
 
   function handleJoin(roomName, callback) {
+    console.log("handling join to", roomName)
     const createEntry = () => ({ event: `joined ${roomName}` })
+    console.log("entry to send:", createEntry)
 
     handleEvent(roomName, createEntry)
       .then(function (room) {
+        console.log("room:",room)
         room.addUser(client)
+        console.log("room:",room)
         callback(null, room.getChatHistory())
       })
       .catch(callback)

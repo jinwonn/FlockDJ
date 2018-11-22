@@ -15,7 +15,6 @@ io.on('connection', function (client) {
     handleLeave,
     handleMessage,
     handleGetRooms,
-    handleGetAvailableUsers,
     handleDisconnect
   } = makeHandlers(client, clientManager, roomManager)
 

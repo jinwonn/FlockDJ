@@ -23,18 +23,21 @@ export default function () {
 
   function join(roomName, cb) {
     socket.emit('join', roomName, cb)
+    console.log("emit join to", roomName)
   }
 
   function leave(roomName, cb) {
+    console.log("emit leave from", roomName)
     socket.emit('leave', roomName, cb)
   }
 
   function message(roomName, msg, cb) {
+    console.log("emit message:", msg, "in room", roomName)
     socket.emit('message', { roomName, message: msg }, cb)
   }
 
   function getRooms(cb) {
-    console.log("emitting rooms to server")
+    console.log("emitting getrooms to server")
     socket.emit('rooms', null, cb)
   }
 
