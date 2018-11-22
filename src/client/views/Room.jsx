@@ -5,7 +5,8 @@ export default class Room extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			username: null
+			username: null,
+			roomname: "Jai-Fi"
 		}
 	}
 
@@ -26,7 +27,7 @@ export default class Room extends Component {
 	      hello this is a room
 	      <div className= 'chat-section'>
 	      	Welcome to flock dj chat
-	      	<Chat user={this.state.username}/>
+	      	<Chat user={this.state.username} room={this.state.roomname}/>
 	      </div>
       </div>
     );
