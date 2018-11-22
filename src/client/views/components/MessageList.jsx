@@ -4,12 +4,22 @@ import React, {Component} from 'react';
 class MessageList extends Component {
   render() {
   	const messages = this.props.messages.map(msg =>{
-  		return (
-        <span>
-          <p>{msg.username}</p>
-          <p>{msg.content}</p>
-        </span>
-  		)
+  		if (msg.message){
+          return (
+          <span>
+            <p>{msg.user}</p>
+            <p>{msg.message}</p>
+          </span>
+        )
+      }
+      if (msg.event){
+        return (
+          <span>
+            <p><em>{msg.event}</em></p>
+          </span>
+        )
+      }
+    
   	});
     
     return (

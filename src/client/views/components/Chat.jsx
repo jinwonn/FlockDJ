@@ -10,7 +10,6 @@ export default class Chat extends Component {
 	 constructor(props) {
     	super(props);
     	this.state = {
-    		messages: [],
             client: socket()
     	}
     	this.addMessage = this.addMessage.bind(this);
@@ -24,38 +23,18 @@ export default class Chat extends Component {
     }
 
 	addMessage(message){
-		// let newMessage = {
-		// 	type: 'postMessage',
-  //       	id: null,
-  //       	username: this.props.user,
-  //       	content: message,
-  //       	color: null
-		// }
+	
         let roomName = this.props.room;
 		console.log(message)
-        this.state.client.message(roomName,message)
-        this.setState({
-                messages: this.state.messages.concat(message)
-            });
+        this.state.client.message(roomName, message)
             
 	}
-
-    // recieveMessage(){
-    //     var socket = io('http://localhost/')
-    //     socket.on('message', function(msg){
-    //         if (msg.type == 'postMessage'){
-    //            this.setState({
-    //                 messages: this.state.messages.concat(msg)
-    //             }) 
-    //         }
-    //     })
-    // }
 
 	render() {
  
     return (
     <div>
-    <MessageList messages={this.state.messages}/>
+    <MessageList messages={this.props.chatHistory}/>
      <div className='chatbar-box'>
      	<ChatBar addMessage={this.addMessage}/>
      </div>
