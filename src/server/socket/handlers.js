@@ -13,7 +13,7 @@ function makeHandleEvent(client, clientManager, roomManager) {
     const room = roomManager.getRoomByName(roomName)
     console.log("ensureValidRoom received", roomName)
     return Promise.all([
-      // ((roomName) => {  
+      // ((roomName) => {
       //   return ensureExists(
       //   () => roomManager.getRoomByName(roomName),
       //   `invalid room name: ${roomName}`

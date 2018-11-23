@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import '../styles/room.css';
 import Chat from './components/Chat.jsx'
+import Player from './components/Player.jsx'
 
 export default class Room extends Component {
   constructor(props, context) {
     super(props, context)
 
 		const { chatHistory } = props
-		
+
 		this.state = {
 			chatHistory,
 			username: null
@@ -19,17 +20,17 @@ export default class Room extends Component {
 
 	componentDidMount() {
 		this.props.registerHandler(this.onMessageReceived)
-		
+
     fetch('/api/getUsername')
       .then(res => res.json())
       .then(user => this.setState({ username: user.username }));
 	}
-	
+
 		onMessageReceived(entry) {
 			console.log('onMessageReceived:', entry)
 			this.updateChatHistory(entry)
 		}
-	
+
 		updateChatHistory(entry) {
 			this.setState({ chatHistory: this.state.chatHistory.concat(entry) })
 		}
@@ -46,6 +47,9 @@ export default class Room extends Component {
 	      	Welcome to flock dj chat
 	      	<Chat user={this.state.username}/>
 	      </div>
+        <div>
+          <Player />
+        </div>
       </div>
     );
   }

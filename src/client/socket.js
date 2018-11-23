@@ -1,7 +1,7 @@
 const io = require('socket.io-client')
 
 export default function () {
-  
+
   const socket = io.connect('http://localhost:3000')
 
   function registerHandler(onMessageReceived) {
@@ -45,6 +45,11 @@ export default function () {
     socket.emit('availableUsers', null, cb)
   }
 
+  function queueUpdate(queueArr, cb) {
+    console.log(queueArr);
+    socket.emit('QUEUE_UPDATE', JSON.stringify(queueArr));
+  }
+
   return {
     getRooms,
     register,
@@ -53,6 +58,7 @@ export default function () {
     message,
     getAvailableUsers,
     registerHandler,
-    unregisterHandler
+    unregisterHandler,
+    queueUpdate
   }
 }

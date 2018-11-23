@@ -8,30 +8,6 @@ import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
 
-function getPlaylistTracks(PlaylistUri) {
-    fetch(`https://api.spotify.com/v1/playlists/${PlaylistUri}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + cookie.load('access_token'),
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    .then(res => res.json())
-    .then(
-      (result) => {
-        console.log(result);
-      }
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      // (error) => {
-      //   socket.emit('error', error);
-      // }
-    )
-}
-
 export default class Main extends Component {
 
   constructor(props, context) {
@@ -61,8 +37,7 @@ export default class Main extends Component {
           duration: 247000
         }
       },
-      messages: [],
-      getPlaylistTracks: getPlaylistTracks,// messages coming from the server will be stored here as they arrive
+      messages: [],// messages coming from the server will be stored here as they arrive
     }
 
     this.onEnterRoom = this.onEnterRoom.bind(this)
@@ -110,7 +85,7 @@ export default class Main extends Component {
   renderRoom(room, { history }) {
     console.log("rendering room", room)
     const { chatHistory } = history.location.state
-    
+
     return (
       <Room
         room={room}
@@ -136,7 +111,7 @@ export default class Main extends Component {
   }
 
   render() {
-    this.state.getPlaylistTracks('6C92HETt370wqh8DQ28Xx7');
+
     return (
       <div>
         <Navbar/>
