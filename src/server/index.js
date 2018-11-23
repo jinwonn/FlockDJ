@@ -53,15 +53,32 @@ app.get('*',(req,res,next) => {
 });
 
 /*
+  =========
   SOCKET.IO
+  =========
 */
 
-io.on('connection', (socket) => {
-  console.log('someone is here');
 
-  socket.on('song', (song) => {
-    io.emit('song', song);
+// when a client first connects...
+io.on('connection', (socket) => {
+  socket.join('lofi_labs');
+
+  // when a client is 'ready' (after the Spotify Connect player has been loaded)...
+  socket.on('READY', () => {
+    const currentRoom = Object.keys(socket.rooms)[1]
+    // if a song is currently playing, send that song.
+    if (state.rooms['lofi_labs'].playing) {
+      io.to('lofi_labs').emit('PLAY_SONG', JSON.stringify(state.rooms[currentRoom].playing));
+    }
   });
+
+  // when a client submits a new queue...
+  socket.on('QUEUE_UPDATE', (playlistArr) => {
+    const currentRoom = Object.keys(socket.rooms)[1];
+    // push that to the queue of the room that the client is connected to
+    state.rooms[currentRoom].queue = JSON.parse(playlistArr);
+  });
+
 });
 
 http.listen(8080, () => console.log('Listening on port 8080.'));

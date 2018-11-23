@@ -16,11 +16,11 @@ export default class ChatBar extends Component{
 	}
 
 	render() {
- 
+
     return (
      <div className='chat-bar'>
 	     <footer>
-	    	
+
 	    	<input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyUp={this.enterMessage}/>
 	  	 </footer>
      </div>

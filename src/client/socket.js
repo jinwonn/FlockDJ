@@ -45,7 +45,7 @@ export default function () {
     socket.emit('availableUsers', null, cb)
   }
 
-  function queueUpdate(queueArr, cb) {
+  function queueUpdate(queueArr) {
     console.log(queueArr);
     socket.emit('QUEUE_UPDATE', JSON.stringify(queueArr));
   }

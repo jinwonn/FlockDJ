@@ -29,7 +29,7 @@ export default class Chat extends Component {
 	}
 
 	render() {
- 
+
     return (
     <div>
     <MessageList messages={this.state.messages}/>

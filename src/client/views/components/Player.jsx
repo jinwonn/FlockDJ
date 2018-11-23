@@ -9,16 +9,12 @@ export default class Player extends Component{
     }
   }
 
-  enterPlaylistUri = (e) => {
+  enterPlaylistUri = (event) => {
     let playlistUri;
     if(event.keyCode === 13){
-      console.log('---------------')
-      console.log('Enter pressed')
-      console.log('---------------')
-      playlistUri = e.target.value;
+      playlistUri = event.target.value;
     }
-    console.log(playlistUri);
-    this.generatePlaylistArray(playlistUri, this.state.client.queueUpdate())
+    this.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
   }
 
   getTailOfURI = (uri) => {
@@ -27,9 +23,6 @@ export default class Player extends Component{
   }
 
   generatePlaylistArray = (uri, cb) => {
-    console.log('---------------')
-    console.log(uri);
-    console.log('---------------')
     fetch(`https://api.spotify.com/v1/playlists/${this.getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
       {
         method: "GET",
@@ -39,9 +32,9 @@ export default class Player extends Component{
         }
        }).then(res => res.json())
          .then((playlist) => {
-          console.log('inside second promise')
-            cb(playlist.items.map((e) => {console.log('Inside playlist map'); return e.track}))
-          });
+            cb(playlist.items.map(trackObj => trackObj.track))
+          })
+         .catch((err) => {console.log('Error Mapping:', err)});
   }
 
   render() {
