@@ -10,7 +10,14 @@ export default class ChatBar extends Component{
 
 	enterMessage(event){
 		if(event.keyCode === 13){
-			if (event.target.value){
+			if (!event.target.value){
+				alert("Please enter something!")
+			}
+			else if (event.target.value.length > 100){
+				alert("Character count exceeded! Character limit: 100!")
+			}
+			else
+			{
 				let message = event.target.value;
 				this.props.addMessage(message)
 				event.target.value = "";
