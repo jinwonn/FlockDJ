@@ -11,9 +11,12 @@ export default class Room extends Component {
 		const { chatHistory } = props
 
 		this.state = {
-			chatHistory,
-			username: null,
+			// chatHistory, this is if you want to show previous chat history
       spotifyhelper: spotifyhelper()
+			chatHistory: [],
+			username: null,
+			roomname: this.props.roomname
+			
 		}
 	}
 
@@ -45,7 +48,7 @@ export default class Room extends Component {
 				<div>{JSON.stringify(this.state)}</div>
 	      <div className= 'chat-section'>
 	      	Welcome to flock dj chat
-	      	<Chat user={this.state.username}/>
+	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
         <div>
           <Player />

@@ -1,23 +1,10 @@
 function makeHandleEvent(client, clientManager, roomManager) {
-  // function ensureExists(getter, rejectionMessage) {
-  //   return new Promise(function (resolve, reject) {
-  //     const res = getter()
-  //     return res
-  //       ? resolve(res)
-  //       : reject(rejectionMessage)
-  //   })
-  // }
-
+  
   function ensureValidRoom(roomName) {
     const user = "test user"
     const room = roomManager.getRoomByName(roomName)
     console.log("ensureValidRoom received", roomName)
     return Promise.all([
-      // ((roomName) => {
-      //   return ensureExists(
-      //   () => roomManager.getRoomByName(roomName),
-      //   `invalid room name: ${roomName}`
-      // )})
     room , user])
       .then(([room, user]) => Promise.resolve({ room, user }))
   }
@@ -56,10 +43,7 @@ module.exports = function (client, clientManager, roomManager) {
 
     handleEvent(roomName, createEntry)
       .then(function (room) {
-        // console.log("room:",room)
         room.addUser(client)
-        // console.log("room:",room)
-        // callback(null, room.getChatHistory())
         callback(room.getChatHistory())
       })
       .catch(callback)
@@ -78,7 +62,7 @@ module.exports = function (client, clientManager, roomManager) {
 
   function handleMessage({ roomName, message } = {}, callback) {
     const createEntry = () => ({ message })
-
+    console.log("message recieved")
     handleEvent(roomName, createEntry)
       .then(() => callback(null))
       .catch(callback)

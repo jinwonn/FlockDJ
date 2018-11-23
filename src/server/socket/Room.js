@@ -10,6 +10,7 @@ module.exports = function ({ name }) {
   function broadcastMessage(message) {
     console.log("broadcasting: (", message, ") to members")
     members.forEach(m => m.emit('message', message))
+
   }
 
   function queue(newQueue) {
