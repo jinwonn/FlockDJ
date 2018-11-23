@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../styles/room.css';
 import Chat from './components/Chat.jsx'
 import Player from './components/Player.jsx'
-import spotifyhelper from '../../assets/spotify-helpers.js'
+import spotifyhelper from '../assets/spotify-helper'
 
 export default class Room extends Component {
   constructor(props, context) {
@@ -18,8 +18,8 @@ export default class Room extends Component {
 	}
 
 	componentDidMount() {
-		this.props.registerHandler(this.onMessageReceived)
-    this.props.registerHandler(this.spotifyhelper.play_Song)
+		this.props.messageHandler(this.onMessageReceived)
+    this.props.playHandler(this.state.spotifyhelper.play_Song)
 
     fetch('/api/getUsername')
       .then(res => res.json())

@@ -1,11 +1,9 @@
-const cache = require('./cache.js');
-
 module.exports = function ({ name }) {
   const members = new Map()
   let chatHistory = []
   let name = name
   let usersConnected = 0
-  let queue = null
+  let roomqueue = null
   let staged = null
   let playing = null
 
@@ -16,7 +14,7 @@ module.exports = function ({ name }) {
 
   function queue(newQueue) {
     if (newQueue) {
-      queue = newQueue;
+      roomqueue = newQueue;
       // if nothing is playing, run the `play` function (otherwise, the play function should
       // already be running, and will roll with the new queue).
       if (!playing && !staged) play();
@@ -24,7 +22,7 @@ module.exports = function ({ name }) {
   }
 
   function stageNext() {
-    staged = queue.shift();
+    staged = roomqueue.shift();
   }
 
   function play() {
@@ -37,7 +35,7 @@ module.exports = function ({ name }) {
     if (!staged) stageNext();
     if (!playing) {
       playing = Object.assign({startTime: Date.now()}, staged);
-       members.forEach(m => m.emit('PLAY_SONG', JSON.stringify(playing)))
+      members.forEach(m => m.emit('PLAY_SONG', JSON.stringify(playing)))
       staged = null;
       const timeToLastThirtySecondsOfSong = playing.duration_ms - 30000;
 

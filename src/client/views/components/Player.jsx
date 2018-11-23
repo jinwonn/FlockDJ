@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import socket from '../../socket';
-import spotifyhelper from '../../assets/spotify-helpers.js'
+import spotifyhelper from '../../assets/spotify-helper'
 
 export default class Player extends Component{
   constructor(props) {
@@ -16,7 +16,7 @@ export default class Player extends Component{
     if(event.keyCode === 13){
       playlistUri = event.target.value;
     }
-    this.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
+    this.state.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
   }
 
   // getTailOfURI = (uri) => {

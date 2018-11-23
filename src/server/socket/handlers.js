@@ -93,12 +93,17 @@ module.exports = function (client, clientManager, roomManager) {
     roomManager.removeClient(client)
   }
 
+  function handleReady() {
+
+  }
+
   return {
     handleRegister,
     handleJoin,
     handleLeave,
     handleMessage,
     handleGetRooms,
-    handleDisconnect
+    handleDisconnect,
+    handleReady
   }
 }

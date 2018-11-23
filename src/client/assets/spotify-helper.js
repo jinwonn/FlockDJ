@@ -1,34 +1,42 @@
 
 export default function () {
-  getTailOfURI = (uri) => {
+
+  function getCookie(name) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }
+
+  function getTailOfURI(uri) {
     const pieces = uri.split(':');
     return pieces[pieces.length - 1];
   }
 
-/*
+  /*
 
-  generatePlaylistArray(uri, cb)
-  ==============================
+    generatePlaylistArray(uri, cb)
+    ==============================
 
-  @uri  {string}   - should be a spotify playlist uri copied directly form spotify
-                     (example: spotify:user:landendanyluk:playlist:3hCn8UBhxjyVmmC1X9t1kC).
-  @cb   {function} - a function to call after the data has been fetched.
+    @uri  {string}   - should be a spotify playlist uri copied directly form spotify
+                       (example: spotify:user:landendanyluk:playlist:3hCn8UBhxjyVmmC1X9t1kC).
+    @cb   {function} - a function to call after the data has been fetched.
 
-*/
+  */
 
-  generatePlaylistArray = (uri, cb) => {
+  function generatePlaylistArray(uri, cb) {
     fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
       {
         method: "GET",
         headers: {
-         "Authorization": "Bearer " + getCookie('access_token'),
-         "Content-Type": "application/json"
+          "Authorization": "Bearer " + getCookie('access_token'),
+          "Content-Type": "application/json"
         }
-       }).then(res => res.json())
-         .then((playlist) => {
-            cb(playlist.items.map(trackObj => trackObj.track))
-          })
-         .catch((err) => {console.log('Error Mapping:', err)});
+      }).then(res => res.json())
+      .then((playlist) => {
+        console.log(playlist);
+        cb(playlist.items.map(trackObj => trackObj.track))
+      })
+      .catch((err) => {console.log('Error Mapping:', err)});
   }
 
 /*
@@ -44,7 +52,7 @@ export default function () {
 
 
 
-   play_Song = (song) => {
+   function play_Song(song) {
       const parsedSong = JSON.parse(song);
       if (parsedSong) playSong(parsedSong, deviceId);
    }

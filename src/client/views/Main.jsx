@@ -18,26 +18,6 @@ export default class Main extends Component {
       user: "dan",
       isRegisterInProcess: false,
       client: socket(),
-      rooms: null,
-      roomID: null,
-      roomName: null,
-      username: null,//This line can be entirely removed
-      currentUser: {
-        name: "Anonymous",
-        color: "black"
-      },//The current user will be stored here along with their random color
-      songs: {
-        staged: {
-          songuri: 'songuriStringHere',
-          duration: 327000
-        },
-        playing: {
-          songuri: 'songuriStringHere',
-          started_at: 'timeinUTC',
-          duration: 247000
-        }
-      },
-      messages: [],// messages coming from the server will be stored here as they arrive
     }
 
     this.onEnterRoom = this.onEnterRoom.bind(this)
@@ -104,7 +84,8 @@ export default class Main extends Component {
             cb
           )
         }
-        registerHandler={this.state.client.registerHandler}
+        messageHandler={this.state.client.messageHandler}
+        playHandler={this.state.client.playHandler}
         unregisterHandler={this.state.client.unregisterHandler}
       />
     );
