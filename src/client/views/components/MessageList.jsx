@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-
+import '../../styles/chat.css'
 
 class MessageList extends Component {
-  
+
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
@@ -20,7 +20,7 @@ class MessageList extends Component {
   	const messages = this.props.messages.map(msg =>{
   		if (msg.message){
           return (
-          <span>
+          <span className='message-content'>
             <p>{msg.user}</p>
             <p>{msg.message}</p>
           </span>
