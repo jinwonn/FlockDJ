@@ -23,13 +23,7 @@ export default class Chat extends Component {
     }
 
 	addMessage(message){
-		// let newMessage = {
-		// 	type: 'postMessage',
-  //       	id: null,
-  //       	username: this.props.user,
-  //       	content: message,
-  //       	color: null
-		// }
+		
         let roomName = this.props.room;
 		console.log(message)
         this.state.client.message(roomName, message)
