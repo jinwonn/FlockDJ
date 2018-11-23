@@ -8,6 +8,10 @@ export default function () {
     socket.on('message', onMessageReceived)
   }
 
+   function registerHandler(play_Song) {
+    socket.on('PLAY_SONG', play_Song)
+  }
+
   function unregisterHandler() {
     socket.off('message')
   }

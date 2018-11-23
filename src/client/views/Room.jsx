@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../styles/room.css';
 import Chat from './components/Chat.jsx'
 import Player from './components/Player.jsx'
+import spotifyhelper from '../../assets/spotify-helpers.js'
 
 export default class Room extends Component {
   constructor(props, context) {
@@ -11,27 +12,26 @@ export default class Room extends Component {
 
 		this.state = {
 			chatHistory,
-			username: null
+			username: null,
+      spotifyhelper: spotifyhelper()
 		}
-
-		this.onMessageReceived = this.onMessageReceived.bind(this)
-		this.updateChatHistory = this.updateChatHistory.bind(this)
 	}
 
 	componentDidMount() {
 		this.props.registerHandler(this.onMessageReceived)
+    this.props.registerHandler(this.spotifyhelper.play_Song)
 
     fetch('/api/getUsername')
       .then(res => res.json())
       .then(user => this.setState({ username: user.username }));
 	}
 
-		onMessageReceived(entry) {
+		onMessageReceived = (entry) => {
 			console.log('onMessageReceived:', entry)
 			this.updateChatHistory(entry)
 		}
 
-		updateChatHistory(entry) {
+		updateChatHistory = (entry) => {
 			this.setState({ chatHistory: this.state.chatHistory.concat(entry) })
 		}
 

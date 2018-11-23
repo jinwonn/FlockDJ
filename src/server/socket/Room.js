@@ -1,10 +1,56 @@
+const cache = require('./cache.js');
+
 module.exports = function ({ name }) {
   const members = new Map()
   let chatHistory = []
+  let name = name
+  let usersConnected = 0
+  let queue = null
+  let staged = null
+  let playing = null
 
   function broadcastMessage(message) {
     console.log("broadcasting: (", message, ") to members")
     members.forEach(m => m.emit('message', message))
+  }
+
+  function queue(newQueue) {
+    if (newQueue) {
+      queue = newQueue;
+      // if nothing is playing, run the `play` function (otherwise, the play function should
+      // already be running, and will roll with the new queue).
+      if (!playing && !staged) play();
+    }
+  }
+
+  function stageNext() {
+    staged = queue.shift();
+  }
+
+  function play() {
+
+    /*
+      All of the actual song playing happens on the client side. `play` simply sends socket
+      messages when the next song should be played/staged.
+    */
+
+    if (!staged) stageNext();
+    if (!playing) {
+      playing = Object.assign({startTime: Date.now()}, staged);
+       members.forEach(m => m.emit('PLAY_SONG', JSON.stringify(playing)))
+      staged = null;
+      const timeToLastThirtySecondsOfSong = playing.duration_ms - 30000;
+
+      setTimeout(() => {
+
+        stageNext();
+        setTimeout(() => {
+          playing = null;
+          if (staged) play();
+        }, 30000);
+
+      }, timeToLastThirtySecondsOfSong);
+    }
   }
 
   function addEntry(entry) {
@@ -36,12 +82,14 @@ module.exports = function ({ name }) {
     }
   }
 
+
   return {
     broadcastMessage,
     addEntry,
     getChatHistory,
     addUser,
     removeUser,
-    serialize
+    serialize,
+    queue
   }
 }
