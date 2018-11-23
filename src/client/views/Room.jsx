@@ -9,7 +9,7 @@ export default class Room extends Component {
 		const { chatHistory } = props
 		
 		this.state = {
-			chatHistory,
+			chatHistory: [],
 			username: null,
 			roomname: this.props.roomname
 			

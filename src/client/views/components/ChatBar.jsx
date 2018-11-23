@@ -10,8 +10,12 @@ export default class ChatBar extends Component{
 
 	enterMessage(event){
 		if(event.keyCode === 13){
-			let message = event.target.value;
-			this.props.addMessage(message)
+			if (event.target.value){
+				let message = event.target.value;
+				this.props.addMessage(message)
+				event.target.value = "";
+			}
+			
 		}
 	}
 

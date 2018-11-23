@@ -2,6 +2,20 @@ import React, {Component} from 'react';
 
 
 class MessageList extends Component {
+  
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+
   render() {
   	const messages = this.props.messages.map(msg =>{
   		if (msg.message){
@@ -26,6 +40,9 @@ class MessageList extends Component {
      
       <main className="messages" >
           <p>{messages}</p>
+          <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+          </div>
       </main>
 
     );
