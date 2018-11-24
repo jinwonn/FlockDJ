@@ -4,11 +4,11 @@ export default function () {
 
   const socket = io.connect('http://localhost:3000')
 
-  function registerHandler(onMessageReceived) {
+  function messageHandler(onMessageReceived) {
     socket.on('message', onMessageReceived)
   }
 
-   function registerHandler(play_Song) {
+  function playHandler(play_Song) {
     socket.on('PLAY_SONG', play_Song)
   }
 
@@ -50,19 +50,25 @@ export default function () {
   }
 
   function queueUpdate(queueArr) {
-    console.log(queueArr);
+    console.log("emitting queue", queueArr);
     socket.emit('QUEUE_UPDATE', JSON.stringify(queueArr));
   }
 
+  function emitReady() {
+    socket.emit('READY');
+  }
+
   return {
+    messageHandler,
     getRooms,
     register,
     join,
     leave,
     message,
     getAvailableUsers,
-    registerHandler,
+    playHandler,
     unregisterHandler,
-    queueUpdate
+    queueUpdate,
+    emitReady
   }
 }

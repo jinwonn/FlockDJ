@@ -1,59 +1,55 @@
 import React, { Component } from 'react';
 import socket from '../../socket';
-import spotifyhelper from '../../assets/spotify-helpers.js'
+import spotifyhelper from '../../assets/spotify-helper';
+import WebPlaybackReact from '../../assets/player';
 
-export default class Player extends Component{
+window.onSpotifyWebPlaybackSDKReady = () => {};
+
+export default class Player extends Component {
+
   constructor(props) {
-      super(props);
-      this.state = {
-        client: socket(),
-        spotifyhelper: spotifyhelper()
+    super(props);
+    this.state = {
+      client: socket(),
+      spotifyhelper: spotifyhelper()
     }
   }
-
+  // URI input feild and handling
   enterPlaylistUri = (event) => {
     let playlistUri;
     if(event.keyCode === 13){
       playlistUri = event.target.value;
     }
-    this.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
+    this.state.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
   }
-
-  // getTailOfURI = (uri) => {
-  //   const pieces = uri.split(':');
-  //   return pieces[pieces.length - 1];
-  // }
-
-  // generatePlaylistArray = (uri, cb) => {
-  //   fetch(`https://api.spotify.com/v1/playlists/${this.getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //        "Authorization": "Bearer " + getCookie('access_token'),
-  //        "Content-Type": "application/json"
-  //       }
-  //      }).then(res => res.json())
-  //        .then((playlist) => {
-  //           cb(playlist.items.map(trackObj => trackObj.track))
-  //         })
-  //        .catch((err) => {console.log('Error Mapping:', err)});
-  // }
-
-
-  //  play_Song(song) {
-  //     const parsedSong = JSON.parse(song);
-  //     if (parsedSong) playSong(parsedSong, deviceId);
-  //  }
-
-
-
 
   render() {
 
+    let {
+      userAccessToken
+    } = this.state;
+
+    let webPlaybackSdkProps = {
+      playerName: "Spotify React Player",
+      playerInitialVolume: 1.0,
+      playerRefreshRateMs: 100,
+      playerAutoConnect: true,
+      deviceId: null,
+      onPlayerRequestAccessToken: (() => userAccessToken),
+      onPlayerLoading: (() => this.setState({ playerLoaded: true })),
+      onPlayerWaitingForDevice: (data => this.setState({ playerSelected: false, userDeviceId: data.device_id })),
+      onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
+      onPlayerStateChange: (playerState => this.setState({ playerState: playerState })),
+      onPlayerError: (playerError => console.error(playerError))
+    };
+
     return (
-     <div className='spotify-player'>
+      <div className="spotify-player">
+        <div>
+          <WebPlaybackReact {...webPlaybackSdkProps}/>
+        </div>
         <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
-     </div>
+      </div>
     );
   }
 }

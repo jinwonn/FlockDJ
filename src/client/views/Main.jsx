@@ -8,16 +8,44 @@ import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
 
-export default class Main extends Component {
 
+function getPlaylistTracks(PlaylistUri) {
+    fetch(`https://api.spotify.com/v1/playlists/${PlaylistUri}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + cookie.load('access_token'),
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    .then(res => res.json())
+    .then(
+      (result) => {
+        console.log(result);
+      }
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      // (error) => {
+      //   socket.emit('error', error);
+      // }
+    )
+}
+
+
+
+export default class Main extends Component {
   constructor(props, context) {
     super(props, context)
+
 
     this.state = {
       username: "test",
       user: "dan",
       isRegisterInProcess: false,
       client: socket(),
+
       rooms: null,
       roomID: null,
       roomName: null,
@@ -37,7 +65,8 @@ export default class Main extends Component {
           duration: 247000
         }
       },
-      messages: [],// messages coming from the server will be stored here as they arrive
+      messages: [],
+      getPlaylistTracks: getPlaylistTracks,// messages coming from the server will be stored here as they arrive
     }
 
     this.onEnterRoom = this.onEnterRoom.bind(this)
@@ -89,6 +118,7 @@ export default class Main extends Component {
     return (
       <Room
         room={room}
+        roomname= {room.name}
         chatHistory={chatHistory}
         user={this.state.user}
         onLeave={
@@ -104,7 +134,8 @@ export default class Main extends Component {
             cb
           )
         }
-        registerHandler={this.state.client.registerHandler}
+        messageHandler={this.state.client.messageHandler}
+        playHandler={this.state.client.playHandler}
         unregisterHandler={this.state.client.unregisterHandler}
       />
     );

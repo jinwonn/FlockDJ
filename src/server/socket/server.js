@@ -15,13 +15,16 @@ io.on('connection', function (client) {
     handleLeave,
     handleMessage,
     handleGetRooms,
-    handleDisconnect
+    handleDisconnect,
+    handleReady
   } = makeHandlers(client, clientManager, roomManager)
 
   // console.log('client.id connected:', client.id)
   clientManager.addClient(client)
 
   client.on('register', handleRegister)
+
+  client.on('READY', handleReady);
 
   client.on('join', handleJoin)
 

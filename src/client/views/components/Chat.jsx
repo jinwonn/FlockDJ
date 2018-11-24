@@ -3,40 +3,36 @@ import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import '../../styles/chat.css'
 import ChatBar from './ChatBar.jsx'
 import MessageList from './MessageList.jsx';
+import socket from '../../socket';
 
 
 export default class Chat extends Component {
-	 constructor(props) {
-    	super(props);
-    	this.state = {
-    		messages: []
-    	}
-    	this.addMessage = this.addMessage.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      client: socket()
+    };
+    this.addMessage = this.addMessage.bind(this);       
+  }
 
-	addMessage(message){
-		let newMessage = {
-			type: 'postMessage',
-        	id: null,
-        	username: this.props.user,
-        	content: message,
-        	color: null
-		}
-		console.log(newMessage)
-		this.setState({
-			messages: this.state.messages.concat(newMessage)
-		})
-	}
+  componentDidMount(){
 
-	render() {
+  }
 
+  addMessage(message) {
+    let roomName = this.props.room;
+    console.log(message)
+    this.state.client.message(roomName, message);
+  }
+
+  render() {
     return (
-    <div>
-    <MessageList messages={this.state.messages}/>
-     <div className='chatbar-box'>
-     	<ChatBar addMessage={this.addMessage}/>
-     </div>
-     </div>
+      <div>
+        <MessageList messages={this.props.chatHistory} />
+        <div className="chatbar-box">
+          <ChatBar addMessage={this.addMessage} />
+        </div>
+      </div>
     );
   }
 }
