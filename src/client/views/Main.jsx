@@ -142,7 +142,6 @@ export default class Main extends Component {
   }
 
   render() {
-    this.state.getPlaylistTracks('6C92HETt370wqh8DQ28Xx7');
 
     return (
       <div>

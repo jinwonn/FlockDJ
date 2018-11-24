@@ -1,7 +1,7 @@
 module.exports = function ({ name }) {
   const members = new Map()
   let chatHistory = []
-  let name = name
+  // let name = name
   let usersConnected = 0
   let roomqueue = null
   let staged = null

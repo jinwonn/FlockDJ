@@ -8,26 +8,30 @@ export default class Room extends Component {
   constructor(props, context) {
     super(props, context)
 
-		const { chatHistory } = props
+    const { chatHistory } = props			
+    this.state = {
+    // chatHistory, this is if you want to show previous chat history
+      spotifyhelper: spotifyhelper(),
+      chatHistory: [],
+      username: null,
+      roomname: this.props.roomname
+    };
+  }
 
-		this.state = {
-			// chatHistory, this is if you want to show previous chat history
-      spotifyhelper: spotifyhelper()
-			chatHistory: [],
-			username: null,
-			roomname: this.props.roomname
-			
-		}
-	}
-
-	componentDidMount() {
-		this.props.messageHandler(this.onMessageReceived)
-    this.props.playHandler(this.state.spotifyhelper.play_Song)
+  componentDidMount() {
+    this.props.messageHandler(this.onMessageReceived)
+		this.props.playHandler(this.state.spotifyhelper.play_Song)
+		
+		const script = document.createElement("script");
+		script.src = 'https://sdk.scdn.co/spotify-player.js';
+		script.src = 'src/client/assets/player.js';
+		script.async = true;
+		document.body.appendChild(script)
 
     fetch('/api/getUsername')
       .then(res => res.json())
       .then(user => this.setState({ username: user.username }));
-	}
+  }
 
 		onMessageReceived = (entry) => {
 			console.log('onMessageReceived:', entry)

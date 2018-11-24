@@ -10,7 +10,7 @@ export default class Player extends Component{
         spotifyhelper: spotifyhelper()
     }
   }
-
+// URI input feild and handling
   enterPlaylistUri = (event) => {
     let playlistUri;
     if(event.keyCode === 13){
@@ -18,35 +18,6 @@ export default class Player extends Component{
     }
     this.state.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
   }
-
-  // getTailOfURI = (uri) => {
-  //   const pieces = uri.split(':');
-  //   return pieces[pieces.length - 1];
-  // }
-
-  // generatePlaylistArray = (uri, cb) => {
-  //   fetch(`https://api.spotify.com/v1/playlists/${this.getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //        "Authorization": "Bearer " + getCookie('access_token'),
-  //        "Content-Type": "application/json"
-  //       }
-  //      }).then(res => res.json())
-  //        .then((playlist) => {
-  //           cb(playlist.items.map(trackObj => trackObj.track))
-  //         })
-  //        .catch((err) => {console.log('Error Mapping:', err)});
-  // }
-
-
-  //  play_Song(song) {
-  //     const parsedSong = JSON.parse(song);
-  //     if (parsedSong) playSong(parsedSong, deviceId);
-  //  }
-
-
-
 
   render() {
 

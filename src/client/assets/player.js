@@ -5,7 +5,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     name: 'Connnect.to',
     getOAuthToken: cb => { cb(token); }
   });
-
+ console.log("working")
   // error handling
   player.addListener('initialization_error', ({ message }) => { console.error(message); });
   player.addListener('authentication_error', ({ message }) => { console.error(message); });
@@ -20,6 +20,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     deviceId = device_id;
     console.log('Ready with Device ID', device_id);
     socket.emit('READY');
+    console.log("emitted ready")
   });
 
   // not ready
