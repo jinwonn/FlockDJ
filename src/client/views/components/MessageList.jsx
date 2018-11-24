@@ -20,7 +20,7 @@ class MessageList extends Component {
   	const messages = this.props.messages.map(msg =>{
   		if (msg.message){
           return (
-          <span className='message-content'>
+          <span className='message-container'>
             <p>{msg.user}</p>
             <p>{msg.message}</p>
           </span>

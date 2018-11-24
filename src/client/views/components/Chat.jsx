@@ -33,11 +33,11 @@ export default class Chat extends Component {
 	render() {
  
     return (
-    <div>
-    <MessageList messages={this.props.chatHistory}/>
-     <div className='chatbar-box'>
-     	<ChatBar addMessage={this.addMessage}/>
-     </div>
+    <div className= 'chat-container'>
+        <MessageList messages={this.props.chatHistory}/>
+        <div className='chatbar-box'>
+     	  <ChatBar addMessage={this.addMessage}/>
+        </div>
      </div>
     );
   }
