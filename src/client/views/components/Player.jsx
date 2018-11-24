@@ -11,7 +11,8 @@ export default class Player extends Component {
     super(props);
     this.state = {
       client: socket(),
-      spotifyhelper: spotifyhelper()
+      spotifyhelper: spotifyhelper(),
+      roomname: this.props.room
     }
   }
   // URI input feild and handling
@@ -21,6 +22,10 @@ export default class Player extends Component {
       playlistUri = event.target.value;
     }
     this.state.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
+  }
+
+  componentDidMount() {
+    console.log("Player.jsx room name:", this.state.roomname)
   }
 
   render() {
@@ -35,6 +40,7 @@ export default class Player extends Component {
       playerRefreshRateMs: 100,
       playerAutoConnect: true,
       deviceId: null,
+      roomName: this.state.roomname,
       onPlayerRequestAccessToken: (() => userAccessToken),
       onPlayerLoading: (() => this.setState({ playerLoaded: true })),
       onPlayerWaitingForDevice: (data => this.setState({ playerSelected: false, userDeviceId: data.device_id })),
@@ -46,7 +52,7 @@ export default class Player extends Component {
     return (
       <div className="spotify-player">
         <div>
-          <WebPlaybackReact {...webPlaybackSdkProps}/>
+          <WebPlaybackReact room={this.state.roomname} {...webPlaybackSdkProps}/>
         </div>
         <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
       </div>
