@@ -72,7 +72,6 @@ export default class Main extends Component {
     this.onEnterRoom = this.onEnterRoom.bind(this)
     this.onLeaveRoom = this.onLeaveRoom.bind(this)
     this.getRooms = this.getRooms.bind(this)
-    this.register = this.register.bind(this)
 
     console.log('initial state:', this.state)
     this.getRooms();
@@ -102,15 +101,6 @@ export default class Main extends Component {
     })
   }
 
-  register(name) {
-    const onRegisterResponse = user => this.setState({ isRegisterInProcess: false, user })
-    this.setState({ isRegisterInProcess: true })
-    this.state.client.register(name, (err, user) => {
-      if (err) return onRegisterResponse(null)
-      return onRegisterResponse(user)
-    })
-  }
-
   renderRoom(room, { history }) {
     console.log("rendering room", room)
     const { chatHistory } = history.location.state
@@ -136,7 +126,6 @@ export default class Main extends Component {
         }
         messageHandler={this.state.client.messageHandler}
         playHandler={this.state.client.playHandler}
-        unregisterHandler={this.state.client.unregisterHandler}
       />
     );
   }

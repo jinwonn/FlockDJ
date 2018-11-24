@@ -1,51 +1,50 @@
-const server = require('http').createServer()
-const io = require('socket.io')(server)
+const server = require('http').createServer();
+const io = require('socket.io')(server);
 
-const ClientManager = require('./ClientManager')
-const RoomManager = require('./RoomManager')
-const makeHandlers = require('./handlers')
+const ClientManager = require('./ClientManager');
+const RoomManager = require('./RoomManager');
+const makeHandlers = require('./handlers');
 
-const clientManager = ClientManager()
-const roomManager = RoomManager()
+const clientManager = ClientManager();
+const roomManager = RoomManager();
 
-io.on('connection', function (client) {
+io.on('connection', (client) => {
   const {
-    handleRegister,
     handleJoin,
     handleLeave,
     handleMessage,
     handleGetRooms,
     handleDisconnect,
-    handleReady
-  } = makeHandlers(client, clientManager, roomManager)
+    handleReady,
+    handleQueueUpdate
+  } = makeHandlers(client, clientManager, roomManager);
 
-  // console.log('client.id connected:', client.id)
-  clientManager.addClient(client)
-
-  client.on('register', handleRegister)
+  clientManager.addClient(client);
 
   client.on('READY', handleReady);
 
-  client.on('join', handleJoin)
+  client.on('QUEUE_UPDATE', handleQueueUpdate);
 
-  client.on('leave', handleLeave)
+  client.on('join', handleJoin);
 
-  client.on('message', handleMessage)
+  client.on('leave', handleLeave);
 
-  client.on('rooms', handleGetRooms)
+  client.on('message', handleMessage);
 
-  client.on('disconnect', function () {
-    console.log('client.id disconnected:', client.id)
-    handleDisconnect()
-  })
+  client.on('rooms', handleGetRooms);
 
-  client.on('error', function (err) {
-    console.log('received error from client:', client.id)
-    console.log(err)
-  })
-})
+  client.on('disconnect', () => {
+    console.log('client.id disconnected:', client.id);
+    handleDisconnect();
+  });
 
-server.listen(3000, function (err) {
-  if (err) throw err
-  console.log('listening on port 3000')
-})
+  client.on('error', (err) => {
+    console.log('received error from client:', client.id);
+    console.log(err);
+  });
+});
+
+server.listen(3000, (err) => {
+  if (err) throw err;
+  console.log('listening on port 3000');
+});

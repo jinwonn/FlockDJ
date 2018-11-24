@@ -1,7 +1,7 @@
-const Room = require('./Room')
-const Rooms = require('./models/rooms')
+const Room = require('./Room');
+const Rooms = require('./models/rooms');
 
-module.exports = function () {
+module.exports = () => {
   const rooms = new Map(
     Rooms.map(c => [
       c.name,
@@ -10,17 +10,17 @@ module.exports = function () {
   )
 
   function removeClient(client) {
-    rooms.forEach(c => c.removeUser(client))
+    rooms.forEach(c => c.removeUser(client));
   }
 
   function getRoomByName(roomName) {
-    console.log("getRoomByName from roommanager finding:", roomName)
-    return rooms.get(roomName)
+    console.log('getRoomByName from roommanager finding:', roomName);
+    return rooms.get(roomName);
   }
 
   function serializeRooms() {
-    console.log("serializing rooms")
-    return Array.from(rooms.values()).map(c => c.serialize())
+    console.log('serializing rooms');
+    return Array.from(rooms.values()).map(c => c.serialize());
   }
 
   return {
