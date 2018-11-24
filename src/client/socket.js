@@ -54,6 +54,10 @@ export default function () {
     socket.emit('QUEUE_UPDATE', JSON.stringify(queueArr));
   }
 
+  function emitReady() {
+    socket.emit('READY');
+  }
+
   return {
     messageHandler,
     getRooms,
@@ -64,6 +68,7 @@ export default function () {
     getAvailableUsers,
     playHandler,
     unregisterHandler,
-    queueUpdate
+    queueUpdate,
+    emitReady
   }
 }

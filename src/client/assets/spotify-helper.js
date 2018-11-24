@@ -67,9 +67,10 @@ export default function () {
     }).then( cb())
   }
 
-   return {
+  return {
     generatePlaylistArray,
-    play_Song
-   }
+    play_Song,
+    getCookie
+  }
 }
 

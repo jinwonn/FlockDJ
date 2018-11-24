@@ -7,38 +7,32 @@ import socket from '../../socket';
 
 
 export default class Chat extends Component {
-	 constructor(props) {
-    	super(props);
-    	this.state = {
-            client: socket()
-    	}
-    	this.addMessage = this.addMessage.bind(this);
-        
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      client: socket()
+    };
+    this.addMessage = this.addMessage.bind(this);       
+  }
 
-    componentDidMount(){
-      
+  componentDidMount(){
 
-      
-    }
+  }
 
-	addMessage(message){
-		
-        let roomName = this.props.room;
-		console.log(message)
-        this.state.client.message(roomName, message)
-            
-	}
+  addMessage(message) {
+    let roomName = this.props.room;
+    console.log(message)
+    this.state.client.message(roomName, message);
+  }
 
-	render() {
-
+  render() {
     return (
-    <div>
-    <MessageList messages={this.props.chatHistory}/>
-     <div className='chatbar-box'>
-     	<ChatBar addMessage={this.addMessage}/>
-     </div>
-     </div>
+      <div>
+        <MessageList messages={this.props.chatHistory} />
+        <div className="chatbar-box">
+          <ChatBar addMessage={this.addMessage} />
+        </div>
+      </div>
     );
   }
 }

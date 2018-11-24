@@ -78,7 +78,7 @@ module.exports = function (client, clientManager, roomManager) {
   }
 
   function handleReady() {
-
+    room.broadcastSong()
   }
 
   return {
