@@ -1,5 +1,3 @@
-const cache = require('./cache.js');
-
 module.exports = function ({ name }) {
   const members = new Map()
   let chatHistory = []

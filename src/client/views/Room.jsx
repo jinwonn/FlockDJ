@@ -19,7 +19,7 @@ export default class Room extends Component {
 
 	componentDidMount() {
 		this.props.registerHandler(this.onMessageReceived)
-    this.props.registerHandler(this.spotifyhelper.play_Song)
+    this.props.registerHandler(this.state.spotifyhelper.play_Song)
 
     fetch('/api/getUsername')
       .then(res => res.json())
