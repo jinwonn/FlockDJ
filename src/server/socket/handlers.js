@@ -1,18 +1,22 @@
-function makeHandleEvent(client, clientManager, roomManager) {
-  
-  function ensureValidRoom(roomName) {
-    const user = "test user"
-    const room = roomManager.getRoomByName(roomName)
-    console.log("ensureValidRoom received", roomName)
-    return Promise.all([
-    room , user])
-      .then(([room, user]) => Promise.resolve({ room, user }))
-  }
+const RoomManager = require('./RoomManager')
+const roomManager = RoomManager()
+
+function ensureValidRoom(roomName) {
+  const room = roomManager.getRoomByName(roomName)
+  console.log("ensureValidRoom received", roomName)
+  return Promise.all([
+    room])
+    .then(([room]) => Promise.resolve({ room }))
+}
+
+function makeHandleEvent() {
 
   function handleEvent(roomName, createEntry) {
     console.log("handling event for", roomName)
+    const user = "test user"
     return ensureValidRoom(roomName)
-      .then(function ({ room, user }) {
+      // .then(function ({ room, user }) {
+      .then(function ({ room }) {
         const entry = { user, ...createEntry() }
         console.log("entry", entry)
         // console.log("room",room)
@@ -23,7 +27,7 @@ function makeHandleEvent(client, clientManager, roomManager) {
       })
   }
 
-  return handleEvent
+  return handleEvent;
 }
 
 module.exports = function (client, clientManager, roomManager) {
@@ -77,8 +81,11 @@ module.exports = function (client, clientManager, roomManager) {
     roomManager.removeClient(client)
   }
 
-  function handleReady() {
-    room.broadcastSong()
+  function handleReady(roomName) {
+    return ensureValidRoom(roomName)
+      .then(function ({ room }) {
+        room.broadcastSong()
+      });
   }
 
   return {

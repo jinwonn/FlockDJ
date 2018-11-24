@@ -21,7 +21,7 @@ export default class Chat extends Component {
 
   addMessage(message) {
     let roomName = this.props.room;
-    console.log(message)
+    console.log("message added:", message)
     this.state.client.message(roomName, message);
   }
 

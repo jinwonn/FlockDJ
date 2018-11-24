@@ -19,6 +19,7 @@ export default class Room extends Component {
   }
 
   componentDidMount() {
+    console.log("Room.jsx room name:", this.state.roomname)
     this.props.messageHandler(this.onMessageReceived)
 		this.props.playHandler(this.state.spotifyhelper.play_Song)
 		
@@ -55,7 +56,7 @@ export default class Room extends Component {
 	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
         <div>
-          <Player />
+          <Player room={this.state.roomname} />
         </div>
       </div>
     );

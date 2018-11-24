@@ -6,6 +6,14 @@ const sh = spotifyhelper()
 const token = sh.getCookie('access_token');
 
 export default class WebPlayback extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      client: socket(),
+      roomname: this.props.room
+    };
+  }
+
   deviceSelectedInterval = null
   statePollingInterval = null
   webPlaybackInstance = null
@@ -40,8 +48,9 @@ export default class WebPlayback extends Component {
     // });
 
     this.webPlaybackInstance.on('ready', () => {
-      socket().emitReady();
-      console.log('emitted ready')
+      let roomName = this.state.roomname;
+      this.state.client.emitReady(roomName);
+      console.log('emitted ready from room:', roomName);
     });
 
     this.webPlaybackInstance.connect();
@@ -58,6 +67,7 @@ export default class WebPlayback extends Component {
   }
 
   async componentWillMount() {
+    console.log("webPlaybackSdkProps room name:", this.state.roomname)
     // // Notify the player is loading
     // this.props.onPlayerLoading();
     
