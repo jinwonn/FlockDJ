@@ -10,7 +10,11 @@ module.exports = function ({ name }) {
   function broadcastMessage(message) {
     console.log("broadcasting: (", message, ") to members")
     members.forEach(m => m.emit('message', message))
+  }
 
+  function broadcastSong() {
+    console.log("broadcasting to play : (", playing , ") to members")
+    members.forEach(m => m.emit('PLAY_SONG', JSON.stringify(playing)))
   }
 
   function queue(newQueue) {
@@ -89,6 +93,7 @@ module.exports = function ({ name }) {
     addUser,
     removeUser,
     serialize,
-    queue
+    queue,
+    broadcastSong
   }
 }

@@ -1,33 +1,85 @@
-let token = getCookie('access_token');
+import React, { Component, Fragment } from 'react';
+import spotifyhelper from './spotify-helper';
+import socket from '../socket'
 
-window.onSpotifyWebPlaybackSDKReady = () => {
-  const player = new Spotify.Player({
-    name: 'Connnect.to',
-    getOAuthToken: cb => { cb(token); }
-  });
- console.log("working")
-  // error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
+const sh = spotifyhelper() 
+const token = sh.getCookie('access_token');
 
-  // playback status updates
-  player.addListener('player_state_changed', state => { console.log(state); });
+export default class WebPlayback extends Component {
+  deviceSelectedInterval = null
+  statePollingInterval = null
+  webPlaybackInstance = null
 
-  // ready
-  player.addListener('ready', ({ device_id }) => {
-    deviceId = device_id;
-    console.log('Ready with Device ID', device_id);
-    socket.emit('READY');
-    console.log("emitted ready")
-  });
+  async setupWebPlaybackEvents() {
+    const { Player } = window.Spotify;
 
-  // not ready
-  player.addListener('not_ready', ({ device_id }) => {
-    console.log('Device ID has gone offline', device_id);
-  });
+    this.webPlaybackInstance = new Player({
+      name: this.props.playerName,
+      volume: this.props.playerInitialVolume,
+      getOAuthToken: async (cb) => { cb(token); }
+    });
+    
+    this.webPlaybackInstance.on('initialization_error', (e) => {
+      this.props.onPlayerError(e.message);
+    });
+    
+    this.webPlaybackInstance.on('authentication_error', (e) => {
+      this.props.onPlayerError(e.message);
+    });
 
-  // connect
-  player.connect();
-};
+    this.webPlaybackInstance.on('account_error', (e) => {
+      this.props.onPlayerError(e.message);
+    });
+
+    this.webPlaybackInstance.on('playback_error', (e) => {
+      this.props.onPlayerError(e.message);
+    });
+
+    // this.webPlaybackInstance.on('player_state_changed', async state => {
+    //   await this.handleState(state);
+    // });
+
+    this.webPlaybackInstance.on('ready', () => {
+      socket().emitReady();
+      console.log('emitted ready')
+    });
+
+    this.webPlaybackInstance.connect();
+  }
+
+  waitForSpotify() {
+    return new Promise((resolve) => {
+      if ('Spotify' in window) {
+        resolve();
+      } else {
+        window.onSpotifyWebPlaybackSDKReady = () => { resolve(); };
+      }
+    });
+  }
+
+  async componentWillMount() {
+    // // Notify the player is loading
+    // this.props.onPlayerLoading();
+    
+    // Wait for Spotify to load player
+    await this.waitForSpotify();
+    
+    // Setup the instance and the callbacks
+    await this.setupWebPlaybackEvents();
+    
+    // // Wait for device to be ready
+    // let device_data = await this.setupWaitingForDevice();
+    // this.props.onPlayerWaitingForDevice(device_data);
+
+    // // Wait for device to be selected
+    // await this.waitForDeviceToBeSelected();
+    // this.props.onPlayerDeviceSelected();
+  }
+  render() {
+    return (
+      <Fragment>
+        {this.props.children}
+      </Fragment>
+    );
+  }
+}
