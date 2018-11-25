@@ -7,33 +7,7 @@ import Room from './Room.jsx';
 import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
-
-
-function getPlaylistTracks(PlaylistUri) {
-    fetch(`https://api.spotify.com/v1/playlists/${PlaylistUri}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + cookie.load('access_token'),
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    .then(res => res.json())
-    .then(
-      (result) => {
-        console.log(result);
-      }
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      // (error) => {
-      //   socket.emit('error', error);
-      // }
-    )
-}
-
-
+import Sound from 'react-sound';
 
 export default class Main extends Component {
   constructor(props, context) {

@@ -48,6 +48,12 @@ export default class Player extends Component {
         <div>
           <WebPlaybackReact {...webPlaybackSdkProps}/>
         </div>
+        <div>
+          <audio hidden>
+            Your browser does not support the &lt;audio&gt; tag.
+            <source src='https://www.computerhope.com/jargon/m/example.mp3' />
+          </audio>
+        </div>
         <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
       </div>
     );

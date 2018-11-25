@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const outputDirectory = 'dist';
-
 module.exports = {
   entry: ['babel-polyfill', './src/client/index.jsx'],
   output: {
@@ -29,8 +28,17 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        test: /\.(png|woff|woff2|eot|ttf|svg|mp3)$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.(png|jpg|gif|mp3)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {}
+          }
+        ]
       }
     ]
   },
