@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import socket from '../../socket';
-import spotifyhelper from '../../assets/spotify-helper';
-import WebPlaybackReact from '../../assets/player';
+import spotifyhelper from './spotify/spotify-helper';
+import WebPlaybackReact from './spotify/WebPlaybackReact.jsx';
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 
@@ -12,7 +12,15 @@ export default class Player extends Component {
     this.state = {
       client: socket(),
       spotifyhelper: spotifyhelper(),
-      roomname: this.props.room
+      roomname: this.props.room,
+      
+      // User's session credentials
+      userDeviceId: null,
+
+      // Player state
+      playerLoaded: false,
+      playerSelected: false,
+      playerState: null
     }
   }
   // URI input feild and handling
@@ -25,8 +33,14 @@ export default class Player extends Component {
     this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, this.state.client.queueUpdate)
   }
 
+  play_Song = (song) => {
+    const parsedSong = JSON.parse(song);
+    if (parsedSong) this.state.spotifyhelper.playSong(parsedSong, this.state.userDeviceId);
+  }
+
   componentDidMount() {
     console.log("Player.jsx room name:", this.state.roomname)
+    this.props.playHandler(this.play_Song)
   }
 
   render() {
@@ -40,12 +54,11 @@ export default class Player extends Component {
       playerInitialVolume: 1.0,
       playerRefreshRateMs: 100,
       playerAutoConnect: true,
-      deviceId: null,
       roomName: this.state.roomname,
       onPlayerRequestAccessToken: (() => userAccessToken),
       onPlayerLoading: (() => this.setState({ playerLoaded: true })),
-      onPlayerWaitingForDevice: (data => this.setState({ playerSelected: false, userDeviceId: data.device_id })),
-      onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
+      onPlayerWaitingForDevice: (data => this.setState({ playerSelected: true, userDeviceId: data.device_id })),
+      // onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
       onPlayerStateChange: (playerState => this.setState({ playerState: playerState })),
       onPlayerError: (playerError => console.error(playerError))
     };
