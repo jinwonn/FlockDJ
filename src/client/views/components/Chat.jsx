@@ -33,12 +33,16 @@ export default class Chat extends Component {
 	render() {
  
     return (
-    <div className= 'chat-container'>
-        <MessageList messages={this.props.chatHistory}/>
-        <div className='chatbar-box'>
-     	  <ChatBar addMessage={this.addMessage}/>
+    <div>
+        <h4 className='chat-title'> Flock DJ Chat </h4>
+        <div className= 'chat-container'>
+            <MessageList messages={this.props.chatHistory}/>      
         </div>
-     </div>
+        <div className='chatbar-box'>
+              <ChatBar addMessage={this.addMessage}/>
+        </div> 
+    </div>
+    
     );
   }
 }
