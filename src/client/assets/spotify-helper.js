@@ -23,7 +23,7 @@ export default function () {
 
   */
 
-  function generatePlaylistArray(uri, cb) {
+  function generatePlaylistArray(uri, roomName, cb) {
     fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
       {
         method: "GET",
@@ -34,7 +34,7 @@ export default function () {
       }).then(res => res.json())
       .then((playlist) => {
         console.log(playlist);
-        cb(playlist.items.map(trackObj => trackObj.track))
+        cb(roomName, playlist.items.map(trackObj => trackObj.track))
       })
       .catch((err) => {console.log('Error Mapping:', err)});
   }

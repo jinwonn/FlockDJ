@@ -18,10 +18,11 @@ export default class Player extends Component {
   // URI input feild and handling
   enterPlaylistUri = (event) => {
     let playlistUri;
+    let roomName = this.state.roomname
     if(event.keyCode === 13){
       playlistUri = event.target.value;
     }
-    this.state.spotifyhelper.generatePlaylistArray(playlistUri, this.state.client.queueUpdate)
+    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, this.state.client.queueUpdate)
   }
 
   componentDidMount() {

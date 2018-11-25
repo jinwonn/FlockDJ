@@ -46,6 +46,7 @@ module.exports = ({ name }) => {
   function queue(newQueue) {
     if (newQueue) {
       roomqueue = newQueue;
+      console.log("new queue set", roomqueue);
       // if nothing is playing, run the `play` function (otherwise, the play function should
       // already be running, and will roll with the new queue).
       if (!playing && !staged) play();

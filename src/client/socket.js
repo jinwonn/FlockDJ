@@ -49,9 +49,13 @@ export default function () {
     socket.emit('availableUsers', null, cb)
   }
 
-  function queueUpdate(queueArr) {
-    console.log("emitting queue", queueArr);
-    socket.emit('QUEUE_UPDATE', JSON.stringify(queueArr));
+  function queueUpdate(roomName, queueArr) {
+    console.log("parsing:", queueArr)
+    const queue = JSON.stringify(queueArr);
+    console.log("emitting to", roomName, "the parsed queue", queue);
+    const message =  { roomName, queue }
+    console.log("emitting message", message)
+    socket.emit('QUEUE_UPDATE', { roomName, queue } );
   }
 
   function emitReady(roomName) {
