@@ -1,104 +1,91 @@
-function makeHandleEvent(client, clientManager, roomManager) {
-  // function ensureExists(getter, rejectionMessage) {
-  //   return new Promise(function (resolve, reject) {
-  //     const res = getter()
-  //     return res
-  //       ? resolve(res)
-  //       : reject(rejectionMessage)
-  //   })
-  // }
+const RoomManager = require('./RoomManager')
 
-  function ensureValidRoom(roomName) {
-    const user = "test user"
-    const room = roomManager.getRoomByName(roomName)
-    console.log("ensureValidRoom received", roomName)
-    return Promise.all([
-      // ((roomName) => {  
-      //   return ensureExists(
-      //   () => roomManager.getRoomByName(roomName),
-      //   `invalid room name: ${roomName}`
-      // )})
-    room , user])
-      .then(([room, user]) => Promise.resolve({ room, user }))
-  }
+const roomManager = RoomManager()
 
-  function handleEvent(roomName, createEntry) {
-    console.log("handling event for", roomName)
-    return ensureValidRoom(roomName)
-      .then(function ({ room, user }) {
-        const entry = { user, ...createEntry() }
-        console.log("entry", entry)
-        // console.log("room",room)
-        room.addEntry(entry)
-        console.log("entry from handle function", entry)
-        room.broadcastMessage({ chat: roomName, ...entry })
-        return room
-      })
-  }
-
-  return handleEvent
+function ensureValidRoom(roomName) {
+  const room = roomManager.getRoomByName(roomName);
+  // console.log("ensure valid room result:", room)
+  // console.log('ensureValidRoom received', roomName);
+  // return Promise.all([
+  //   room])
+  //   .then(([room]) => Promise.resolve({ room }));
+  return room; 
 }
 
-module.exports = function (client, clientManager, roomManager) {
-  const handleEvent = makeHandleEvent(client, clientManager, roomManager)
+function makeHandleEvent() {
 
-  function handleRegister(userName, callback) {
-    const user = "username"
-    clientManager.registerClient(client, user)
-
-    return callback(null, user)
+  function handleEvent(roomName, createEntry) {
+    // console.log('handling event for', roomName)
+    const user = 'test user'
+    const room = ensureValidRoom(roomName)
+    // console.log("handleevent gets this from ensure room", room)
+    const entry = { user, ...createEntry() };
+    room.addEntry(entry)
+    // console.log('entry from handle function', entry)
+    room.broadcastMessage({ chat: roomName, ...entry })
+    return room;
   }
 
-  function handleJoin(roomName, callback) {
-    console.log("handling join to", roomName)
-    const createEntry = () => ({ event: `joined ${roomName}` })
-    console.log("entry to send:", createEntry)
+  return handleEvent;
+}
 
-    handleEvent(roomName, createEntry)
-      .then(function (room) {
-        // console.log("room:",room)
-        room.addUser(client)
-        // console.log("room:",room)
-        // callback(null, room.getChatHistory())
-        callback(room.getChatHistory())
-      })
-      .catch(callback)
+module.exports = (client, clientManager, roomManager) => {
+  const handleEvent = makeHandleEvent(client, clientManager, roomManager);
+
+  function handleJoin(roomName, callback) {
+    console.log('handling join to', roomName);
+    const createEntry = () => ({ event: `joined ${roomName}` });
+    console.log('entry to send:', createEntry);
+
+    const room = handleEvent(roomName, createEntry)
+    room.addUser(client);
+    callback(room.getChatHistory());
   }
 
   function handleLeave(roomName, callback) {
-    const createEntry = () => ({ event: `left ${roomName}` })
-
-    handleEvent(roomName, createEntry)
-      .then(function (room) {
-        room.removeUser(client.id)
-        callback(null)
-      })
-      .catch(callback)
+    const createEntry = () => ({ event: `left ${roomName}` });
+    const room = handleEvent(roomName, createEntry)
+    room.removeUser(client.id);
+    callback(null);
   }
 
   function handleMessage({ roomName, message } = {}, callback) {
-    const createEntry = () => ({ message })
-
+    const createEntry = () => ({ message });
+    console.log('message recieved:', message)
     handleEvent(roomName, createEntry)
-      .then(() => callback(null))
-      .catch(callback)
   }
 
   function handleGetRooms(_, callback) {
-    return callback(null, roomManager.serializeRooms())
+    return callback(null, roomManager.serializeRooms());
   }
 
   function handleDisconnect() {
-    clientManager.removeClient(client)
-    roomManager.removeClient(client)
+    clientManager.removeClient(client);
+    roomManager.removeClient(client);
+  }
+
+  function handleReady(roomName) {
+    const room = ensureValidRoom(roomName);
+    room.broadcastSong();
+  }
+
+  function handleQueueUpdate({ roomName, queue } = {}) {
+    console.log('handle queue update for room:', roomName);
+    console.log('thequeue to be handled is:', queue);
+    const room = ensureValidRoom(roomName)
+    console.log("queueArray: ", queue)
+    const ParsedQueueArray = JSON.parse(queue);
+    console.log("ParsedQA:", ParsedQueueArray)
+    room.queue(ParsedQueueArray);
   }
 
   return {
-    handleRegister,
     handleJoin,
     handleLeave,
     handleMessage,
     handleGetRooms,
-    handleDisconnect
-  }
-}
+    handleDisconnect,
+    handleReady,
+    handleQueueUpdate
+  };
+};

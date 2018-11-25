@@ -8,6 +8,7 @@ import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
 
+
 function getPlaylistTracks(PlaylistUri) {
     fetch(`https://api.spotify.com/v1/playlists/${PlaylistUri}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
       {
@@ -32,16 +33,19 @@ function getPlaylistTracks(PlaylistUri) {
     )
 }
 
-export default class Main extends Component {
 
+
+export default class Main extends Component {
   constructor(props, context) {
     super(props, context)
+
 
     this.state = {
       username: "test",
       user: "dan",
       isRegisterInProcess: false,
       client: socket(),
+
       rooms: null,
       roomID: null,
       roomName: null,
@@ -68,7 +72,6 @@ export default class Main extends Component {
     this.onEnterRoom = this.onEnterRoom.bind(this)
     this.onLeaveRoom = this.onLeaveRoom.bind(this)
     this.getRooms = this.getRooms.bind(this)
-    this.register = this.register.bind(this)
 
     console.log('initial state:', this.state)
     this.getRooms();
@@ -98,22 +101,14 @@ export default class Main extends Component {
     })
   }
 
-  register(name) {
-    const onRegisterResponse = user => this.setState({ isRegisterInProcess: false, user })
-    this.setState({ isRegisterInProcess: true })
-    this.state.client.register(name, (err, user) => {
-      if (err) return onRegisterResponse(null)
-      return onRegisterResponse(user)
-    })
-  }
-
   renderRoom(room, { history }) {
     console.log("rendering room", room)
     const { chatHistory } = history.location.state
-    
+
     return (
       <Room
         room={room}
+        roomname= {room.name}
         chatHistory={chatHistory}
         user={this.state.user}
         onLeave={
@@ -129,14 +124,14 @@ export default class Main extends Component {
             cb
           )
         }
-        registerHandler={this.state.client.registerHandler}
-        unregisterHandler={this.state.client.unregisterHandler}
+        messageHandler={this.state.client.messageHandler}
+        playHandler={this.state.client.playHandler}
       />
     );
   }
 
   render() {
-    this.state.getPlaylistTracks('6C92HETt370wqh8DQ28Xx7');
+
     return (
       <div>
         <Navbar/>
