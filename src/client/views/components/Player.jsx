@@ -32,7 +32,11 @@ export default class Player extends Component {
   render() {
 
     let {
-      userAccessToken
+      userDeviceId,
+      // userAccessToken,
+      playerLoaded,
+      playerSelected,
+      playerState
     } = this.state;
 
     let webPlaybackSdkProps = {
@@ -42,10 +46,10 @@ export default class Player extends Component {
       playerAutoConnect: true,
       deviceId: null,
       roomName: this.state.roomname,
-      onPlayerRequestAccessToken: (() => userAccessToken),
+      // onPlayerRequestAccessToken: (() => userAccessToken),
       onPlayerLoading: (() => this.setState({ playerLoaded: true })),
-      onPlayerWaitingForDevice: (data => this.setState({ playerSelected: false, userDeviceId: data.device_id })),
-      onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
+      onPlayerWaitingForDevice: (data => this.setState({ playerSelected: true, userDeviceId: data.device_id })),
+      // onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
       onPlayerStateChange: (playerState => this.setState({ playerState: playerState })),
       onPlayerError: (playerError => console.error(playerError))
     };

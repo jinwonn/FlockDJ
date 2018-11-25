@@ -48,6 +48,7 @@ export default class WebPlayback extends Component {
     // });
 
     this.webPlaybackInstance.on('ready', ({device_id}) => {
+      this.props.onPlayerWaitingForDevice(data);
       deviceId = device_id;
       let roomName = this.state.roomname;
       this.state.client.emitReady(roomName);
@@ -68,6 +69,14 @@ export default class WebPlayback extends Component {
     });
   }
 
+  setupWaitingForDevice() {
+    return new Promise(resolve => {
+      this.webPlaybackInstance.on("ready", data => {
+        resolve(data);
+      });
+    });
+  }
+
   async componentWillMount() {
     console.log("webPlaybackSdkProps room name:", this.state.roomname)
     // // Notify the player is loading
@@ -80,8 +89,8 @@ export default class WebPlayback extends Component {
     await this.setupWebPlaybackEvents();
     
     // // Wait for device to be ready
-    // let device_data = await this.setupWaitingForDevice();
-    // this.props.onPlayerWaitingForDevice(device_data);
+    let device_data = await this.setupWaitingForDevice();
+    this.props.onPlayerWaitingForDevice(device_data);
 
     // // Wait for device to be selected
     // await this.waitForDeviceToBeSelected();
