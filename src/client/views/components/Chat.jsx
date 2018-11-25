@@ -34,7 +34,7 @@ export default class Chat extends Component {
  
     return (
     <div>
-        <h3> Flock DJ Chat </h3>
+        <h4 className='chat-title'> Flock DJ Chat </h4>
         <div className= 'chat-container'>
             <MessageList messages={this.props.chatHistory}/>      
         </div>

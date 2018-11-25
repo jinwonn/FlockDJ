@@ -48,10 +48,15 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-	    			
+	    			<img className='album-art' src='https://i.ytimg.com/vi/NESCd6IFfLM/maxresdefault.jpg'/>
+	    			<span className='song-description'>
+	    				<h3>Song Title</h3>
+	    				<p>Artist Name</p>
+	    				<p>Album Name</p>
+	    			</span>
 	    		</div>
 	    		<footer className='bottom-container'>
-	    			
+	    			<p>Next Song: </p>
 	    		</footer>
 	    	</div>
 	    </div> 

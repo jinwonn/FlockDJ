@@ -1,7 +1,11 @@
+.chat-title{
+	padding: 0.5em;
+}
+
 .chat-container{
 	margin: 0.7em;
 	display: flex;
-	height: 80vh;
+	height: 75vh;
     flex-flow: column-reverse nowrap;
     overflow-y: auto;
 
@@ -12,8 +16,9 @@
 	border-radius: 12px;
 	border: 1px solid lightblue;
 	background-color: #1D1C2A;
-	font-size: 60%;
+	font-size: 70%;
     padding: 1em;
+    color: white;
 }
 .chat-bar{
 	text-align: left;
@@ -45,7 +50,7 @@
 	margin-bottom: 8px;
 	color: #535079;
 	padding: 2em;
-	font-family: Roboto;
+	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
 	font-kerning: 0.5px;
@@ -55,7 +60,7 @@
 .message-body-text {
 	padding: 0;
 	color: white;
-	font-family: Roboto;
+	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
 	font-kerning: 0.5px;
@@ -66,7 +71,7 @@
 .message-sender {
 	margin-top: 8px;
 	color: #535079;
-	font-family: Roboto;
+	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
 	font-kerning: 0.5px;
@@ -76,7 +81,7 @@
 .message-event {
 	margin-top: 8px;
 	color: #535079;
-	font-family: Roboto;
+	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
 	font-kerning: 0.5px;
