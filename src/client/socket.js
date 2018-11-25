@@ -50,11 +50,11 @@ export default function () {
   }
 
   function queueUpdate(roomName, queueArr) {
-    console.log("parsing:", queueArr)
+    console.log("to be stringified:", queueArr)
     const queue = JSON.stringify(queueArr);
-    console.log("emitting to", roomName, "the parsed queue", queue);
-    const message =  { roomName, queue }
-    console.log("emitting message", message)
+    console.log("emitting to", roomName, "the strigified queue", queue);
+    // const message =  { roomName, queue }
+    // console.log("emitting message", message)
     socket.emit('QUEUE_UPDATE', { roomName, queue } );
   }
 

@@ -47,13 +47,15 @@ export default class WebPlayback extends Component {
     //   await this.handleState(state);
     // });
 
-    this.webPlaybackInstance.on('ready', () => {
+    this.webPlaybackInstance.on('ready', ({device_id}) => {
+      deviceId = device_id;
       let roomName = this.state.roomname;
       this.state.client.emitReady(roomName);
       console.log('emitted ready from room:', roomName);
     });
 
     this.webPlaybackInstance.connect();
+    console.log("player.js loaded")
   }
 
   waitForSpotify() {

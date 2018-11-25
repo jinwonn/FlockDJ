@@ -53,6 +53,7 @@ export default function () {
 
 
    function play_Song(song) {
+     const deviceId = "6H6S0juPYrUnOuCygmD0k6";
       const parsedSong = JSON.parse(song);
       if (parsedSong) playSong(parsedSong, deviceId);
    }
