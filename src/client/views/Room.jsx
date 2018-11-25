@@ -48,7 +48,7 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-	    			<img className='album-art' src='https://i.ytimg.com/vi/NESCd6IFfLM/maxresdefault.jpg'/>
+	    			<img className='album-art' src='https://i2.wp.com/www.mbird.com/wp-content/uploads/2012/08/george-michael-careless-whisper-album-cover-54772.jpeg'/>
 	    			<span className='song-description'>
 	    				<h3>Song Title</h3>
 	    				<p>Artist Name</p>
