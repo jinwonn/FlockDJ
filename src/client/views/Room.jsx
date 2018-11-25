@@ -41,13 +41,25 @@ export default class Room extends Component {
 
     return (
 
-      <div className= 'room'>
-	      hello this is a room
-				<div>{JSON.stringify(this.state)}</div>
+      <div className= 'room'>			
+	    <div className= 'main'>
+	    	<div className='left-container'>
+
+	    	</div>
+	    	<div className= 'center-container'>
+	    		<div className='album-art-container'>
+	    			
+	    		</div>
+	    		<footer className='bottom-container'>
+	    			
+	    		</footer>
+	    	</div>
+	    </div> 
 	      <div className= 'chat'>
-	      	Welcome to flock dj chat
+	      	
 	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
+
       </div>
     );
   }
