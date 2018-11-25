@@ -3,7 +3,7 @@
 }
 
 .chat-container{
-	margin: 0.7em;
+	
 	display: flex;
 	height: 75vh;
     flex-flow: column-reverse nowrap;
