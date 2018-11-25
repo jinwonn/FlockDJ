@@ -54,8 +54,9 @@ export default function () {
     socket.emit('QUEUE_UPDATE', JSON.stringify(queueArr));
   }
 
-  function emitReady() {
-    socket.emit('READY');
+  function emitReady(roomName) {
+    console.log("room emit ready with roomName:", roomName)
+    socket.emit('READY', roomName);
   }
 
   return {
