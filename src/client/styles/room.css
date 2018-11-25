@@ -1,0 +1,55 @@
+.room{
+	height: 100vh;
+  	display: grid;
+  	grid-template-columns: 1.4fr 0.1fr;
+}
+
+.main {
+	display: flex;
+	background-color: #212121;
+}
+
+.chat{
+	display: flex;
+	flex-flow: column-reverse nowrap;
+	background-color: #1D1C2A;
+	width: 50vh;
+	font-family: 'Roboto', sans-serif;
+    color: #00FFFF;
+}
+.center-container{
+	width: 100%;
+}
+.album-art-container{
+	text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+    background-image: url("https://wallpapercave.com/wp/wp2621431.png");
+    background-size: cover;
+}
+
+.album-art{
+	width: 40vh;
+    height: 35vh;
+    border: 2px solid #535079;
+    border-radius: 7px;
+
+}
+
+.song-description{
+	padding: 1.5em;
+	color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.bottom-container{
+	border: 1px solid purple;
+    margin: 0.5em;
+    height: 22vh;
+    background-color: #27253D;
+    border-radius: 1em;
+    color: white;
+}
