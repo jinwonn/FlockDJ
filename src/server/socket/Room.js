@@ -30,6 +30,7 @@ module.exports = ({ name }) => {
     if (!playing) {
       playing = Object.assign({startTime: Date.now()}, staged);
       members.forEach(m => m.emit('PLAY_SONG', JSON.stringify(playing)));
+      console.log("emitting play to all members")
       staged = null;
       const timeToLastThirtySecondsOfSong = playing.duration_ms - 30000;
 
@@ -46,7 +47,7 @@ module.exports = ({ name }) => {
   function queue(newQueue) {
     if (newQueue) {
       roomqueue = newQueue;
-      console.log("new queue set", roomqueue);
+      console.log("new queue set success");
       // if nothing is playing, run the `play` function (otherwise, the play function should
       // already be running, and will roll with the new queue).
       if (!playing && !staged) play();

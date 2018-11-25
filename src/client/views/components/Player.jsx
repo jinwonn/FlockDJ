@@ -34,6 +34,7 @@ export default class Player extends Component {
   }
 
   play_Song = (song) => {
+    console.log("received song to play")
     const parsedSong = JSON.parse(song);
     if (parsedSong) this.state.spotifyhelper.playSong(parsedSong, this.state.userDeviceId);
   }

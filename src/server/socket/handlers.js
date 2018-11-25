@@ -69,12 +69,12 @@ module.exports = (client, clientManager, roomManager) => {
     room.broadcastSong();
   }
 
-  function handleQueueUpdate({ roomName, queueArray } = {}) {
+  function handleQueueUpdate({ roomName, queue } = {}) {
     console.log('handle queue update for room:', roomName);
-    console.log('thequeue to be handled is:', queueArray);
+    console.log('thequeue to be handled is:', queue);
     const room = ensureValidRoom(roomName)
-    console.log("queueArray: ", queueArray)
-    const ParsedQueueArray = JSON.parse(queueArray);
+    console.log("queueArray: ", queue)
+    const ParsedQueueArray = JSON.parse(queue);
     console.log("ParsedQA:", ParsedQueueArray)
     room.queue(ParsedQueueArray);
   }

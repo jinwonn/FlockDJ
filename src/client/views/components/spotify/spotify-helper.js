@@ -51,6 +51,7 @@ export default function () {
 */
 
    function playSong(song, deviceId, cb = () => null) {
+     console.log("playing song on player? (log locaiton s helper)")
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
       {
         method: "PUT",
