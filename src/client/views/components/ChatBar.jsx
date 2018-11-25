@@ -5,7 +5,11 @@ import '../../styles/chat.css'
 export default class ChatBar extends Component{
 	constructor(props) {
     	super(props);
+    	this.state={
+    		charCount: 100
+    	}
     	this.enterMessage = this.enterMessage.bind(this);
+    	this.charCount = this.charCount.bind(this)
     }
 
 	enterMessage(event){
@@ -25,6 +29,13 @@ export default class ChatBar extends Component{
 			
 		}
 	}
+	charCount(event){
+		let char = event.target.value.length;
+		let count = 100 - char
+		this.setState({
+			charCount: count 
+		})
+	}
 
 	render() {
  
@@ -32,7 +43,8 @@ export default class ChatBar extends Component{
      <div className='chat-bar'>
 	     <footer>
 	    	
-	    	<input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyUp={this.enterMessage}/>
+	    	<input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyUp={this.enterMessage} onChange={this.charCount}/>
+	    	<span className='char-count'>{this.state.charCount}</span>
 	  	 </footer>
      </div>
     );

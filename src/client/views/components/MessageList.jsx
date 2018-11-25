@@ -33,7 +33,7 @@ class MessageList extends Component {
       if (msg.event){
         return (
           <span className="message-event">
-            <p><em>{msg.event}</em></p>
+            <p><em>{msg.user} {msg.event}</em></p>
           </span>
         )
       }

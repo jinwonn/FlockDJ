@@ -31,6 +31,12 @@
 	border: solid 1px black;
 }
 
+.char-count{
+	font-size: 75%;
+    float: right;
+    padding: 5px;
+}
+
 .messages{
 	width: 40vh;
 	margin: 10px auto;
@@ -88,4 +94,6 @@
 	line-height: 16px;
 	text-align: center;
 }
+
+
 	

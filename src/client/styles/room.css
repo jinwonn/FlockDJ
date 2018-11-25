@@ -27,7 +27,8 @@
     align-items: center;
     justify-content: center;
     height: 75vh;
-    background-image: url(https://i.ytimg.com/vi/1eTgZExk7IM/maxre);
+    background-image: url("https://wallpapercave.com/wp/wp2621431.png");
+    background-size: cover;
 }
 
 .album-art{
