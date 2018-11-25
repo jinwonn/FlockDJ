@@ -1,12 +1,28 @@
+.chat-title{
+	padding: 0.5em;
+}
 
+.chat-container{
+	
+	display: flex;
+	height: 75vh;
+    flex-flow: column-reverse nowrap;
+    overflow-y: auto;
+
+}
 .chatbar-message{
 	text-align: left;
-	width: 90%;
-	margin: 10px;
-	
+	width: 100%;
+	border-radius: 12px;
+	border: 1px solid lightblue;
+	background-color: #1D1C2A;
+	font-size: 70%;
+    padding: 1em;
+    color: white;
 }
 .chat-bar{
 	text-align: left;
+	padding: 1em;
 	
 }
 
@@ -15,6 +31,69 @@
 	border: solid 1px black;
 }
 
-.message-content{
+.char-count{
+	font-size: 75%;
+    float: right;
+    padding: 5px;
+}
+
+.messages{
+	width: 40vh;
+	margin: 10px auto;
+}
+
+.message-container{
+	padding: 16px;
+	min-height: 32px;
+	overflow-y: auto;
+	margin: 10px auto;
+	background: rgba(83,80,121,0.33);
+	border-radius: 12px;
 	word-wrap: break-word;
 }
+
+.message-timestamp {
+	margin-bottom: 8px;
+	color: #535079;
+	padding: 2em;
+	font-family: 'Roboto', sans-serif;
+	font-weight: regular;
+	font-size: 14px;
+	font-kerning: 0.5px;
+	line-height: 16px;
+}
+
+.message-body-text {
+	padding: 0;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	font-weight: regular;
+	font-size: 14px;
+	font-kerning: 0.5px;
+	line-height: 16px;
+	text-align: left;
+}
+
+.message-sender {
+	margin-top: 8px;
+	color: #535079;
+	font-family: 'Roboto', sans-serif;
+	font-weight: regular;
+	font-size: 14px;
+	font-kerning: 0.5px;
+	line-height: 16px;
+}
+
+.message-event {
+	margin-top: 8px;
+	color: #535079;
+	font-family: 'Roboto', sans-serif;
+	font-weight: regular;
+	font-size: 14px;
+	font-kerning: 0.5px;
+	line-height: 16px;
+	text-align: center;
+}
+
+
+	

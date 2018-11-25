@@ -20,16 +20,20 @@ class MessageList extends Component {
   	const messages = this.props.messages.map(msg =>{
   		if (msg.message){
           return (
-          <span className='message-content'>
-            <p>{msg.user}</p>
-            <p>{msg.message}</p>
+          <span>
+            
+            <div className='message-container'>
+              <span className='message-body-text'>{msg.message}</span>
+            </div>
+            <span className="message-sender">{msg.user}</span>
+            <span className="message-timestamp">5:52 p.m.</span>
           </span>
         )
       }
       if (msg.event){
         return (
-          <span>
-            <p><em>{msg.event}</em></p>
+          <span className="message-event">
+            <p><em>{msg.user} {msg.event}</em></p>
           </span>
         )
       }

@@ -44,11 +44,27 @@ export default class Room extends Component {
 
     return (
 
-      <div className= 'room'>
-	      hello this is a room
-				<div>{JSON.stringify(this.state)}</div>
-	      <div className= 'chat-section'>
-	      	Welcome to flock dj chat
+      <div className= 'room'>			
+	    <div className= 'main'>
+	    	<div className='left-container'>
+
+	    	</div>
+	    	<div className= 'center-container'>
+	    		<div className='album-art-container'>
+	    			<img className='album-art' src='https://i2.wp.com/www.mbird.com/wp-content/uploads/2012/08/george-michael-careless-whisper-album-cover-54772.jpeg'/>
+	    			<span className='song-description'>
+	    				<h3>Song Title</h3>
+	    				<p>Artist Name</p>
+	    				<p>Album Name</p>
+	    			</span>
+	    		</div>
+	    		<footer className='bottom-container'>
+	    			<p>Next Song: </p>
+	    		</footer>
+	    	</div>
+	    </div> 
+	      <div className= 'chat'>
+	      	
 	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
         <div>
