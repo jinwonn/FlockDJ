@@ -7,7 +7,6 @@ export default class NowPlaying extends Component {
       playerState: { position: position_ms }
     } = this.props;
     let {
-      id,
       uri: track_uri,
       name: track_name,
       duration_ms,
@@ -29,6 +28,7 @@ export default class NowPlaying extends Component {
 	    				<h3 href={track_uri}>{track_name}</h3>
 	    				<p href={artist_uri}>{artist_name}</p>
 	    				<p href={album_uri}>{album_name}</p>
+              <p>Position: {position_ms} | Duration: {duration_ms}</p>
 	    			</span>
       </div>
     );
