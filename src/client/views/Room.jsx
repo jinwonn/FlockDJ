@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import '../styles/room.css';
 import Chat from './components/Chat.jsx'
 import Player from './components/Player.jsx'
+import Mp3Upload from './components/Mp3Upload.jsx'
 
 export default class Room extends Component {
   constructor(props, context) {
     super(props, context)
 
-    const { chatHistory } = props			
+    const { chatHistory } = props
     this.state = {
     // chatHistory, this is if you want to show previous chat history
       chatHistory: [],
@@ -19,7 +20,7 @@ export default class Room extends Component {
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
     this.props.messageHandler(this.onMessageReceived)
-		
+
 		// const script = document.createElement("script");
 		// script.src = 'https://sdk.scdn.co/spotify-player.js';
 		// script.src = 'src/client/assets/player.js';
@@ -44,7 +45,7 @@ export default class Room extends Component {
 
     return (
 
-      <div className= 'room'>			
+      <div className= 'room'>
 	    <div className= 'main'>
 	    	<div className='left-container'>
 
@@ -62,13 +63,16 @@ export default class Room extends Component {
 	    			<p>Next Song: </p>
 	    		</footer>
 	    	</div>
-	    </div> 
+	    </div>
 	      <div className= 'chat'>
-	      	
+
 	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
         <div>
           <Player room={this.state.roomname} playHandler={this.props.playHandler}/>
+        </div>
+        <div className='mp3-upload'>
+          <Mp3Upload />
         </div>
       </div>
     );

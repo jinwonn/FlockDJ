@@ -1,11 +1,18 @@
 const express           = require('express');
-const os                = require('os');
 const app               = express();
 const http              = require('http').Server(app);
 const cookieParser      = require('cookie-parser')
 const io                = require('socket.io')(http);
 const SpotifyAPI        = require('spotify-web-api-node');
 require('dotenv').config();
+const AWS               = require('aws-sdk');
+const fs                = require('fs');
+const fileType          = require('file-type');
+const bluebird          = require('bluebird');
+const multiparty        = require('multiparty');
+const awsBucket         = process.env.AWS_BUCKET_NAME;
+const awsId             = process.env.AWS_ACCESS_KEY_ID;
+const awsSecret         = process.env.AWS_SECRET_ACCESS_KEY;
 const clientId          = process.env.CLIENT_ID;
 const clientSecret      = process.env.CLIENT_SECRET;
 const redirectUri       = 'http://localhost:8080/callback';
@@ -17,10 +24,55 @@ const spotify           = new SpotifyAPI({ clientId, clientSecret, redirectUri }
 app.use(cookieParser());
 
 app.use(express.static('dist'));
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
 app.get('/auth', (req, res) => {
   res.redirect(spotify.createAuthorizeURL(scopes));
+});
+
+/*
+  ========================================
+  AWS FILE UPLOAD ROUTES AND CONFIGURATION
+  ========================================
+*/
+
+// configure the keys for accessing AWS
+AWS.config.update({
+  accessKeyId: awsId,
+  secretAccessKey: awsSecret
+});
+
+// create S3 instance
+const s3 = new AWS.S3();
+
+// abstracts function to upload a file returning a promise
+const uploadFile = (buffer, name, type) => {
+  const params = {
+    ACL: 'public-read',
+    Body: buffer,
+    Bucket: awsBucket,
+    ContentType: type.mime,
+    Key: `${name}.${type.ext}`
+  };
+  return s3.upload(params).promise();
+};
+
+// Define POST route
+app.post('/test-upload', (request, response) => {
+  const form = new multiparty.Form();
+    form.parse(request, async (error, fields, files) => {
+      if (error) throw new Error(error);
+      try {
+        const path = files.file[0].path;
+        const buffer = fs.readFileSync(path);
+        const type = fileType(buffer);
+        const timestamp = Date.now().toString();
+        const fileName = `bucketFolder/${timestamp}-lg`;
+        const data = await uploadFile(buffer, fileName, type);
+        return response.status(200).send(data);
+      } catch (error) {
+        return response.status(400).send(error);
+      }
+    });
 });
 
 /*
