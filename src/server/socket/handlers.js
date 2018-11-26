@@ -39,7 +39,7 @@ module.exports = (client, clientManager, roomManager) => {
 
     const room = handleEvent(roomName, createEntry)
     room.addUser(client);
-    callback(room.getChatHistory());
+    callback(null);
   }
 
   function handleLeave(roomName, callback) {

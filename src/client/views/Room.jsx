@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import '../styles/room.css';
 import Chat from './components/Chat.jsx'
 import Player from './components/Player.jsx'
+import socket from '../socket';
 
 export default class Room extends Component {
   constructor(props, context) {
     super(props, context)
 
-    const { chatHistory } = props			
+    // const { chatHistory } = props			
     this.state = {
     // chatHistory, this is if you want to show previous chat history
       chatHistory: [],
       username: null,
-      roomname: this.props.roomname
+			roomname: this.props.roomname,
+			client: socket()
     };
   }
 
@@ -25,10 +27,19 @@ export default class Room extends Component {
 		// script.src = 'src/client/assets/player.js';
 		// script.async = true;
 		// document.body.appendChild(script)
-
+		this.onEnterRoom(this.state.roomname)
     fetch('/api/getUsername')
       .then(res => res.json())
       .then(user => this.setState({ username: user.username }));
+  }
+
+	onEnterRoom(roomName, onEnterSuccess) {
+    console.log("entering room", roomName)
+    return this.state.client.join(roomName, (err) => {
+      if (err)
+        return console.error(err)
+      return onEnterSuccess()
+    })
   }
 
 		onMessageReceived = (entry) => {

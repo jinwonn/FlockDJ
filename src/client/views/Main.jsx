@@ -69,7 +69,6 @@ export default class Main extends Component {
       getPlaylistTracks: getPlaylistTracks,// messages coming from the server will be stored here as they arrive
     }
 
-    this.onEnterRoom = this.onEnterRoom.bind(this)
     this.onLeaveRoom = this.onLeaveRoom.bind(this)
     this.getRooms = this.getRooms.bind(this)
 
@@ -77,14 +76,6 @@ export default class Main extends Component {
     this.getRooms();
   }
 
-  onEnterRoom(roomName, onEnterSuccess) {
-    console.log("entering room", roomName)
-    return this.state.client.join(roomName, (chatHistory) => {
-      // if (err)
-      //   return console.error("err")
-      return onEnterSuccess(chatHistory)
-    })
-  }
 
   onLeaveRoom(roomName, onLeaveSuccess) {
     this.state.client.leave(roomName, (err) => {
@@ -103,14 +94,17 @@ export default class Main extends Component {
 
   renderRoom(room, { history }) {
     console.log("rendering room", room)
-    const { chatHistory } = history.location.state
+    // const { chatHistory } = history.location.state
 
     return (
       <Room
         room={room}
         roomname= {room.name}
-        chatHistory={chatHistory}
         user={this.state.user}
+        onEnterRoom={
+          roomName => this.onEnterRoom(
+            roomName,
+            () => history.push({pathname: roomName}))}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
@@ -142,20 +136,10 @@ export default class Main extends Component {
                 exact
                 path="/"
                 render={
-                  props => (
+                  () => (
                     <RoomsList
                       user={this.state.user}
                       rooms={this.state.rooms}
-                      onEnterRoom={
-                        roomName => this.onEnterRoom(
-                          roomName,
-                          chatHistory => props.history.push({
-                            pathname: roomName,
-                            state: { chatHistory }
-                          },
-                          console.log("chatHistory:", chatHistory))
-                        )
-                      }
                     />
                   )
                 }
