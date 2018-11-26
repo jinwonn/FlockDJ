@@ -4,7 +4,6 @@ import Rooms from './Rooms.jsx'
 
 export default ({
   rooms,
-  onEnterRoom
 }) => (
   <div>
     {
@@ -12,7 +11,6 @@ export default ({
         <Rooms
           key={room.name}
           room={room}
-          onEnter={() => onEnterRoom(room.name)}
         />
       ))
     }

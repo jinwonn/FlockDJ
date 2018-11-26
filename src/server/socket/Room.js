@@ -2,6 +2,8 @@ module.exports = ({ name }) => {
   const members = new Map();
   let chatHistory = [];
   // let name = name
+  let history = [];
+  let repeat = true;
   let usersConnected = 0;
   let roomqueue = null;
   let staged = null;
@@ -28,6 +30,7 @@ module.exports = ({ name }) => {
     */
     if (!staged) stageNext();
     if (!playing) {
+      history.push(staged);
       playing = Object.assign({startTime: Date.now()}, staged);
       members.forEach(m => m.emit('PLAY_SONG', JSON.stringify(playing)));
       console.log("emitting play to all members")
@@ -38,7 +41,10 @@ module.exports = ({ name }) => {
         stageNext();
         setTimeout(() => {
           playing = null;
-          if (staged) play();
+          if (!staged && repeat === true) {
+            queue(history);
+          }
+          else if (staged) play();
         }, 30000);
       }, timeToLastThirtySecondsOfSong);
     }
@@ -47,6 +53,7 @@ module.exports = ({ name }) => {
   function queue(newQueue) {
     if (newQueue) {
       roomqueue = newQueue;
+      history = [];
       console.log("new queue set success");
       // if nothing is playing, run the `play` function (otherwise, the play function should
       // already be running, and will roll with the new queue).
@@ -66,12 +73,14 @@ module.exports = ({ name }) => {
   }
 
   function addUser(client) {
+    // console.log('adding', client.id, 'to room.', '# of members of room:', members.size)
     members.set(client.id, client);
-    console.log('addUser(client). now # of members of room:', members.size);
+    console.log("members:",members)
+    console.log('addUser(client). now # of members of room:', members.size, 'room', {name});
   }
 
   function removeUser(client) {
-    console.log('removing user from room:', client.id)
+    // console.log('removing user from room:', client.id)
     members.delete(client.id);
   }
 
