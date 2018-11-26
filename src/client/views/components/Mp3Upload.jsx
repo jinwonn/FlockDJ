@@ -1,39 +1,39 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import ReactDOM from 'react-dom'
+import ReactS3 from 'react-s3';
+
+const config = {
+    bucketName: 'connect-to-bucket',
+    region: 'us-east-2',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+}
 
 class Mp3Upload extends Component {
-  constructor () {
-    super();
-    this.state = {
-      file: null
-    };
-  }
-
-  submitFile = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('file', this.state.file[0]);
-    axios.post(`/test-upload`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(response => {
-      // handle your response;
-    }).catch(error => {
-      // handle your error
-    });
+  constructor(props) {
+    super(props);
   }
 
   handleFileUpload = (event) => {
-    this.setState({file: event.target.files});
+    ReactS3
+    .uploadFile(event.target.files[0], config)
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log('Upload Error: ', err);
+    })
   }
 
   render () {
     return (
-      <form onSubmit={this.submitFile}>
-        <input label='upload file' type='file' onChange={this.handleFileUpload} />
-        <button type='submit'>Send</button>
-      </form>
+      <div>
+        <input
+        label='Upload MP3'
+        type='file'
+        onChange={this.handleFileUpload}
+        />
+      </div>
     );
   }
 }

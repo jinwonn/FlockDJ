@@ -20,16 +20,6 @@ export default class Room extends Component {
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
     this.props.messageHandler(this.onMessageReceived)
-
-		// const script = document.createElement("script");
-		// script.src = 'https://sdk.scdn.co/spotify-player.js';
-		// script.src = 'src/client/assets/player.js';
-		// script.async = true;
-		// document.body.appendChild(script)
-
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
   }
 
 		onMessageReceived = (entry) => {
