@@ -101,10 +101,10 @@ export default class Main extends Component {
         room={room}
         roomname= {room.name}
         user={this.state.user}
-        onEnterRoom={
-          roomName => this.onEnterRoom(
-            roomName,
-            () => history.push({pathname: roomName}))}
+        // onEnterRoom={
+        //   roomName => this.onEnterRoom(
+        //     roomName,
+        //     () => history.push({pathname: roomName}))}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
@@ -118,8 +118,8 @@ export default class Main extends Component {
             cb
           )
         }
-        messageHandler={this.state.client.messageHandler}
-        playHandler={this.state.client.playHandler}
+        // messageHandler={this.state.client.messageHandler}
+        // playHandler={this.state.client.playHandler}
       />
     );
   }

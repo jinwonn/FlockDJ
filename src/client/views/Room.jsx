@@ -20,7 +20,7 @@ export default class Room extends Component {
 
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
-    this.props.messageHandler(this.onMessageReceived)
+    this.state.client.messageHandler(this.onMessageReceived)
 		
 		// const script = document.createElement("script");
 		// script.src = 'https://sdk.scdn.co/spotify-player.js';
@@ -33,13 +33,17 @@ export default class Room extends Component {
       .then(user => this.setState({ username: user.username }));
   }
 
-	onEnterRoom(roomName, onEnterSuccess) {
+	// onEnterRoom(roomName, onEnterSuccess) {
+		onEnterRoom(roomName) {
     console.log("entering room", roomName)
-    return this.state.client.join(roomName, (err) => {
-      if (err)
-        return console.error(err)
-      return onEnterSuccess()
-    })
+		return this.state.client.join(roomName 
+			// (err) => {
+      // if (err)
+      //   return console.error(err)
+			// return
+			//  onEnterSuccess()
+		// }
+		)
   }
 
 		onMessageReceived = (entry) => {
@@ -61,7 +65,7 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-          	<Player room={this.state.roomname} playHandler={this.props.playHandler}/>
+          	<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
 	    		</div>
 	    		<footer className='bottom-container'>
 	    			<p>Next Song: </p>
