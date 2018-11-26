@@ -75,7 +75,8 @@ module.exports = ({ name }) => {
   function addUser(client) {
     // console.log('adding', client.id, 'to room.', '# of members of room:', members.size)
     members.set(client.id, client);
-    console.log('addUser(client). now # of members of room:', members.size);
+    console.log("members:",members)
+    console.log('addUser(client). now # of members of room:', members.size, 'room', {name});
   }
 
   function removeUser(client) {
