@@ -43,12 +43,9 @@ class MessageList extends Component {
     return (
      
       <main className="messages" >
-          <p>{messages}</p>
-          <div style={{ float:"left", clear: "both" }}
-             ref={(el) => { this.messagesEnd = el; }}>
-          </div>
+        <p>{messages}</p>
+        <div style={{ float:"left", clear: "both" }} ref={(el) => { this.messagesEnd = el; }}/>
       </main>
-
     );
   }
 }
