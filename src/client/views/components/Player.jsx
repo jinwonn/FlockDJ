@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import socket from '../../socket';
 import spotifyhelper from './spotify/spotify-helper';
 import WebPlaybackReact from './spotify/WebPlaybackReact.jsx';
+import NowPlaying from './spotify/NowPlaying.jsx';
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 
@@ -47,7 +48,9 @@ export default class Player extends Component {
   render() {
 
     let {
-      userAccessToken
+      userAccessToken,
+      playerLoaded,
+      playerState
     } = this.state;
 
     let webPlaybackSdkProps = {
@@ -67,7 +70,11 @@ export default class Player extends Component {
     return (
       <div className="spotify-player">
         <div>
-          <WebPlaybackReact room={this.state.roomname} {...webPlaybackSdkProps}/>
+          <WebPlaybackReact room={this.state.roomname} {...webPlaybackSdkProps}>
+            {playerLoaded && playerState &&
+              <NowPlaying playerState={playerState} />
+            }
+          </WebPlaybackReact>
         </div>
         <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
       </div>
