@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import cookie from 'react-cookie';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 
 import '../styles/main.css';
@@ -20,19 +19,18 @@ export default class Main extends Component {
       client: socket(),
     };
 
-    this.onLeaveRoom = this.onLeaveRoom.bind(this)
-    this.getRooms = this.getRooms.bind(this)
+    this.onLeaveRoom = this.onLeaveRoom.bind(this);
+    this.getRooms = this.getRooms.bind(this);
 
-    console.log('initial state:', this.state)
+    console.log('initial state:', this.state);
     this.getRooms();
   }
 
 
   onLeaveRoom(roomName, onLeaveSuccess) {
     this.state.client.leave(roomName, (err) => {
-      if (err)
-        return console.error(err)
-      return onLeaveSuccess()
+      if (err) return console.error(err);
+      return onLeaveSuccess();
     })
   }
 
@@ -49,7 +47,7 @@ export default class Main extends Component {
     return (
       <Room
         room={room}
-        roomname= {room.name}
+        roomname={room.name}
         user={this.state.user}
         onLeave={
           () => this.onLeaveRoom(
@@ -72,7 +70,7 @@ export default class Main extends Component {
 
     return (
       <div>
-        <Navbar/>
+        <Navbar/>        
         <BrowserRouter user={this.state.user}>
           { !this.state.rooms ? (<div> wait.</div>): (
             <Switch>
@@ -102,6 +100,7 @@ export default class Main extends Component {
           )
         }
         </BrowserRouter>
+        
       </div>
     );
   }

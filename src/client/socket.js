@@ -63,6 +63,11 @@ export default function () {
     socket.emit('READY', roomName);
   }
 
+  function createRoom(roomName, user){
+    console.log('created', roomName)
+    socket.emit('createRoom',roomName,user)
+  }
+
   return {
     messageHandler,
     getRooms,
@@ -74,6 +79,8 @@ export default function () {
     playHandler,
     unregisterHandler,
     queueUpdate,
-    emitReady
+    emitReady,
+    createRoom
   }
 }
+

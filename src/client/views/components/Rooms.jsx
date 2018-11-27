@@ -1,15 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-export default ({ room, onEnter }) => (
-    <div className="card" style={{width: '18rem'}}>
-      <img className="card-img-top" src="https://charliebarnett.com/wp-content/themes/soundcheck/images/default-album-artwork.png" alt="Card image cap"></img>
-      <div className="card-body">
-        <h5 className="card-title">{room.name}</h5>
-        <Link className="btn btn-primary" to={`/${room.name}`}>
-        {/* {room.name} room */}
-        Enter Room
-        </Link>
+class Rooms extends Component {
+  constructor(props, context) {
+    super(props, context)
+    
+    this.state = {
+      room: this.props.room
+    };
+    
+    this.routeChange = this.routeChange.bind(this);
+  }
+
+  routeChange() {
+    let path = `/${this.state.room.name}`;
+    this.props.history.push(path);
+  }
+
+
+  render() {  
+    return (
+      <div className="card" style={{width: '18rem'}} onClick={this.routeChange}>
+        <img className="card-img-top" src="https://charliebarnett.com/wp-content/themes/soundcheck/images/default-album-artwork.png" alt="Card image cap"></img>
+        <div className="card-body">
+          <h6 className="card-title">{this.state.room.name}</h6>
+        </div>
       </div>
-    </div>
-)
+    )
+  }
+}
+export default withRouter(Rooms);
