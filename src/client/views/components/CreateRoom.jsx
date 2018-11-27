@@ -17,8 +17,7 @@ constructor(props, context) {
 
   showForm = () =>{
   	this.setState({
-  		showForm: true,
-  		showButton: false
+  		showForm: true
   	})
   }
 
@@ -41,22 +40,24 @@ constructor(props, context) {
 		// let user = this.props.user
 		let user = "user"
   	this.state.client.createRoom(room,user)
+    hideForm()
   }
 
   render() {
 
   	const styleForm = this.state.showForm ? {}:{display: 'none'};
-  	const styleButton = this.state.showButton ? {display: 'none'}:{};
+  	const styleButton = this.state.showButton ? {}:{display: 'none'};
     return (
     	<div>
-    		<button className="create-button" onClick={this.showForm}>Create Room</button>
-        	<form className="create-room" onSubmit={this.sendRoomData}>
+    		<button className="create-button" onClick={this.showForm} style={styleButton}>Create Room</button>
+
+        <form className="create-room" onSubmit={this.sendRoomData} style={styleForm}>
   				<label>
     			Room Name:
    				 <input type="text" name="name" onChange={this.handleEnterName} />
   				</label>
-  				<input type="submit" value="Submit" />
-			</form>
+  				<input type="submit" value="Submit"  />
+			  </form>
 
     	</div>
     
