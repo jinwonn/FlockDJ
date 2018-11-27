@@ -13,6 +13,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "@material-ui/core": "^3.6.0",
     "babel-polyfill": "^6.26.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.1.0",
