@@ -8,12 +8,13 @@ export default class ChatBar extends Component{
     	this.state={
     		charCount: 100
     	}
-    	this.enterMessage = this.enterMessage.bind(this);
-    	this.charCount = this.charCount.bind(this)
     }
 
-	enterMessage(event){
+	enterMessage = (event) => {
 		if(event.keyCode === 13){
+      this.setState({
+        charCount: 100
+      })
 			if (!event.target.value){
 				alert("Please enter something!")
 			}
@@ -26,14 +27,14 @@ export default class ChatBar extends Component{
 				this.props.addMessage(message)
 				event.target.value = "";
 			}
-			
+
 		}
 	}
-	charCount(event){
+
+	charCount = (event) => {
 		let char = event.target.value.length;
-		let count = 100 - char
 		this.setState({
-			charCount: count 
+			charCount: 100 - char
 		})
 	}
 
@@ -42,7 +43,7 @@ export default class ChatBar extends Component{
     return (
      <div className='chat-bar'>
 	     <footer>
-	    	
+
 	    	<input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyUp={this.enterMessage} onChange={this.charCount}/>
 	    	<span className='char-count'>{this.state.charCount}</span>
 	  	 </footer>

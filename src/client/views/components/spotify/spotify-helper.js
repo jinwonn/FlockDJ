@@ -24,20 +24,43 @@ export default function () {
   */
 
   function generatePlaylistArray(uri, roomName, cb) {
-    fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + getCookie('access_token'),
-          "Content-Type": "application/json"
-        }
-      }).then(res => res.json())
-      .then((playlist) => {
-        console.log(playlist);
-        cb(roomName, playlist.items.map(trackObj => trackObj.track))
-      })
-      .catch((err) => {console.log('Error Mapping:', err)});
-  }
+  // items(track.uri,track.duration_ms,track.album(images))
+
+  fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms%2Ctrack.album(images))`,
+    {
+      method: "GET",
+      headers: {
+       "Authorization": "Bearer " + getCookie('access_token'),
+       "Content-Type": "application/json"
+      }
+     }).then(res => res.json())
+       .then((response) => {
+        const arrOfTracks = response.items.map(item => {
+          const artwork = item.track.album.images[0].url;
+          const duration_ms = item.track.duration_ms;
+          const uri = item.track.uri;
+          return {artwork, duration_ms, uri}
+        });
+
+          cb(roomName, arrOfTracks);
+        });
+}
+
+  // function generatePlaylistArray(uri, roomName, cb) {
+  //   fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Authorization": "Bearer " + getCookie('access_token'),
+  //         "Content-Type": "application/json"
+  //       }
+  //     }).then(res => res.json())
+  //     .then((playlist) => {
+  //       console.log(playlist);
+  //       cb(roomName, playlist.items.map(trackObj => trackObj.track))
+  //     })
+  //     .catch((err) => {console.log('Error Mapping:', err)});
+  // }
 
 /*
 
