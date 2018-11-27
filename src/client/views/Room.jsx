@@ -59,7 +59,7 @@ export default class Room extends Component {
 
     return (
 
-      <div className= 'room'>			
+      <div className= 'room'>
 	    <div className= 'main'>
 	    	<div className='left-container'>
 	    	</div>
@@ -71,11 +71,11 @@ export default class Room extends Component {
 	    			<p>Next Song: </p>
 	    		</footer>
 	    	</div>
-	    </div> 
+	    </div>
 	      <div className= 'chat'>
 	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
-        
+
       </div>
     );
   }

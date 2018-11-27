@@ -1,11 +1,12 @@
 import React from 'react';
-
 import Rooms from './Rooms.jsx'
+import '../../styles/browse.css';
 
 export default ({
   rooms,
 }) => (
-  <div>
+<div className="card-layout">
+  <div className="card-deck">
     {
       rooms.map(room => (
         <Rooms
@@ -15,4 +16,5 @@ export default ({
       ))
     }
   </div>
+</div>
 )
