@@ -1,7 +1,6 @@
 module.exports = ({ name }) => {
   const members = new Map();
   let chatHistory = [];
-  // let name = name
   let history = [];
   let repeat = true;
   let usersConnected = 0;

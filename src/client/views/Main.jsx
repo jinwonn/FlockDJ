@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import cookie from 'react-cookie';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 
 import '../styles/main.css';
@@ -7,6 +6,7 @@ import Room from './Room.jsx';
 import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
+import spotifyhelper from './components/spotify/spotify-helper';
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -14,25 +14,29 @@ export default class Main extends Component {
 
 
     this.state = {
-      username: "test",
+      username: null,
       user: "dan",
       isRegisterInProcess: false,
       client: socket(),
+      spotifyhelper: spotifyhelper()
     };
 
-    this.onLeaveRoom = this.onLeaveRoom.bind(this)
-    this.getRooms = this.getRooms.bind(this)
+    this.onLeaveRoom = this.onLeaveRoom.bind(this);
+    this.getRooms = this.getRooms.bind(this);
 
-    console.log('initial state:', this.state)
+    console.log('initial state:', this.state);
     this.getRooms();
   }
 
+  async componentDidMount() {
+    await this.state.spotifyhelper.getSpotifyUserId(this.updateUsername)
+		await console.log("component", this.state.username)
+  }
 
   onLeaveRoom(roomName, onLeaveSuccess) {
     this.state.client.leave(roomName, (err) => {
-      if (err)
-        return console.error(err)
-      return onLeaveSuccess()
+      if (err) return console.error(err);
+      return onLeaveSuccess();
     })
   }
 
@@ -43,6 +47,13 @@ export default class Main extends Component {
     })
   }
 
+  updateUsername = (entry) => {
+    this.setState({ username: entry })
+    console.log(entry)
+    console.log(this.state.username)
+  }
+
+
   renderRoom(room, { history }) {
     console.log("rendering room", room)
 
@@ -50,18 +61,11 @@ export default class Main extends Component {
       <Room
         room={room}
         roomname= {room.name}
-        user={this.state.user}
+        username={this.state.username}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
             () => history.push('/')
-          )
-        }
-        onSendMessage={
-          (message, cb) => this.state.client.message(
-            room.name,
-            message,
-            cb
           )
         }
       />
@@ -72,8 +76,8 @@ export default class Main extends Component {
 
     return (
       <div>
-        <Navbar/>
-        <BrowserRouter user={this.state.user}>
+        <Navbar/>        
+        <BrowserRouter>
           { !this.state.rooms ? (<div> wait.</div>): (
             <Switch>
               <Route
@@ -82,7 +86,6 @@ export default class Main extends Component {
                 render={
                   () => (
                     <RoomsList
-                      user={this.state.user}
                       rooms={this.state.rooms}
                     />
                   )
@@ -102,6 +105,7 @@ export default class Main extends Component {
           )
         }
         </BrowserRouter>
+        
       </div>
     );
   }
