@@ -7,6 +7,7 @@ import Room from './Room.jsx';
 import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
+import spotifyhelper from './components/spotify/spotify-helper';
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -14,10 +15,11 @@ export default class Main extends Component {
 
 
     this.state = {
-      username: "test",
+      username: null,
       user: "dan",
       isRegisterInProcess: false,
       client: socket(),
+      spotifyhelper: spotifyhelper()
     };
 
     this.onLeaveRoom = this.onLeaveRoom.bind(this)
@@ -27,6 +29,10 @@ export default class Main extends Component {
     this.getRooms();
   }
 
+  async componentDidMount() {
+    await this.state.spotifyhelper.getSpotifyUserId(this.updateUsername)
+		await console.log("component", this.state.username)
+  }
 
   onLeaveRoom(roomName, onLeaveSuccess) {
     this.state.client.leave(roomName, (err) => {
@@ -42,6 +48,13 @@ export default class Main extends Component {
       console.log("state with rooms:", this.state)
     })
   }
+
+  updateUsername = (entry) => {
+    this.setState({ username: entry })
+    console.log(entry)
+    console.log(this.state.username)
+  }
+
 
   renderRoom(room, { history }) {
     console.log("rendering room", room)

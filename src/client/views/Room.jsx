@@ -9,7 +9,6 @@ export default class Room extends Component {
     super(props, context)
     this.state = {
       chatHistory: [],
-      username: null,
 			roomname: this.props.roomname,
 			client: socket()
     };
@@ -18,11 +17,7 @@ export default class Room extends Component {
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
     this.state.client.messageHandler(this.onMessageReceived)
-		
 		this.onEnterRoom(this.state.roomname)
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
   }
 
 		onEnterRoom(roomName) {
