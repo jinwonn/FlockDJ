@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 
 export default class NowPlaying extends Component {
   render() {
@@ -20,6 +22,7 @@ export default class NowPlaying extends Component {
         images: [{ url: album_image }]
       }
     } = playerState.track_window.current_track;
+    let progress = ((position_ms / duration_ms) * 100)
 
     return (
       <div>
@@ -28,7 +31,7 @@ export default class NowPlaying extends Component {
 	    				<h3 href={track_uri}>{track_name}</h3>
 	    				<p href={artist_uri}>{artist_name}</p>
 	    				<p href={album_uri}>{album_name}</p>
-              <p>Position: {position_ms} | Duration: {duration_ms}</p>
+              <p><Progress percent={progress} /></p>
 	    			</span>
       </div>
     );
