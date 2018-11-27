@@ -11,10 +11,16 @@ export default class Room extends Component {
       chatHistory: [],
 			roomname: this.props.roomname,
 			client: socket(),
-			username: this.props.username
+			username: 'Anonymous'
     };
   }
 
+	componentWillMount() {
+		if (this.props.username) {
+			this.setState({ username: this.props.username })
+		}
+	}
+	
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
     this.state.client.messageHandler(this.onMessageReceived)
