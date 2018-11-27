@@ -1,5 +1,4 @@
 import React from 'react';
-import CreateRoom from './CreateRoom.jsx';
 import Rooms from './Rooms.jsx'
 import '../../styles/browse.css';
 
@@ -9,7 +8,6 @@ export default ({
   onEnterRoom
 }) => (
   <div>
-    <CreateRoom user={user}/>
     <div className="card-layout">
       <div className="card-deck">
         {

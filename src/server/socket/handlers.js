@@ -1,38 +1,27 @@
-
-const RoomManager = require('./RoomManager')
-const Rooms = require('./models/rooms');
-const roomManager = RoomManager()
-
-function ensureValidRoom(roomName) {
-  const room = roomManager.getRoomByName(roomName);
-  return room;
-}
-
-function makeHandleEvent() {
-  function handleEvent(roomName, createEntry) {
-    const user = 'test user'
-    const room = ensureValidRoom(roomName)
-    const entry = { user, ...createEntry() };
-    room.addEntry(entry)
-    room.broadcastMessage({ chat: roomName, ...entry })
-    return room;
-  }
-  return handleEvent;
-}
-
 module.exports = (client, clientManager, roomManager) => {
+  function makeHandleEvent() {
+    function handleEvent(roomName, createEntry) {
+      const user = 'Anonymous';
+      const room = roomManager.getRoomByName(roomName);
+      const entry = { user, ...createEntry()};
+      room.addEntry(entry);
+      room.broadcastMessage({ chat: roomName, ...entry });
+      return room;
+    }
+    return handleEvent;
+  }
+
   const handleEvent = makeHandleEvent(client, clientManager, roomManager);
 
-  
   function handleJoin(roomName) {
     const createEntry = () => ({ event: `joined ${roomName}` });
-    const room = handleEvent(roomName, createEntry)
+    const room = handleEvent(roomName, createEntry);
     room.addUser(client);
   }
 
   function handleLeave(roomName, callback) {
     const createEntry = () => ({ event: `left ${roomName}` });
-    const room = handleEvent(roomName, createEntry)
+    const room = handleEvent(roomName, createEntry);
     room.removeUser(client.id);
     callback(null);
   }
@@ -52,23 +41,20 @@ module.exports = (client, clientManager, roomManager) => {
   }
 
   function handleReady(roomName) {
-    const room = ensureValidRoom(roomName);
+    const room = roomManager.getRoomByName(roomName);
     room.broadcastSong();
   }
 
   function handleQueueUpdate({ roomName, queue } = {}) {
-    const room = ensureValidRoom(roomName);
+    const room = roomManager.getRoomByName(roomName);
     const ParsedQueueArray = JSON.parse(queue);
     room.queue(ParsedQueueArray);
   }
 
-  function handleCreateRoom(roomName, user){
-    console.log('will add this to rooms:',roomName);
+  function handleCreateRoom(roomName, user) {
     const roomData = {
-      name: roomName,
-      user: user
-    }
-    console.log(roomData);
+      name: roomName
+    };
     roomManager.roomAdd(roomData);
   }
 
@@ -80,6 +66,7 @@ module.exports = (client, clientManager, roomManager) => {
     handleDisconnect,
     handleReady,
     handleQueueUpdate,
-    handleCreateRoom
+    handleCreateRoom,
+    makeHandleEvent
   };
 };
