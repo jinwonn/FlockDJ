@@ -30,7 +30,7 @@ export default class WebPlayback extends Component {
 
       this.clearStatePolling();
       this.props.onPlayerWaitingForDevice({ device_id: device_id });
-      // await this.waitForDeviceToBeSelected();
+      this.waitForDeviceToBeSelected();
       // this.props.onPlayerDeviceSelected();
     }
   }
@@ -44,6 +44,34 @@ export default class WebPlayback extends Component {
       }
     });
   }
+
+  waitForDeviceToBeSelected() {
+    return new Promise(resolve => {
+      this.deviceSelectedInterval = setInterval(() => {
+        if (this.webPlaybackInstance) {
+          this.webPlaybackInstance.getCurrentState().then(state => {
+            if (state !== null) {
+              this.startStatePolling();
+              clearInterval(this.deviceSelectedInterval);
+              resolve(state);
+            }
+          });
+        }
+      });
+    });
+  }
+
+  startStatePolling() {
+    this.statePollingInterval = setInterval(async () => {
+      let state = await this.webPlaybackInstance.getCurrentState();
+      await this.handleState(state);
+    }, this.props.playerRefreshRateMs || 1000);
+  }
+
+  clearStatePolling() {
+    clearInterval(this.statePollingInterval);
+  }
+
 
   async setupWebPlaybackEvents() {
     const { Player } = window.Spotify;
@@ -107,8 +135,8 @@ export default class WebPlayback extends Component {
     this.props.onPlayerWaitingForDevice(device_data);
 
     // // Wait for device to be selected
-    // await this.waitForDeviceToBeSelected();
-    // this.props.onPlayerDeviceSelected();
+    this.waitForDeviceToBeSelected();
+    
   }
   render() {
     return (

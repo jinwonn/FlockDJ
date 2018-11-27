@@ -25,9 +25,9 @@ export default function () {
     socket.emit('register', name, cb)
   }
 
-  function join(roomName, cb) {
-    socket.emit('join', roomName, cb)
-    console.log("emit join to", roomName)
+  function join(roomName, username, cb) {
+    socket.emit('join', roomName, username, cb)
+    console.log(username, "emit join to", roomName)
   }
 
   function leave(roomName, cb) {
@@ -35,9 +35,9 @@ export default function () {
     socket.emit('leave', roomName, cb)
   }
 
-  function message(roomName, msg, cb) {
-    console.log("emit message:", msg, "in room", roomName)
-    socket.emit('message', { roomName, message: msg }, cb)
+  function message(roomName, username, message, created_at, cb) {
+    console.log("emit message:", message, "in room", roomName)
+    socket.emit('message', { roomName, username, message, created_at }, cb)
   }
 
   function getRooms(cb) {
@@ -63,6 +63,11 @@ export default function () {
     socket.emit('READY', roomName);
   }
 
+  function createRoom(roomName, user){
+    console.log('created', roomName)
+    socket.emit('createRoom',roomName,user)
+  }
+
   return {
     messageHandler,
     getRooms,
@@ -74,6 +79,8 @@ export default function () {
     playHandler,
     unregisterHandler,
     queueUpdate,
-    emitReady
+    emitReady,
+    createRoom
   }
 }
+

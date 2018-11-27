@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
-import '../styles/room.css';
-import Chat from './components/Chat.jsx'
-import Player from './components/Player.jsx'
+import '../../styles/room.css';
+import Chat from './chat/Chat.jsx'
+import Player from './spotify/Player.jsx'
+import socket from '../../socket';
 
 export default class Room extends Component {
   constructor(props, context) {
     super(props, context)
-
-    const { chatHistory } = props
     this.state = {
-    // chatHistory, this is if you want to show previous chat history
       chatHistory: [],
-      username: null,
-      roomname: this.props.roomname
+			roomname: this.props.roomname,
+			client: socket(),
+			username: 'Anonymous'
     };
   }
 
+	componentWillMount() {
+		if (this.props.username) {
+			this.setState({ username: this.props.username })
+		}
+	}
+	
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
-    this.props.messageHandler(this.onMessageReceived)
-
-		// const script = document.createElement("script");
-		// script.src = 'https://sdk.scdn.co/spotify-player.js';
-		// script.src = 'src/client/assets/player.js';
-		// script.async = true;
-		// document.body.appendChild(script)
-
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
+    this.state.client.messageHandler(this.onMessageReceived)
+		this.onEnterRoom(this.state.roomname, this.state.username)
   }
+
+		onEnterRoom(roomName, username) {
+			return this.state.client.join(roomName, username);
+		}
 
 		onMessageReceived = (entry) => {
 			console.log('onMessageReceived:', entry)
@@ -50,7 +50,7 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-          	<Player room={this.state.roomname} playHandler={this.props.playHandler}/>
+          	<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
 	    		</div>
 	    		<footer className='bottom-container'>
 	    			<p>Next Song: </p>
@@ -58,7 +58,7 @@ export default class Room extends Component {
 	    	</div>
 	    </div>
 	      <div className= 'chat'>
-	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
+	      	<Chat username={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
 
       </div>

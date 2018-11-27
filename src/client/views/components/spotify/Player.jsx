@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import socket from '../../socket';
-import spotifyhelper from './spotify/spotify-helper';
-import WebPlaybackReact from './spotify/WebPlaybackReact.jsx';
-import NowPlaying from './spotify/NowPlaying.jsx';
+import socket from '../../../socket';
+import spotifyhelper from './spotify-helper';
+import WebPlaybackReact from './WebPlaybackReact.jsx';
+import NowPlaying from './NowPlaying.jsx';
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 
@@ -62,7 +62,6 @@ export default class Player extends Component {
       onPlayerRequestAccessToken: (() => userAccessToken),
       onPlayerLoading: (() => this.setState({ playerLoaded: true })),
       onPlayerWaitingForDevice: (data => this.setState({ playerSelected: true, userDeviceId: data.device_id })),
-      // onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
       onPlayerStateChange: (playerState => this.setState({ playerState: playerState })),
       onPlayerError: (playerError => console.error(playerError))
     };

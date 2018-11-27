@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import '../../styles/chat.css'
+import Timestamp from 'react-timestamp';
+import '../../../styles/chat.css'
 
 class MessageList extends Component {
 
@@ -21,12 +22,15 @@ class MessageList extends Component {
   		if (msg.message){
           return (
           <span>
-            
             <div className='message-container'>
               <span className='message-body-text'>{msg.message}</span>
             </div>
-            <span className="message-sender">{msg.user}</span>
-            <span className="message-timestamp">5:52 p.m.</span>
+            <div className='message-info'>
+              <span className="message-sender">{msg.user}</span>
+              <span className="message-timestamp">
+                <Timestamp time={msg.created_at} autoUpdate/>
+              </span>
+            </div>
           </span>
         )
       }
@@ -37,11 +41,11 @@ class MessageList extends Component {
           </span>
         )
       }
-    
+
   	});
-    
+
     return (
-     
+
       <main className="messages" >
           <p>{messages}</p>
           <div style={{ float:"left", clear: "both" }}
