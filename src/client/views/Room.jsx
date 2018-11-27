@@ -9,24 +9,20 @@ export default class Room extends Component {
     super(props, context)
     this.state = {
       chatHistory: [],
-      username: null,
 			roomname: this.props.roomname,
-			client: socket()
+			client: socket(),
+			username: this.props.username
     };
   }
 
   componentDidMount() {
     console.log("Room.jsx room name:", this.state.roomname)
     this.state.client.messageHandler(this.onMessageReceived)
-		
-		this.onEnterRoom(this.state.roomname)
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
+		this.onEnterRoom(this.state.roomname, this.state.username)
   }
 
-		onEnterRoom(roomName) {
-			return this.state.client.join(roomName);
+		onEnterRoom(roomName, username) {
+			return this.state.client.join(roomName, username);
 		}
 
 		onMessageReceived = (entry) => {
@@ -56,7 +52,7 @@ export default class Room extends Component {
 	    	</div>
 	    </div>
 	      <div className= 'chat'>
-	      	<Chat user={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
+	      	<Chat username={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
 
       </div>

@@ -13,9 +13,9 @@ module.exports = (client, clientManager, roomManager) => {
 
   const handleEvent = makeHandleEvent(client, clientManager, roomManager);
 
-  function handleJoin(roomName) {
+  function handleJoin(roomName, username) {
     const createEntry = () => ({ event: `joined ${roomName}` });
-    const room = handleEvent(roomName, createEntry);
+    const room = handleEvent(roomName, username, createEntry)
     room.addUser(client);
   }
 
@@ -26,9 +26,9 @@ module.exports = (client, clientManager, roomManager) => {
     callback(null);
   }
 
-  function handleMessage({ roomName, message } = {}, callback) {
+  function handleMessage({ roomName, username, message } = {}, callback) {
     const createEntry = () => ({ message });
-    handleEvent(roomName, createEntry)
+    handleEvent(roomName, username, createEntry)
   }
 
   function handleGetRooms(_, callback) {
