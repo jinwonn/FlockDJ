@@ -12,13 +12,8 @@ module.exports = () => {
     clients.delete(client.id);
   }
 
-  function getUserByClientId(clientId) {
-    return (clients.get(clientId) || {}).user;
-  }
-
   return {
     addClient,
-    removeClient,
-    getUserByClientId
+    removeClient
   };
 };
