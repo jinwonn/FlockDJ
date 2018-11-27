@@ -62,7 +62,6 @@ export default class Player extends Component {
       onPlayerRequestAccessToken: (() => userAccessToken),
       onPlayerLoading: (() => this.setState({ playerLoaded: true })),
       onPlayerWaitingForDevice: (data => this.setState({ playerSelected: true, userDeviceId: data.device_id })),
-      // onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
       onPlayerStateChange: (playerState => this.setState({ playerState: playerState })),
       onPlayerError: (playerError => console.error(playerError))
     };
