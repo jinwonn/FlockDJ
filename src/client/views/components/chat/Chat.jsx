@@ -13,7 +13,7 @@ export default class Chat extends Component {
       client: socket(),
       username: this.props.username
     };
-    this.addMessage = this.addMessage.bind(this);       
+    this.addMessage = this.addMessage.bind(this);
   }
 
   componentDidMount(){
@@ -23,8 +23,9 @@ export default class Chat extends Component {
   addMessage(message) {
     let roomName = this.props.room;
     let username = this.state.username;
+    let created_at = Date.now();
     console.log("message added:", message)
-    this.state.client.message(roomName, username, message);
+    this.state.client.message(roomName, username, message, created_at);
   }
 
   render() {
@@ -32,13 +33,13 @@ export default class Chat extends Component {
     <div>
         <h4 className='chat-title'> Flock DJ Chat </h4>
         <div className= 'chat-container'>
-            <MessageList messages={this.props.chatHistory}/>      
+            <MessageList messages={this.props.chatHistory}/>
         </div>
         <div className='chatbar-box'>
               <ChatBar addMessage={this.addMessage}/>
-        </div> 
+        </div>
     </div>
-    
+
     );
   }
 }

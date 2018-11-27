@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Timestamp from 'react-timestamp';
 import '../../../styles/chat.css'
 
 class MessageList extends Component {
@@ -21,12 +22,11 @@ class MessageList extends Component {
   		if (msg.message){
           return (
           <span>
-            
             <div className='message-container'>
               <span className='message-body-text'>{msg.message}</span>
             </div>
             <span className="message-sender">{msg.user}</span>
-            <span className="message-timestamp">5:52 p.m.</span>
+            <Timestamp time={msg.created_at} precision={2} />
           </span>
         )
       }
@@ -37,11 +37,11 @@ class MessageList extends Component {
           </span>
         )
       }
-    
+
   	});
-    
+
     return (
-     
+
       <main className="messages" >
           <p>{messages}</p>
           <div style={{ float:"left", clear: "both" }}

@@ -35,9 +35,9 @@ export default function () {
     socket.emit('leave', roomName, cb)
   }
 
-  function message(roomName, username, msg, cb) {
-    console.log("emit message:", msg, "in room", roomName)
-    socket.emit('message', { roomName, username, message: msg }, cb)
+  function message(roomName, username, message, created_at, cb) {
+    console.log("emit message:", message, "in room", roomName)
+    socket.emit('message', { roomName, username, message, created_at }, cb)
   }
 
   function getRooms(cb) {
