@@ -68,14 +68,6 @@ export default class Main extends Component {
             () => history.push('/')
           )
         }
-        // onSendMessage={
-        //   (message, cb) => this.state.client.message(
-        //     room.name,
-        //     this.state.username,
-        //     message,
-        //     cb
-        //   )
-        // }
       />
     );
   }
@@ -85,7 +77,7 @@ export default class Main extends Component {
     return (
       <div>
         <Navbar/>        
-        <BrowserRouter user={this.state.user}>
+        <BrowserRouter>
           { !this.state.rooms ? (<div> wait.</div>): (
             <Switch>
               <Route
@@ -94,7 +86,6 @@ export default class Main extends Component {
                 render={
                   () => (
                     <RoomsList
-                      user={this.state.user}
                       rooms={this.state.rooms}
                     />
                   )

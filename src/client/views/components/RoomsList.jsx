@@ -3,9 +3,7 @@ import Rooms from './Rooms.jsx'
 import '../../styles/browse.css';
 
 export default ({
-  rooms,
-  user,
-  onEnterRoom
+  rooms
 }) => (
   <div>
     <div className="card-layout">
