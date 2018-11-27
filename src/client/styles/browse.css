@@ -1,3 +1,19 @@
 .card-layout {
-    padding: 0.5em;
+    padding: 1em;
+}
+
+.card {
+    opacity: 0.8;
+    padding: 1em;
+    background-color: #27253C;
+}
+
+.card:hover {
+    opacity: 1;
+    border: solid 2px #7F0F7E;
+}
+
+.card-title {
+    text-align: center;
+    color: black;
 }

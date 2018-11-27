@@ -1,3 +1,7 @@
 .navbar-brand {
-  color: red;
+  color: #000 !important;
+}
+
+.navbar {
+  background-color: #27253C !important;
 }
