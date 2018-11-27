@@ -1,7 +1,7 @@
 const Room = require('./Room');
-  
+
 module.exports = () => {
-  let rooms = new Map()
+  let rooms = new Map();
 
   function removeClient(client) {
     rooms.forEach(c => c.removeUser(client));
@@ -24,5 +24,5 @@ module.exports = () => {
     getRoomByName,
     serializeRooms,
     roomAdd
-  }
-}
+  };
+};

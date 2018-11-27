@@ -2,10 +2,10 @@ module.exports = (client, clientManager, roomManager) => {
   function makeHandleEvent() {
     function handleEvent(roomName, username, createEntry) {
       const user = username;
-      const room = roomManager.getRoomByName(roomName)
+      const room = roomManager.getRoomByName(roomName);
       const entry = { user, ...createEntry() };
-      room.addEntry(entry)
-      room.broadcastMessage({ chat: roomName, ...entry })
+      room.addEntry(entry);
+      room.broadcastMessage({ chat: roomName, ...entry });
       return room;
     }
     return handleEvent;
@@ -15,7 +15,7 @@ module.exports = (client, clientManager, roomManager) => {
 
   function handleJoin(roomName, username) {
     const createEntry = () => ({ event: `joined ${roomName}` });
-    const room = handleEvent(roomName, username, createEntry)
+    const room = handleEvent(roomName, username, createEntry);
     room.addUser(client);
   }
 
@@ -26,9 +26,9 @@ module.exports = (client, clientManager, roomManager) => {
     callback(null);
   }
 
-  function handleMessage({ roomName, username, message } = {}, callback) {
+  function handleMessage({ roomName, username, message } = {}) {
     const createEntry = () => ({ message });
-    handleEvent(roomName, username, createEntry)
+    handleEvent(roomName, username, createEntry);
   }
 
   function handleGetRooms(_, callback) {
@@ -51,7 +51,7 @@ module.exports = (client, clientManager, roomManager) => {
     room.queue(ParsedQueueArray);
   }
 
-  function handleCreateRoom(roomName, user) {
+  function handleCreateRoom(roomName) {
     const roomData = {
       name: roomName
     };
