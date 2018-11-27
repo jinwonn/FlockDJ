@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 
-import '../styles/main.css';
-import Room from './components/Room.jsx';
-import Navbar from './components/NavBar.jsx';
-import socket from '../socket';
-import RoomsList from './components/rooms/RoomsList.jsx';
-import spotifyhelper from './components/spotify/spotify-helper';
+import '../../styles/main.css';
+import Room from './Room.jsx';
+import Navbar from './NavBar.jsx';
+import socket from '../../socket';
+import RoomsList from './rooms/RoomsList.jsx';
+import spotifyhelper from './spotify/spotify-helper';
 
 export default class Main extends Component {
   constructor(props, context) {
