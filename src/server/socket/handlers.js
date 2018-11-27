@@ -1,5 +1,5 @@
 const RoomManager = require('./RoomManager')
-
+const Rooms = require('./models/rooms');
 const roomManager = RoomManager()
 
 function makeHandleEvent() {
@@ -59,6 +59,16 @@ module.exports = (client, clientManager, roomManager) => {
     room.queue(ParsedQueueArray);
   }
 
+  function handleCreateRoom(roomName, user){
+    console.log('will add this to rooms:',roomName);
+    const roomData = {
+      name: roomName,
+      user: user
+    }
+    console.log(roomData);
+    roomManager.roomAdd(roomData);
+  }
+
   return {
     handleJoin,
     handleLeave,
@@ -66,6 +76,7 @@ module.exports = (client, clientManager, roomManager) => {
     handleGetRooms,
     handleDisconnect,
     handleReady,
-    handleQueueUpdate
+    handleQueueUpdate,
+    handleCreateRoom
   };
 };

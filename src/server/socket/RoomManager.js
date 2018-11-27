@@ -2,12 +2,24 @@ const Room = require('./Room');
 const Rooms = require('./models/rooms');
 
 module.exports = () => {
-  const rooms = new Map(
+  let rooms = new Map(
     Rooms.map(c => [
       c.name,
       Room(c)
     ])
   )
+
+  function roomAdd(roomData){
+    console.log("adding new room to rooms array");
+    Rooms.push(roomData);
+    console.log(Rooms);
+      rooms = new Map(
+        Rooms.map(c => [
+          c.name,
+          Room(c)
+        ])
+      )
+  }
 
   function removeClient(client) {
     rooms.forEach(c => c.removeUser(client));
@@ -15,6 +27,12 @@ module.exports = () => {
 
   function getRoomByName(roomName) {
     console.log('getRoomByName from roommanager finding:', roomName);
+    rooms = new Map(
+        Rooms.map(c => [
+          c.name,
+          Room(c)
+        ])
+      )
     return rooms.get(roomName);
   }
 
@@ -26,6 +44,7 @@ module.exports = () => {
   return {
     removeClient,
     getRoomByName,
-    serializeRooms
+    serializeRooms,
+    roomAdd
   }
 }

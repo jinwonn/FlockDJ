@@ -6,6 +6,7 @@ import Room from './Room.jsx';
 import Navbar from './components/NavBar.jsx';
 import socket from '../socket';
 import RoomsList from './components/RoomsList.jsx';
+import CreateRoom from './components/CreateRoom.jsx';
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -85,6 +86,7 @@ export default class Main extends Component {
     return (
       <div>
         <Navbar/>
+        
         <BrowserRouter user={this.state.user}>
           { !this.state.rooms ? (<div> wait.</div>): (
             <Switch>
@@ -124,6 +126,7 @@ export default class Main extends Component {
           )
         }
         </BrowserRouter>
+        
       </div>
     );
   }
