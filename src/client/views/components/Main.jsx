@@ -10,12 +10,11 @@ import spotifyhelper from './spotify/spotify-helper';
 
 export default class Main extends Component {
   constructor(props, context) {
-    super(props, context)
-
+    super(props, context);
 
     this.state = {
       username: null,
-      user: "dan",
+      email: null,
       isRegisterInProcess: false,
       client: socket(),
       spotifyhelper: spotifyhelper()
@@ -28,9 +27,8 @@ export default class Main extends Component {
     this.getRooms();
   }
 
-  async componentDidMount() {
-    await this.state.spotifyhelper.getSpotifyUserId(this.updateUsername)
-		await console.log("component", this.state.username)
+  componentDidMount() {
+    this.state.spotifyhelper.getSpotifyUserId(this.updateUserInfo)
   }
 
   onLeaveRoom(roomName, onLeaveSuccess) {
@@ -47,12 +45,10 @@ export default class Main extends Component {
     })
   }
 
-  updateUsername = (entry) => {
-    this.setState({ username: entry })
-    console.log(entry)
-    console.log(this.state.username)
+  updateUserInfo = (response) => {
+    this.setState({ username: response.display_name });
+    this.setState({ email: response.email });
   }
-
 
   renderRoom(room, { history }) {
     console.log("rendering room", room)

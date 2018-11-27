@@ -57,8 +57,7 @@ function getSpotifyUserId(cb) {
       }
      }).then(res => res.json())
        .then((response) => {
-        const userId = response.display_name;
-          cb(userId);
+          cb(response);
         });
 }
 
