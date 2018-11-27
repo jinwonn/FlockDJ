@@ -63,20 +63,21 @@ export default class Main extends Component {
       <Room
         room={room}
         roomname= {room.name}
-        user={this.state.user}
+        username={this.state.username}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
             () => history.push('/')
           )
         }
-        onSendMessage={
-          (message, cb) => this.state.client.message(
-            room.name,
-            message,
-            cb
-          )
-        }
+        // onSendMessage={
+        //   (message, cb) => this.state.client.message(
+        //     room.name,
+        //     this.state.username,
+        //     message,
+        //     cb
+        //   )
+        // }
       />
     );
   }
