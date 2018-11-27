@@ -26,8 +26,8 @@ module.exports = (client, clientManager, roomManager) => {
     callback(null);
   }
 
-  function handleMessage({ roomName, username, message } = {}) {
-    const createEntry = () => ({ message });
+  function handleMessage({ roomName, username, message, created_at } = {}) {
+    const createEntry = () => ({ message, created_at });
     handleEvent(roomName, username, createEntry);
   }
 
