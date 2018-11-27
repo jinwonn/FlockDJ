@@ -46,6 +46,22 @@ export default function () {
         });
 }
 
+function getSpotifyUserId(cb) {
+
+  fetch(`https://api.spotify.com/v1/me`,
+    {
+      method: "GET",
+      headers: {
+       "Authorization": "Bearer " + getCookie('access_token'),
+       "Content-Type": "application/json"
+      }
+     }).then(res => res.json())
+       .then((response) => {
+        const userId = response.display_name;
+          cb(userId);
+        });
+}
+
   // function generatePlaylistArray(uri, roomName, cb) {
   //   fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
   //     {
@@ -87,7 +103,8 @@ export default function () {
   return {
     generatePlaylistArray,
     playSong,
-    getCookie
+    getCookie,
+    getSpotifyUserId
   }
 }
 

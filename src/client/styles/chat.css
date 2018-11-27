@@ -3,7 +3,7 @@
 }
 
 .chat-container{
-	
+
 	display: flex;
 	height: 75vh;
     flex-flow: column-reverse nowrap;
@@ -23,7 +23,7 @@
 .chat-bar{
 	text-align: left;
 	padding: 1em;
-	
+
 }
 
 .chatbar-box{
@@ -96,4 +96,3 @@
 }
 
 
-	
