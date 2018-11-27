@@ -23,7 +23,7 @@ export default class Chat extends Component {
   addMessage(message) {
     let roomName = this.props.room;
     let username = this.state.username;
-    let created_at = Date.now();
+    let created_at = (Date.now() / 1000);
     console.log("message added:", message)
     this.state.client.message(roomName, username, message, created_at);
   }

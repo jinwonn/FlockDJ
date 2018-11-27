@@ -25,8 +25,12 @@ class MessageList extends Component {
             <div className='message-container'>
               <span className='message-body-text'>{msg.message}</span>
             </div>
-            <span className="message-sender">{msg.user}</span>
-            <Timestamp time={msg.created_at} precision={2} />
+            <div className='message-info'>
+              <span className="message-sender">{msg.user}</span>
+              <span className="message-timestamp">
+                <Timestamp time={msg.created_at} autoUpdate/>
+              </span>
+            </div>
           </span>
         )
       }
