@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import socket from '../../socket';
-import spotifyhelper from './spotify/spotify-helper';
-import WebPlaybackReact from './spotify/WebPlaybackReact.jsx';
-import NowPlaying from './spotify/NowPlaying.jsx';
+import socket from '../../../socket';
+import spotifyhelper from './spotify-helper';
+import WebPlaybackReact from './WebPlaybackReact.jsx';
+import NowPlaying from './NowPlaying.jsx';
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 

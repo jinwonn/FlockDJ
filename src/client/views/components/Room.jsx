@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import '../styles/room.css';
-import Chat from './components/Chat.jsx'
-import Player from './components/Player.jsx'
-import socket from '../socket';
+import '../../styles/room.css';
+import Chat from './chat/Chat.jsx'
+import Player from './spotify/Player.jsx'
+import socket from '../../socket';
 
 export default class Room extends Component {
   constructor(props, context) {

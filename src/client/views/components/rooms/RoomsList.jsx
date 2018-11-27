@@ -1,6 +1,6 @@
 import React from 'react';
 import Rooms from './Rooms.jsx'
-import '../../styles/browse.css';
+import '../../../styles/browse.css';
 
 export default ({
   rooms

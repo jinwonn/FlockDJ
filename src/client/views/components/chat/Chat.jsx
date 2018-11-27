@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
-import '../../styles/chat.css'
+import '../../../styles/chat.css'
 import ChatBar from './ChatBar.jsx'
 import MessageList from './MessageList.jsx';
-import socket from '../../socket';
+import socket from '../../../socket';
 
 
 export default class Chat extends Component {
