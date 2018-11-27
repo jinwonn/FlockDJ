@@ -1,11 +1,11 @@
 module.exports = (client, clientManager, roomManager) => {
   function makeHandleEvent() {
-    function handleEvent(roomName, createEntry) {
-      const user = 'Anonymous';
-      const room = roomManager.getRoomByName(roomName);
-      const entry = { user, ...createEntry()};
-      room.addEntry(entry);
-      room.broadcastMessage({ chat: roomName, ...entry });
+    function handleEvent(roomName, username, createEntry) {
+      const user = username;
+      const room = roomManager.getRoomByName(roomName)
+      const entry = { user, ...createEntry() };
+      room.addEntry(entry)
+      room.broadcastMessage({ chat: roomName, ...entry })
       return room;
     }
     return handleEvent;
