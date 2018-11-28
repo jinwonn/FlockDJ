@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 import Zoom from '@material-ui/core/Zoom';
-import Collapse from '@material-ui/core/Fade';
+import Fade from '@material-ui/core/Fade';
 
 export default class NowPlaying extends Component {
   state = {
@@ -35,7 +35,7 @@ export default class NowPlaying extends Component {
         <Zoom in={checked}>
           <img className='album-art' src={album_image} alt={track_name} />
         </Zoom>
-        <Collapse in={checked} style={{ transitionDelay: checked ? '200ms' : '0ms' }}>
+        <Fade in={checked} style={{ transitionDelay: checked ? '200ms' : '0ms' }}>
           <div>
 	    	  	<span className='song-description'>
 	    	  		<h3 href={track_uri}>{track_name}</h3>
@@ -50,7 +50,7 @@ export default class NowPlaying extends Component {
                 }/></p>
 	    	  	</span>
           </div>
-        </Collapse>
+        </Fade>
       </div>
     );
   }

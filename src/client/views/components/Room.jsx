@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../styles/room.css';
+import Fade from '@material-ui/core/Fade';
 import Chat from './chat/Chat.jsx'
 import Player from './spotify/Player.jsx'
 import socket from '../../socket';
@@ -13,7 +14,8 @@ export default class Room extends Component {
 			ownerEmail: this.props.ownerEmail,
 			client: socket(),
 			username: 'Anonymous',
-			userEmail: this.props.userEmail
+			userEmail: this.props.userEmail,
+			checked: true
     };
   }
 
@@ -44,7 +46,7 @@ export default class Room extends Component {
 		}
 
   render() {
-
+		let { checked } = this.state;
     return (
 
       <div className= 'room'>
@@ -63,9 +65,11 @@ export default class Room extends Component {
 	    		</div>
 	    	</div> 
 	    </div>
+			<Fade in={checked} style={{ transitionDelay: checked ? '250ms' : '0ms' }}>
 	      <div className= 'chat'>
 	      	<Chat username={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
+			</Fade>
 
       </div>
     );
