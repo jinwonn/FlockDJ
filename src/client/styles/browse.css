@@ -60,3 +60,7 @@
   float: none;
   margin: 0 auto;
 }
+
+.card-title {
+  color: white;
+}
