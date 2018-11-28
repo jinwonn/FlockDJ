@@ -48,16 +48,17 @@ export default class Main extends Component {
   updateUserInfo = (response) => {
     this.setState({ username: response.display_name });
     this.setState({ email: response.email });
+    console.log("useremail",this.state.email)
   }
 
   renderRoom(room, { history }) {
-    console.log("rendering room", room)
-
     return (
       <Room
         room={room}
         roomname= {room.name}
+        ownerEmail={room.email}
         username={this.state.username}
+        userEmail={this.state.email}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
