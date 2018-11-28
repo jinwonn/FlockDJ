@@ -19,6 +19,7 @@
 }
 .center-container{
 	width: 100%;
+    background-image: url("https://wallpapercave.com/wp/wp2621431.png");
 }
 .album-art-container{
 	text-align: center;
@@ -26,8 +27,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 75vh;
-    background-image: url("https://wallpapercave.com/wp/wp2621431.png");
+    height: 75vh; 
     background-size: cover;
 }
 
@@ -51,5 +51,12 @@
     height: 22vh;
     background-color: #27253D;
     border-radius: 1em;
+    color: white;
+}
+
+.queue-input{
+    background-color: #1D1C2A;
+    border: 2px solid lightblue;
+    border-radius: 10px;
     color: white;
 }

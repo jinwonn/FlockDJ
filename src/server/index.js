@@ -34,26 +34,28 @@ app.get('/auth', (req, res) => {
   SPOTIFY AUTH ROUTES
 */
 
-app.get('/callback', (req, res) => {
-  spotify.authorizationCodeGrant(req.query.code)
-    .then((data) => {
-      res.cookie('access_token', data.body.access_token);
-      res.cookie('refresh_token', data.body.refresh_token);
-    },
-    err => console.log('Error retrieving access token and refresh token:', err))
-    .then(() => res.redirect('/main'));
-});
-
-app.get('/auth/refresh', (req, res) => {
-  const refreshToken = req.cookies.refresh_token;
-  const spotifyRefresh = new SpotifyAPI({ clientId, clientSecret, redirectUri });
-  spotifyRefresh.setRefreshToken(refreshToken);
-  spotifyRefresh.refreshAccessToken().then((data) => {
-    res.cookie('access_token', data.body.access_token);
-  },
-  err => console.log('Could not refresh access token', err))
-    .then(() => res.redirect('/'));
-});
+ app.get('/callback', (req, res) => {
+   spotify.authorizationCodeGrant(req.query.code)
+     .then((data) => {
+       res.cookie('access_token', data.body.access_token);
+       res.cookie('refresh_token', data.body.refresh_token);
+       res.cookie('retrieved', Date.now()); 
+     },
+     err => console.log('Error retrieving access token and refresh token:', err))
+     .then(() => res.redirect('/'));
+ });
+ 
+ app.get('/auth/refresh', (req, res) => {
+   const refreshToken = req.cookies.refresh_token;
+   const spotifyRefresh = new SpotifyAPI({ clientId, clientSecret, redirectUri });
+   spotifyRefresh.setRefreshToken(refreshToken);
+   spotifyRefresh.refreshAccessToken().then((data) => {
+     res.cookie('access_token', data.body.access_token);
+     res.cookie('retrieved', Date.now()); 
+   },
+   err => console.log('Could not refresh access token', err))
+     .then(() => res.redirect('/'));
+ });
 
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: './dist/' });

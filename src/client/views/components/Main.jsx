@@ -7,6 +7,7 @@ import Navbar from './NavBar.jsx';
 import socket from '../../socket';
 import RoomsList from './rooms/RoomsList.jsx';
 import spotifyhelper from './spotify/spotify-helper';
+import Authenticate from './Authenticate.jsx'
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -74,8 +75,11 @@ export default class Main extends Component {
 
   render() {
 
-    return (
-      <div>
+    let page;
+
+    const is_authenticated = this.state.username;
+    if (is_authenticated) {
+      page = <div>
         <Navbar/>
         <BrowserRouter>
           { !this.state.rooms ? (<div> Loading... </div>): (
@@ -107,6 +111,9 @@ export default class Main extends Component {
         </BrowserRouter>
 
       </div>
-    );
+    } else {
+      page = <Authenticate />
+    }
+    return page;
   }
 }
