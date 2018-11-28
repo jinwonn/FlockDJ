@@ -10,7 +10,9 @@ constructor(props, context) {
     		
     this.state = {
     	client: socket(),
-    	roomName: null,
+			roomName: null,
+			username: this.props.username,
+			email: this.props.email,
     	showForm: false,
     	showButton: true      	
     };
@@ -39,9 +41,9 @@ constructor(props, context) {
   	console.log(this.state.roomName)
     if(this.state.roomName){
     	let room = this.state.roomName
-  		// let user = this.props.user
-  		let user = "user"
-    	this.state.client.createRoom(room,user)
+  		let email = this.state.email
+  		let username = this.state.username
+    	this.state.client.createRoom(room, username, email)
       hideForm()
     }
   }

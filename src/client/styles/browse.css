@@ -2,16 +2,18 @@
     opacity: 0.8;
     padding: 1em;
     background-color: #27253C;
+    box-shadow: 10px 10px purple;
 }
 
 .card:hover {
     opacity: 1;
     border: solid 2px #7F0F7E;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card-title {
     text-align: center;
-    color: black;
+    color: white;
 }
 
 .create-form-container{
@@ -53,10 +55,11 @@
     background-color: purple;
 }
 
-
-
-
 .card-deck {
   float: none;
   margin: 0 auto;
+}
+
+.card-title {
+  color: white;
 }

@@ -1,7 +1,11 @@
 .navbar-brand {
-  color: #000 !important;
+  color: white !important;
+}
+
+.nav-link {
+  color: white !important;
 }
 
 .navbar {
-  background-color: #27253C !important;
+  background: linear-gradient(-45deg, rgb(21, 16, 36), rgb(127, 41, 30), rgb(96, 61, 135), rgb(188, 42, 16)) !important;
 }
