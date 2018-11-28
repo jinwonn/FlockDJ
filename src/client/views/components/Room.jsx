@@ -57,6 +57,7 @@ export default class Room extends Component {
 									room={this.state.roomname}
 									ownerEmail={this.state.ownerEmail}
 									userEmail={this.state.userEmail}
+									username={this.state.username}
 									playHandler={this.state.client.playHandler}
 								/>
 	    		</div>
