@@ -15,13 +15,16 @@ export default class Player extends Component {
       client: socket(),
       spotifyhelper: spotifyhelper(),
       roomname: this.props.room,
-      
+      ownerEmail: this.props.ownerEmail,
+
       // User's session credentials
       userDeviceId: null,
+      userEmail: this.props.userEmail,
+      username: this.props.username,
 
       // Player state
       playerLoaded: false,
-      playerSelected: false,
+      // playerSelected: false,
       playerState: null
     }
   }
@@ -29,10 +32,12 @@ export default class Player extends Component {
   enterPlaylistUri = (event) => {
     let playlistUri;
     let roomName = this.state.roomname
+    let username = this.state.username
     if(event.keyCode === 13){
       playlistUri = event.target.value;
     }
-    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, this.state.client.queueUpdate)
+    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, username, this.state.client.queueUpdate);
+    event.target.value = "";
   }
 
   play_Song = (song) => {
@@ -47,6 +52,8 @@ export default class Player extends Component {
    componentDidMount() {
      this.state.spotifyhelper.checkToken();
      console.log("Player.jsx room name:", this.state.roomname)
+     console.log("useremail:", this.state.userEmail)
+     console.log("owneremail", this.state.ownerEmail)
      this.props.playHandler(this.play_Song)
    }
  
@@ -79,7 +86,9 @@ export default class Player extends Component {
              }
            </WebPlaybackReact>
          </div>
+         { this.state.ownerEmail === this.state.userEmail ? (
          <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
+         ) : (<div />) }
        </div>
      );
    }

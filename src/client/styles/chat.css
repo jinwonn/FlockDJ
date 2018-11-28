@@ -1,11 +1,15 @@
 .chat-title{
 	padding: 0.5em;
+	word-wrap: break-word;
+	border-bottom: 2px solid purple;
+	font-size: 1.3em;
+	color: purple;
 }
 
 .chat-container{
 
 	display: flex;
-	height: 75vh;
+	height: 78vh;
     flex-flow: column-reverse nowrap;
     overflow-y: auto;
 
@@ -14,9 +18,9 @@
 	text-align: left;
 	width: 100%;
 	border-radius: 12px;
-	border: 1px solid lightblue;
+	border: 1px solid purple;
 	background-color: #1D1C2A;
-	font-size: 70%;
+	font-size: 100%;
     padding: 1em;
     color: white;
 }
@@ -28,13 +32,14 @@
 
 .chatbar-box{
 	width: 100%;
-	border: solid 1px black;
+	border-top: solid 2px purple;
 }
 
 .char-count{
 	font-size: 75%;
     float: right;
     padding: 5px;
+    color: purple;
 }
 
 .messages{
@@ -76,7 +81,7 @@
 
 .message-sender {
 	margin-top: 8px;
-	color: #535079;
+	color: white;
 	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
@@ -86,7 +91,7 @@
 
 .message-event {
 	margin-top: 8px;
-	color: #535079;
+	color: white;
 	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;

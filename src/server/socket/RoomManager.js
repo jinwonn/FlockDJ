@@ -9,6 +9,7 @@ module.exports = () => {
 
   function roomAdd(roomData) {
     rooms = rooms.set(roomData.name, Room(roomData));
+    console.log(rooms);
   }
 
   function getRoomByName(roomName) {

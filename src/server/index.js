@@ -42,7 +42,7 @@ app.get('/auth', (req, res) => {
        res.cookie('retrieved', Date.now()); 
      },
      err => console.log('Error retrieving access token and refresh token:', err))
-     .then(() => res.redirect('/main'));
+     .then(() => res.redirect('/'));
  });
  
  app.get('/auth/refresh', (req, res) => {

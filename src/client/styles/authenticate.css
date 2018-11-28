@@ -1,0 +1,66 @@
+html, body {
+    height: 100vh;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100vh;
+    background: url(../assets/landing-bg.png) no-repeat center center fixed; 
+}
+
+.content-container {
+    margin: auto;
+}
+
+.content-container h1 {
+    font-family: Roboto;
+    font-weight: bold;
+    font-kerning: 0.5px;
+    font-size: 52px;
+    color: white;
+    margin-bottom: 32px;
+}
+
+.spotify-login-button {
+    margin: auto;
+    border-radius: 30px;
+    background-color: purple;
+    width: 290px;
+    height: 60px;
+}
+
+.spotify-login-button:hover {
+    background-color: #169644;
+}
+
+.spotify-login-button img {
+    z-index: 9999;
+    width: 32px;
+    height: 32px;
+    padding-left: 44px;
+    padding-top: 14px;
+}
+
+.spotify-login-button-text {
+    font-family: Roboto;
+    font-weight: bold;
+    font-kerning: 0.5px;
+    font-size: 13px;
+    color: white;
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    padding-top: 24px;
+    padding-left: 70px;
+}
+
+.party-parrot-container {
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.party-parrot-container img {
+    width: 25px;
+    height: 25px;
+}

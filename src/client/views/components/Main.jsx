@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import { css } from 'react-emotion';
+import { ClipLoader } from 'react-spinners';
 
 import '../../styles/main.css';
 import Room from './Room.jsx';
@@ -7,15 +9,15 @@ import Navbar from './NavBar.jsx';
 import socket from '../../socket';
 import RoomsList from './rooms/RoomsList.jsx';
 import spotifyhelper from './spotify/spotify-helper';
+import Authenticate from './Authenticate.jsx'
 
 export default class Main extends Component {
   constructor(props, context) {
-    super(props, context)
-
+    super(props, context);
 
     this.state = {
       username: null,
-      user: "dan",
+      email: null,
       isRegisterInProcess: false,
       client: socket(),
       spotifyhelper: spotifyhelper()
@@ -28,9 +30,8 @@ export default class Main extends Component {
     this.getRooms();
   }
 
-  async componentDidMount() {
-    await this.state.spotifyhelper.getSpotifyUserId(this.updateUsername)
-		await console.log("component", this.state.username)
+  componentDidMount() {
+    this.state.spotifyhelper.getSpotifyUserId(this.updateUserInfo)
   }
 
   onLeaveRoom(roomName, onLeaveSuccess) {
@@ -47,21 +48,20 @@ export default class Main extends Component {
     })
   }
 
-  updateUsername = (entry) => {
-    this.setState({ username: entry })
-    console.log(entry)
-    console.log(this.state.username)
+  updateUserInfo = (response) => {
+    this.setState({ username: response.display_name });
+    this.setState({ email: response.email });
+    console.log("useremail",this.state.email)
   }
 
-
   renderRoom(room, { history }) {
-    console.log("rendering room", room)
-
     return (
       <Room
         room={room}
         roomname= {room.name}
+        ownerEmail={room.email}
         username={this.state.username}
+        userEmail={this.state.email}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
@@ -74,11 +74,24 @@ export default class Main extends Component {
 
   render() {
 
-    return (
-      <div>
+    let page;
+
+    const is_authenticated = this.state.username;
+    if (is_authenticated) {
+      page = <div>
         <Navbar/>
         <BrowserRouter>
-          { !this.state.rooms ? (<div> Loading... </div>): (
+          { (!this.state.rooms || !this.state.email) ? (
+            <div className='sweet-loading'>
+              <ClipLoader
+                className='loader-page'
+                sizeUnit={"em"}
+                size={10}
+                color={'purple'}
+                loading='true'
+              />
+            </div>
+        ) : (
             <Switch>
               <Route
                 exact
@@ -87,6 +100,8 @@ export default class Main extends Component {
                   () => (
                     <RoomsList
                       rooms={this.state.rooms}
+                      username={this.state.username}
+                      email={this.state.email}
                     />
                   )
                 }
@@ -107,6 +122,9 @@ export default class Main extends Component {
         </BrowserRouter>
 
       </div>
-    );
+    } else {
+      page = <Authenticate />
+    }
+    return page;
   }
 }
