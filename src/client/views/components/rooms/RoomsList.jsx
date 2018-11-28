@@ -25,7 +25,7 @@ export default class RoomsList extends Component {
           <div className="row">
             <div className="card-deck justify-content-center">
               {
-                this.state.rooms.map(room => (
+                this.state.rooms.slice(0).reverse().map(room => (
                   <Rooms
                     key={room.name}
                     room={room}
