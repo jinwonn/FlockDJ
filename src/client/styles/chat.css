@@ -24,6 +24,14 @@
     padding: 1em;
     color: white;
 }
+
+.chatbar-message:focus{
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+ 	padding: 1em;
+	border: 1px solid purple;
+	border-radius: 12px;
+}
+
 .chat-bar{
 	text-align: left;
 	padding: 1em;
