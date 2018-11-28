@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
-import '../../styles/chat.css'
+import '../../../styles/chat.css'
 
 export default class ChatBar extends Component{
 	constructor(props) {

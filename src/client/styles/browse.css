@@ -1,3 +1,62 @@
-.card-layout {
-    padding: 0.5em;
+.card {
+    opacity: 0.8;
+    padding: 1em;
+    background-color: #27253C;
+}
+
+.card:hover {
+    opacity: 1;
+    border: solid 2px #7F0F7E;
+}
+
+.card-title {
+    text-align: center;
+    color: black;
+}
+
+.create-form-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+#create-room-button{
+	margin-top: 1em;
+}
+.create-room{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin-top: 1em;
+    border: 2px solid purple;
+    padding: 1em;
+    border-radius: 10px;
+}
+
+.roomname-label{
+	color: lightblue;
+}
+
+.room-name{
+	background-color: #1D1C2A;
+	border: 2px solid purple;
+	border-radius: 10px;
+	color: white;
+
+}
+
+#room-input{
+	color: white;
+    margin-top: 1em;
+    background-color: purple;
+}
+
+
+
+
+.card-deck {
+  float: none;
+  margin: 0 auto;
 }
