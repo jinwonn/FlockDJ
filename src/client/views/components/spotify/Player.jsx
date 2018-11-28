@@ -87,7 +87,7 @@ export default class Player extends Component {
            </WebPlaybackReact>
          </div>
          { this.state.ownerEmail === this.state.userEmail ? (
-         <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
+         <input className="queue-input" placeholder="Enter a valid Spotify playlist URI to update room playlist" onKeyUp={this.enterPlaylistUri}/>
          ) : (<div />) }
        </div>
      );

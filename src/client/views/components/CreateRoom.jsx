@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Fade from '@material-ui/core/Fade';
 import socket from '../../socket';
 import '../../styles/browse.css'
 
@@ -14,7 +15,8 @@ constructor(props, context) {
 			username: this.props.username,
 			email: this.props.email,
     	showForm: false,
-    	showButton: true      	
+			showButton: true,
+			checked: true
     };
   }
 
@@ -49,14 +51,16 @@ constructor(props, context) {
   }
 
   render() {
-
+		let { checked } = this.state;
   	const styleForm = this.state.showForm ? {}:{display: 'none'};
   	const styleButton = this.state.showButton ? {}:{display: 'none'};
     return (
     	<div className='create-form-container'>
-        <button type="button" className="btn btn-primary" id='create-room-button' onClick={this.showForm} style={styleButton}>
-         Create Room
-        </button>
+				<Fade in={checked} style={{ transitionDelay: checked ? '350ms' : '0ms' }}>
+      	  <button type="button" className="btn btn-primary" id='create-room-button' onClick={this.showForm} style={styleButton}>
+      	   Create Room
+      	  </button>
+				</Fade>
         <form className="create-room" onSubmit={this.sendRoomData} style={styleForm}>
           <label className='roomname-label'>
     			 Room Name:

@@ -48,7 +48,11 @@
 	border: 2px solid purple;
 	border-radius: 10px;
 	color: white;
-
+}
+.room-name:focus{
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 2px solid purple;
+    border-radius: 10px;
 }
 
 #room-input{
