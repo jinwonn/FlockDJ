@@ -37,11 +37,13 @@ constructor(props, context) {
 
   sendRoomData = () =>{
   	console.log(this.state.roomName)
-  	let room = this.state.roomName
-		// let user = this.props.user
-		let user = "user"
-  	this.state.client.createRoom(room,user)
-    hideForm()
+    if(this.state.roomName){
+    	let room = this.state.roomName
+  		// let user = this.props.user
+  		let user = "user"
+    	this.state.client.createRoom(room,user)
+      hideForm()
+    }
   }
 
   render() {
