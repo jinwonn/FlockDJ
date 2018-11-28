@@ -53,9 +53,6 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-<<<<<<< HEAD
-          			<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
-=======
 								<Player 
 									room={this.state.roomname}
 									ownerEmail={this.state.ownerEmail}
@@ -63,7 +60,6 @@ export default class Room extends Component {
 									username={this.state.username}
 									playHandler={this.state.client.playHandler}
 								/>
->>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
 	    		</div>
 	    	</div> 
 	    </div>

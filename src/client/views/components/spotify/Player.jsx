@@ -52,11 +52,8 @@ export default class Player extends Component {
    componentDidMount() {
      this.state.spotifyhelper.checkToken();
      console.log("Player.jsx room name:", this.state.roomname)
-<<<<<<< HEAD
-=======
      console.log("useremail:", this.state.userEmail)
      console.log("owneremail", this.state.ownerEmail)
->>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
      this.props.playHandler(this.play_Song)
    }
  
@@ -89,13 +86,9 @@ export default class Player extends Component {
              }
            </WebPlaybackReact>
          </div>
-<<<<<<< HEAD
-         <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
-=======
          { this.state.ownerEmail === this.state.userEmail ? (
          <input className="queue-input" placeholder="Enter a playlist" onKeyUp={this.enterPlaylistUri}/>
          ) : (<div />) }
->>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
        </div>
      );
    }
