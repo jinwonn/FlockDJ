@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import socket from '../../socket';
+import '../../styles/browse.css'
 
 export default class CreateRoom extends Component {
 
@@ -36,11 +37,13 @@ constructor(props, context) {
 
   sendRoomData = () =>{
   	console.log(this.state.roomName)
-  	let room = this.state.roomName
-		// let user = this.props.user
-		let user = "user"
-  	this.state.client.createRoom(room,user)
-    hideForm()
+    if(this.state.roomName){
+    	let room = this.state.roomName
+  		// let user = this.props.user
+  		let user = "user"
+    	this.state.client.createRoom(room,user)
+      hideForm()
+    }
   }
 
   render() {
@@ -48,17 +51,18 @@ constructor(props, context) {
   	const styleForm = this.state.showForm ? {}:{display: 'none'};
   	const styleButton = this.state.showButton ? {}:{display: 'none'};
     return (
-    	<div>
-    		<button className="create-button" onClick={this.showForm} style={styleButton}>Create Room</button>
-
+    	<div className='create-form-container'>
+        <button type="button" className="btn btn-primary" id='create-room-button' onClick={this.showForm} style={styleButton}>
+         Create Room
+        </button>
         <form className="create-room" onSubmit={this.sendRoomData} style={styleForm}>
-  				<label>
-    			Room Name:
-   				 <input type="text" name="name" onChange={this.handleEnterName} />
-  				</label>
-  				<input type="submit" value="Submit"  />
+          <label className='roomname-label'>
+    			 Room Name:
+          </label>
+   				 <input className='room-name' type="text" placeholder='Enter room name'name="name" onChange={this.handleEnterName} />
+  				
+  				<button className='btn btn-secondary' type="submit" id='room-input'>Create</button>
 			  </form>
-
     	</div>
     
     );
