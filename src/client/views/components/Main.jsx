@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import { css } from 'react-emotion';
+import { ClipLoader } from 'react-spinners';
 
 import '../../styles/main.css';
 import Room from './Room.jsx';
@@ -78,7 +80,17 @@ export default class Main extends Component {
       <div>
         <Navbar/>
         <BrowserRouter>
-          { !this.state.rooms ? (<div> Loading... </div>): (
+          { !this.state.rooms ? (
+            <div className='sweet-loading'>
+              <ClipLoader
+                className='loader-page'
+                sizeUnit={"em"}
+                size={10}
+                color={'purple'}
+                loading='true'
+              />
+            </div>
+        ) : (
             <Switch>
               <Route
                 exact
