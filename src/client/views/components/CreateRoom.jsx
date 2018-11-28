@@ -55,7 +55,7 @@ constructor(props, context) {
 				<Collapse in={!checked}>
 					<div>
 						<Fade in={!checked}>
-        			<form className="create-room" onSubmit={this.handleChange}>
+        			<form className="create-room" onSubmit={this.sendRoomData}>
         			  <label className='roomname-label'>
     							Room Name:
         			  </label>
