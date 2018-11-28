@@ -3,6 +3,7 @@ import socket from '../../../socket';
 import spotifyhelper from './spotify-helper';
 import WebPlaybackReact from './WebPlaybackReact.jsx';
 import NowPlaying from './NowPlaying.jsx';
+import '../../../styles/room.css';
 
 window.onSpotifyWebPlaybackSDKReady = () => {};
 
