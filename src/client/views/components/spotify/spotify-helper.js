@@ -65,11 +65,10 @@ export default function () {
          }
        }).then(res => res.json())
        .then((response) => {
-         const userId = response.display_name;
-         cb(userId);
-       });
-   }
- 
+        cb(response);
+      });
+}
+
  /*
  
    playSong(song)
@@ -80,37 +79,6 @@ export default function () {
    @cb       {function} - (optional) callback function with no arguments (for logging purposes).
  
  */
- 
-          cb(response);
-        });
-}
-
-  // function generatePlaylistArray(uri, roomName, cb) {
-  //   fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms)`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Authorization": "Bearer " + getCookie('access_token'),
-  //         "Content-Type": "application/json"
-  //       }
-  //     }).then(res => res.json())
-  //     .then((playlist) => {
-  //       console.log(playlist);
-  //       cb(roomName, playlist.items.map(trackObj => trackObj.track))
-  //     })
-  //     .catch((err) => {console.log('Error Mapping:', err)});
-  // }
-
-/*
-
-  playSong(song)
-  ==============================
-
-  @song     {object}   - same song object that is passed into `staged` and `playing` in state.
-  @deviceId {string}   - deviceID to play song on (set equal to the ID of the connnect.to Spotify Connect player).
-  @cb       {function} - (optional) callback function with no arguments (for logging purposes).
-
-*/
 
    function playSong(song, deviceId, cb = () => null) {
      console.log('playing song on player? (log locaiton s helper)');
