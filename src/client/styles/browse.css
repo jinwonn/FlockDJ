@@ -25,6 +25,8 @@
 
 #create-room-button{
 	margin-top: 1em;
+    background-color: purple;
+
 }
 .create-room{
 	display: flex;
