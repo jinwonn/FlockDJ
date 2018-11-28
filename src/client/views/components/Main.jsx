@@ -57,7 +57,10 @@ export default class Main extends Component {
   }
 
   renderRoom(room, { history }) {
+    let { checked } = this.state;
     return (
+      <Fade in={checked} style={{ transitionDelay: checked ? '150ms' : '0ms' }}>
+      <div>
       <Room
         room={room}
         roomname= {room.name}
@@ -71,6 +74,8 @@ export default class Main extends Component {
           )
         }
       />
+      </div>
+      </Fade>
     );
   }
 
@@ -120,7 +125,7 @@ export default class Main extends Component {
                     key={room.name}
                     exact
                     path={`/${room.name}`}
-                    render={props => this.renderRoom(room, props)}
+                    render={ props => this.renderRoom(room, props)}
                   />
                 ))
               }
