@@ -9,7 +9,7 @@
 .chat-container{
 
 	display: flex;
-	height: 75vh;
+	height: 78vh;
     flex-flow: column-reverse nowrap;
     overflow-y: auto;
 
