@@ -76,9 +76,9 @@ export default class Main extends Component {
 
     return (
       <div>
-        <Navbar/>        
+        <Navbar/>
         <BrowserRouter>
-          { !this.state.rooms ? (<div> wait.</div>): (
+          { !this.state.rooms ? (<div> Loading... </div>): (
             <Switch>
               <Route
                 exact
@@ -105,7 +105,7 @@ export default class Main extends Component {
           )
         }
         </BrowserRouter>
-        
+
       </div>
     );
   }

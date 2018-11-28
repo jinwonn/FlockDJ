@@ -1,7 +1,3 @@
-.card-layout {
-    padding: 1em;
-}
-
 .card {
     opacity: 0.8;
     padding: 1em;
@@ -16,4 +12,9 @@
 .card-title {
     text-align: center;
     color: black;
+}
+
+.card-deck {
+  float: none;
+  margin: 0 auto;
 }
