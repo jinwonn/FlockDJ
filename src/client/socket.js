@@ -63,9 +63,9 @@ export default function () {
     socket.emit('READY', roomName);
   }
 
-  function createRoom(roomName, user){
+  function createRoom(roomName, username, email){
     console.log('created', roomName)
-    socket.emit('createRoom',roomName,user)
+    socket.emit('createRoom', roomName, username, email)
   }
 
   return {

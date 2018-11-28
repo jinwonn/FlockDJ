@@ -51,10 +51,13 @@ module.exports = (client, clientManager, roomManager) => {
     room.queue(ParsedQueueArray);
   }
 
-  function handleCreateRoom(roomName) {
+  function handleCreateRoom(roomName, username, email) {
     const roomData = {
-      name: roomName
+      name: roomName,
+      username: username,
+      email: email
     };
+    console.log ("roomData name ", roomData.name)
     roomManager.roomAdd(roomData);
   }
 

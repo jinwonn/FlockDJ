@@ -83,6 +83,8 @@ export default class Main extends Component {
                   () => (
                     <RoomsList
                       rooms={this.state.rooms}
+                      username={this.state.username}
+                      email={this.state.email}
                     />
                   )
                 }
