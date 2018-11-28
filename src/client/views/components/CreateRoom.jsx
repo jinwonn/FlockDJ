@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Fade from '@material-ui/core/Fade';
+import Collapse from '@material-ui/core/Collapse';
 import socket from '../../socket';
 import '../../styles/browse.css'
 
@@ -14,24 +15,15 @@ constructor(props, context) {
 			roomName: null,
 			username: this.props.username,
 			email: this.props.email,
-    	showForm: false,
 			showButton: true,
-			checked: true
+			checked: true,
+			fade: true
     };
   }
 
-  showForm = () =>{
-  	this.setState({
-  		showForm: true
-  	})
-  }
-
-  hideForm = () =>{
-  	this.setState({
-  		showForm: false,
-  		showButton: false
-  	})
-  }
+  handleChange = () => {
+    this.setState(state => ({ checked: !state.checked }));
+  };
 
   handleEnterName = (event) =>{
   	this.setState({
@@ -46,31 +38,34 @@ constructor(props, context) {
   		let email = this.state.email
   		let username = this.state.username
     	this.state.client.createRoom(room, username, email)
-      hideForm()
+			this.handleChange()
     }
   }
 
   render() {
-		let { checked } = this.state;
-  	const styleForm = this.state.showForm ? {}:{display: 'none'};
+		let { checked, fade } = this.state;
   	const styleButton = this.state.showButton ? {}:{display: 'none'};
     return (
     	<div className='create-form-container'>
-				<Fade in={checked} style={{ transitionDelay: checked ? '350ms' : '0ms' }}>
-      	  <button type="button" className="btn btn-primary" id='create-room-button' onClick={this.showForm} style={styleButton}>
+				<Fade in={fade} style={{ transitionDelay: checked ? '350ms' : '0ms' }}>
+      	  <button type="button" className="btn btn-primary" id='create-room-button' onClick={this.handleChange} style={styleButton}>
       	   Create Room
       	  </button>
 				</Fade>
-        <form className="create-room" onSubmit={this.sendRoomData} style={styleForm}>
-          <label className='roomname-label'>
-    			 Room Name:
-          </label>
-   				 <input className='room-name' type="text" placeholder='Enter room name'name="name" onChange={this.handleEnterName} />
-  				
-  				<button className='btn btn-secondary' type="submit" id='room-input'>Create</button>
-			  </form>
+				<Collapse in={!checked}>
+					<div>
+						<Fade in={!checked}>
+        			<form className="create-room" onSubmit={this.handleChange}>
+        			  <label className='roomname-label'>
+    							Room Name:
+        			  </label>
+   							<input className='room-name' type="text" placeholder='Enter room name'name="name" onChange={this.handleEnterName} />
+  							<button className='btn btn-secondary' type="submit" id='room-input'>Create</button>
+			  			</form>
+						</Fade>
+					</div>
+				</Collapse>
     	</div>
-    
     );
   }
 
