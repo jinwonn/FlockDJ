@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../styles/navbar.css';
+import CreateRoom from './CreateRoom.jsx';
 
 export default class Navbar extends Component {
 

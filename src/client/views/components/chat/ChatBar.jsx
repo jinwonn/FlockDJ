@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
-import '../../styles/chat.css'
+import '../../../styles/chat.css'
 
 export default class ChatBar extends Component{
 	constructor(props) {
@@ -11,6 +10,7 @@ export default class ChatBar extends Component{
     }
 
 	enterMessage = (event) => {
+    event.preventDefault();
 		if(event.keyCode === 13){
       this.setState({
         charCount: 100
@@ -43,8 +43,7 @@ export default class ChatBar extends Component{
     return (
      <div className='chat-bar'>
 	     <footer>
-
-	    	<input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyUp={this.enterMessage} onChange={this.charCount}/>
+	    	<textarea className="chatbar-message" type="text" rows="3" cols="32" placeholder="Type a message and hit ENTER" onKeyUp={this.enterMessage} onChange={this.charCount}/>
 	    	<span className='char-count'>{this.state.charCount}</span>
 	  	 </footer>
      </div>

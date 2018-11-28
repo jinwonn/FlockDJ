@@ -25,9 +25,9 @@ export default function () {
     socket.emit('register', name, cb)
   }
 
-  function join(roomName, cb) {
-    socket.emit('join', roomName, cb)
-    console.log("emit join to", roomName)
+  function join(roomName, username, cb) {
+    socket.emit('join', roomName, username, cb)
+    console.log(username, "emit join to", roomName)
   }
 
   function leave(roomName, cb) {
@@ -35,9 +35,9 @@ export default function () {
     socket.emit('leave', roomName, cb)
   }
 
-  function message(roomName, msg, cb) {
-    console.log("emit message:", msg, "in room", roomName)
-    socket.emit('message', { roomName, message: msg }, cb)
+  function message(roomName, username, message, created_at, cb) {
+    console.log("emit message:", message, "in room", roomName)
+    socket.emit('message', { roomName, username, message, created_at }, cb)
   }
 
   function getRooms(cb) {
@@ -49,18 +49,23 @@ export default function () {
     socket.emit('availableUsers', null, cb)
   }
 
-  function queueUpdate(roomName, queueArr) {
+  function queueUpdate(roomName, username, queueArr) {
     console.log("parsing:", queueArr)
     const queue = JSON.stringify(queueArr);
     console.log("emitting to", roomName, "the parsed queue", queue);
-    const message =  { roomName, queue }
+    const message =  { roomName, username, queue }
     console.log("emitting message", message)
-    socket.emit('QUEUE_UPDATE', { roomName, queue } );
+    socket.emit('QUEUE_UPDATE', { roomName, username, queue } );
   }
 
   function emitReady(roomName) {
     console.log("room emit ready with roomName:", roomName)
     socket.emit('READY', roomName);
+  }
+
+  function createRoom(roomName, username, email){
+    console.log('created', roomName)
+    socket.emit('createRoom', roomName, username, email)
   }
 
   return {
@@ -74,6 +79,8 @@ export default function () {
     playHandler,
     unregisterHandler,
     queueUpdate,
-    emitReady
+    emitReady,
+    createRoom
   }
 }
+

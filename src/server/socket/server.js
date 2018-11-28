@@ -16,7 +16,8 @@ io.on('connection', (client) => {
     handleGetRooms,
     handleDisconnect,
     handleReady,
-    handleQueueUpdate
+    handleQueueUpdate,
+    handleCreateRoom
   } = makeHandlers(client, clientManager, roomManager);
 
   clientManager.addClient(client);
@@ -31,7 +32,10 @@ io.on('connection', (client) => {
 
   client.on('message', handleMessage);
 
+  client.on('createRoom', handleCreateRoom);
+
   client.on('rooms', handleGetRooms);
+
 
   client.on('disconnect', () => {
     console.log('client.id disconnected:', client.id);
