@@ -50,12 +50,9 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-          	<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
+          			<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
 	    		</div>
-	    		<footer className='bottom-container'>
-	    			<p>Next Song: </p>
-	    		</footer>
-	    	</div>
+	    	</div> 
 	    </div>
 	      <div className= 'chat'>
 	      	<Chat username={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
