@@ -34,7 +34,8 @@ export default class Player extends Component {
     if(event.keyCode === 13){
       playlistUri = event.target.value;
     }
-    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, this.state.client.queueUpdate)
+    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, this.state.client.queueUpdate);
+    event.target.value = "";
   }
 
   play_Song = (song) => {
