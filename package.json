@@ -13,6 +13,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "@material-ui/core": "^3.6.0",
     "babel-polyfill": "^6.26.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.1.0",
@@ -24,6 +25,7 @@
     "react-router-dom": "^4.3.1",
     "react-sound": "^1.2.0",
     "react-sweet-progress": "^1.1.2",
+    "react-timestamp": "^4.4.0",
     "socket.io": "^2.1.1",
     "spotify-web-api-node": "^4.0.0"
   },
