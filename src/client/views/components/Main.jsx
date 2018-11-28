@@ -81,7 +81,7 @@ export default class Main extends Component {
       page = <div>
         <Navbar/>
         <BrowserRouter>
-          { !this.state.rooms ? (
+          { (!this.state.rooms || !this.state.email) ? (
             <div className='sweet-loading'>
               <ClipLoader
                 className='loader-page'
