@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import { css } from 'react-emotion';
+import Fade from '@material-ui/core/Fade';
 import { ClipLoader } from 'react-spinners';
 
 import '../../styles/main.css';
@@ -20,7 +21,8 @@ export default class Main extends Component {
       email: null,
       isRegisterInProcess: false,
       client: socket(),
-      spotifyhelper: spotifyhelper()
+      spotifyhelper: spotifyhelper(),
+      checked: true
     };
 
     this.onLeaveRoom = this.onLeaveRoom.bind(this);
@@ -73,13 +75,17 @@ export default class Main extends Component {
   }
 
   render() {
-
+    let { checked } = this.state;
     let page;
 
     const is_authenticated = this.state.username;
     if (is_authenticated) {
       page = <div>
-        <Navbar/>
+        <Fade in={checked} style={{ transitionDelay: checked ? '150ms' : '0ms' }}>
+          <div>
+            <Navbar/>
+          </div>
+        </Fade>
         <BrowserRouter>
           { (!this.state.rooms || !this.state.email) ? (
             <div className='sweet-loading'>
@@ -92,6 +98,8 @@ export default class Main extends Component {
               />
             </div>
         ) : (
+          <Fade in={checked} style={{ transitionDelay: checked ? '250ms' : '0ms' }}>
+            <div>
             <Switch>
               <Route
                 exact
@@ -117,13 +125,21 @@ export default class Main extends Component {
                 ))
               }
             </Switch>
+            </div>
+          </Fade>
           )
         }
         </BrowserRouter>
 
       </div>
     } else {
-      page = <Authenticate />
+      page = (
+        <Fade in={checked} style={{ transitionDelay: checked ? '200ms' : '0ms' }}>
+          <div>
+          <Authenticate />
+          </div>
+        </Fade>
+      )
     }
     return page;
   }
