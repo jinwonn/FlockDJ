@@ -10,8 +10,10 @@ export default class Room extends Component {
     this.state = {
       chatHistory: [],
 			roomname: this.props.roomname,
+			ownerEmail: this.props.ownerEmail,
 			client: socket(),
-			username: 'Anonymous'
+			username: 'Anonymous',
+			userEmail: this.props.userEmail
     };
   }
 
@@ -25,6 +27,7 @@ export default class Room extends Component {
     console.log("Room.jsx room name:", this.state.roomname)
     this.state.client.messageHandler(this.onMessageReceived)
 		this.onEnterRoom(this.state.roomname, this.state.username)
+		console.log("this room was made by:", this.state.ownerEmail)
   }
 
 		onEnterRoom(roomName, username) {
@@ -50,7 +53,17 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
+<<<<<<< HEAD
           			<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
+=======
+								<Player 
+									room={this.state.roomname}
+									ownerEmail={this.state.ownerEmail}
+									userEmail={this.state.userEmail}
+									username={this.state.username}
+									playHandler={this.state.client.playHandler}
+								/>
+>>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
 	    		</div>
 	    	</div> 
 	    </div>

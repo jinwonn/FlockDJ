@@ -32,7 +32,7 @@ export default function () {
 
   */
 
-  function generatePlaylistArray(uri, roomName, cb) {
+  function generatePlaylistArray(uri, roomName, username, cb) {
   // items(track.uri,track.duration_ms,track.album(images))
 
      fetch(`https://api.spotify.com/v1/playlists/${getTailOfURI(uri)}/tracks?fields=items(track.uri%2Ctrack.duration_ms%2Ctrack.album(images))`,
@@ -51,7 +51,11 @@ export default function () {
            return { artwork, duration_ms, uri };
         });
  
+<<<<<<< HEAD
          cb(roomName, arrOfTracks);
+=======
+         cb(roomName, username, arrOfTracks);
+>>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
        });
    }
  
@@ -65,11 +69,18 @@ export default function () {
          }
        }).then(res => res.json())
        .then((response) => {
+<<<<<<< HEAD
          const userId = response.display_name;
          cb(userId);
        });
    }
  
+=======
+        cb(response);
+      });
+}
+
+>>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
  /*
  
    playSong(song)
@@ -80,7 +91,11 @@ export default function () {
    @cb       {function} - (optional) callback function with no arguments (for logging purposes).
  
  */
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> e3b05315db91aa8a53fc99ea6da1e8e3acfcfabe
    function playSong(song, deviceId, cb = () => null) {
      console.log('playing song on player? (log locaiton s helper)');
      fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,

@@ -1,5 +1,8 @@
-module.exports = ({ name }) => {
+module.exports = (roomData) => {
   const members = new Map();
+  let name = roomData.name;
+  let username = roomData.username;
+  let ownerEmail = roomData.email;
   let chatHistory = [];
   let history = [];
   const settings = {
@@ -24,6 +27,8 @@ module.exports = ({ name }) => {
   function serialize() {
     return {
       name,
+      username: username,
+      email: ownerEmail,
       numberofMembers: members.size
     };
   }
