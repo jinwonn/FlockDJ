@@ -20,6 +20,7 @@ export default class Player extends Component {
       // User's session credentials
       userDeviceId: null,
       userEmail: this.props.userEmail,
+      username: this.props.username,
 
       // Player state
       playerLoaded: false,
@@ -31,10 +32,11 @@ export default class Player extends Component {
   enterPlaylistUri = (event) => {
     let playlistUri;
     let roomName = this.state.roomname
+    let username = this.state.username
     if(event.keyCode === 13){
       playlistUri = event.target.value;
     }
-    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, this.state.client.queueUpdate);
+    this.state.spotifyhelper.generatePlaylistArray(playlistUri, roomName, username, this.state.client.queueUpdate);
     event.target.value = "";
   }
 

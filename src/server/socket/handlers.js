@@ -45,8 +45,9 @@ module.exports = (client, clientManager, roomManager) => {
     room.broadcastSong();
   }
 
-  function handleQueueUpdate({ roomName, queue } = {}) {
-    const room = roomManager.getRoomByName(roomName);
+  function handleQueueUpdate({ roomName, username, queue } = {}) {
+    const createEntry = () => ({ event: 'updated the queue with new tracks.' });
+    const room = handleEvent(roomName, username, createEntry);
     const ParsedQueueArray = JSON.parse(queue);
     room.queue(ParsedQueueArray);
   }
