@@ -1,19 +1,71 @@
-.card-layout {
-    padding: 1em;
-}
-
 .card {
     opacity: 0.8;
     padding: 1em;
     background-color: #27253C;
+    box-shadow: 10px 10px purple;
 }
 
 .card:hover {
     opacity: 1;
     border: solid 2px #7F0F7E;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card-title {
     text-align: center;
-    color: black;
+    color: white;
+}
+
+.create-form-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+#create-room-button{
+	margin-top: 1em;
+    background-color: purple;
+
+}
+.create-room{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin-top: 1em;
+    border: 2px solid purple;
+    padding: 1em;
+    border-radius: 10px;
+}
+
+.roomname-label{
+	color: lightblue;
+}
+
+.room-name{
+	background-color: #1D1C2A;
+	border: 2px solid purple;
+	border-radius: 10px;
+	color: white;
+}
+.room-name:focus{
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 2px solid purple;
+    border-radius: 10px;
+}
+
+#room-input{
+	color: white;
+    margin-top: 1em;
+    background-color: purple;
+}
+
+.card-deck {
+  float: none;
+  margin: 0 auto;
+}
+
+.card-title {
+  color: white;
 }

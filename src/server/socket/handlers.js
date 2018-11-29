@@ -2,10 +2,10 @@ module.exports = (client, clientManager, roomManager) => {
   function makeHandleEvent() {
     function handleEvent(roomName, username, createEntry) {
       const user = username;
-      const room = roomManager.getRoomByName(roomName)
+      const room = roomManager.getRoomByName(roomName);
       const entry = { user, ...createEntry() };
-      room.addEntry(entry)
-      room.broadcastMessage({ chat: roomName, ...entry })
+      room.addEntry(entry);
+      room.broadcastMessage({ chat: roomName, ...entry });
       return room;
     }
     return handleEvent;
@@ -15,7 +15,7 @@ module.exports = (client, clientManager, roomManager) => {
 
   function handleJoin(roomName, username) {
     const createEntry = () => ({ event: `joined ${roomName}` });
-    const room = handleEvent(roomName, username, createEntry)
+    const room = handleEvent(roomName, username, createEntry);
     room.addUser(client);
   }
 
@@ -26,9 +26,9 @@ module.exports = (client, clientManager, roomManager) => {
     callback(null);
   }
 
-  function handleMessage({ roomName, username, message } = {}, callback) {
-    const createEntry = () => ({ message });
-    handleEvent(roomName, username, createEntry)
+  function handleMessage({ roomName, username, message, created_at } = {}) {
+    const createEntry = () => ({ message, created_at });
+    handleEvent(roomName, username, createEntry);
   }
 
   function handleGetRooms(_, callback) {
@@ -45,16 +45,20 @@ module.exports = (client, clientManager, roomManager) => {
     room.broadcastSong();
   }
 
-  function handleQueueUpdate({ roomName, queue } = {}) {
-    const room = roomManager.getRoomByName(roomName);
+  function handleQueueUpdate({ roomName, username, queue } = {}) {
+    const createEntry = () => ({ event: 'updated the queue with new tracks.' });
+    const room = handleEvent(roomName, username, createEntry);
     const ParsedQueueArray = JSON.parse(queue);
     room.queue(ParsedQueueArray);
   }
 
-  function handleCreateRoom(roomName, user) {
+  function handleCreateRoom(roomName, username, email) {
     const roomData = {
-      name: roomName
+      name: roomName,
+      username: username,
+      email: email
     };
+    console.log ("roomData name ", roomData.name)
     roomManager.roomAdd(roomData);
   }
 

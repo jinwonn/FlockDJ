@@ -5,3 +5,12 @@ h1 {
 body {
     background-color: #1D1C29;
 }
+
+.sweet-loading {
+  width: 10em;
+  height: 10em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

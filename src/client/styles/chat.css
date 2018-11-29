@@ -1,11 +1,15 @@
 .chat-title{
 	padding: 0.5em;
+	word-wrap: break-word;
+	border-bottom: 2px solid purple;
+	font-size: 1.3em;
+	color: purple;
 }
 
 .chat-container{
 
 	display: flex;
-	height: 75vh;
+	height: 78vh;
     flex-flow: column-reverse nowrap;
     overflow-y: auto;
 
@@ -14,27 +18,56 @@
 	text-align: left;
 	width: 100%;
 	border-radius: 12px;
-	border: 1px solid lightblue;
+	border: 1px solid purple;
 	background-color: #1D1C2A;
-	font-size: 70%;
+	font-size: 100%;
     padding: 1em;
     color: white;
 }
+
+/*.chatbar-message:focus{
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+ 	padding: 1em;
+	border: 1px solid purple;
+	border-radius: 12px;
+}*/
+
+textarea[type=text] {
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  padding: 10px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid purple;
+  resize: none;
+/*  height: 4em;*/
+}
+
+textarea[type=text]:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 10px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
+
 .chat-bar{
 	text-align: left;
-	padding: 1em;
+	padding: 0.5em;
 
 }
 
 .chatbar-box{
 	width: 100%;
-	border: solid 1px black;
+	border-top: solid 2px purple;
 }
 
 .char-count{
 	font-size: 75%;
     float: right;
     padding: 5px;
+    color: purple;
 }
 
 .messages{
@@ -46,7 +79,7 @@
 	padding: 16px;
 	min-height: 32px;
 	overflow-y: auto;
-	margin: 10px auto;
+	margin: 10px 0 0 0;
 	background: rgba(83,80,121,0.33);
 	border-radius: 12px;
 	word-wrap: break-word;
@@ -55,10 +88,10 @@
 .message-timestamp {
 	margin-bottom: 8px;
 	color: #535079;
-	padding: 2em;
+	padding: 1em;
 	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
-	font-size: 14px;
+	font-size: 0.75em;
 	font-kerning: 0.5px;
 	line-height: 16px;
 }
@@ -68,7 +101,7 @@
 	color: white;
 	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
-	font-size: 14px;
+	font-size: 1em;
 	font-kerning: 0.5px;
 	line-height: 16px;
 	text-align: left;
@@ -76,7 +109,7 @@
 
 .message-sender {
 	margin-top: 8px;
-	color: #535079;
+	color: white;
 	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
@@ -86,13 +119,17 @@
 
 .message-event {
 	margin-top: 8px;
-	color: #535079;
+	color: white;
 	font-family: 'Roboto', sans-serif;
 	font-weight: regular;
 	font-size: 14px;
 	font-kerning: 0.5px;
 	line-height: 16px;
 	text-align: center;
+}
+
+.message-info {
+	padding: 0.25em 0 0.25em 0
 }
 
 

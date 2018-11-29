@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../styles/room.css';
+import Fade from '@material-ui/core/Fade';
 import Chat from './chat/Chat.jsx'
 import Player from './spotify/Player.jsx'
 import socket from '../../socket';
@@ -10,8 +11,11 @@ export default class Room extends Component {
     this.state = {
       chatHistory: [],
 			roomname: this.props.roomname,
+			ownerEmail: this.props.ownerEmail,
 			client: socket(),
-			username: 'Anonymous'
+			username: 'Anonymous',
+			userEmail: this.props.userEmail,
+			checked: true
     };
   }
 
@@ -25,6 +29,7 @@ export default class Room extends Component {
     console.log("Room.jsx room name:", this.state.roomname)
     this.state.client.messageHandler(this.onMessageReceived)
 		this.onEnterRoom(this.state.roomname, this.state.username)
+		console.log("this room was made by:", this.state.ownerEmail)
   }
 
 		onEnterRoom(roomName, username) {
@@ -41,7 +46,7 @@ export default class Room extends Component {
 		}
 
   render() {
-
+		let { checked } = this.state;
     return (
 
       <div className= 'room'>
@@ -50,16 +55,21 @@ export default class Room extends Component {
 	    	</div>
 	    	<div className= 'center-container'>
 	    		<div className='album-art-container'>
-          	<Player room={this.state.roomname} playHandler={this.state.client.playHandler}/>
+								<Player 
+									room={this.state.roomname}
+									ownerEmail={this.state.ownerEmail}
+									userEmail={this.state.userEmail}
+									username={this.state.username}
+									playHandler={this.state.client.playHandler}
+								/>
 	    		</div>
-	    		<footer className='bottom-container'>
-	    			<p>Next Song: </p>
-	    		</footer>
-	    	</div>
+	    	</div> 
 	    </div>
+			<Fade in={checked} style={{ transitionDelay: checked ? '250ms' : '0ms' }}>
 	      <div className= 'chat'>
 	      	<Chat username={this.state.username} room={this.state.roomname} chatHistory={this.state.chatHistory}/>
 	      </div>
+			</Fade>
 
       </div>
     );

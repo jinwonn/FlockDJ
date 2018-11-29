@@ -33,7 +33,7 @@ io.on('connection', (client) => {
   client.on('message', handleMessage);
 
   client.on('createRoom', handleCreateRoom);
-  
+
   client.on('rooms', handleGetRooms);
 
 

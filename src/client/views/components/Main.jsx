@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import { css } from 'react-emotion';
+import Fade from '@material-ui/core/Fade';
+import { ClipLoader } from 'react-spinners';
 
 import '../../styles/main.css';
 import Room from './Room.jsx';
@@ -7,18 +10,19 @@ import Navbar from './NavBar.jsx';
 import socket from '../../socket';
 import RoomsList from './rooms/RoomsList.jsx';
 import spotifyhelper from './spotify/spotify-helper';
+import Authenticate from './Authenticate.jsx'
 
 export default class Main extends Component {
   constructor(props, context) {
-    super(props, context)
-
+    super(props, context);
 
     this.state = {
       username: null,
-      user: "dan",
+      email: null,
       isRegisterInProcess: false,
       client: socket(),
-      spotifyhelper: spotifyhelper()
+      spotifyhelper: spotifyhelper(),
+      checked: true
     };
 
     this.onLeaveRoom = this.onLeaveRoom.bind(this);
@@ -28,9 +32,8 @@ export default class Main extends Component {
     this.getRooms();
   }
 
-  async componentDidMount() {
-    await this.state.spotifyhelper.getSpotifyUserId(this.updateUsername)
-		await console.log("component", this.state.username)
+  componentDidMount() {
+    this.state.spotifyhelper.getSpotifyUserId(this.updateUserInfo)
   }
 
   onLeaveRoom(roomName, onLeaveSuccess) {
@@ -47,21 +50,23 @@ export default class Main extends Component {
     })
   }
 
-  updateUsername = (entry) => {
-    this.setState({ username: entry })
-    console.log(entry)
-    console.log(this.state.username)
+  updateUserInfo = (response) => {
+    this.setState({ username: response.display_name });
+    this.setState({ email: response.email });
+    console.log("useremail",this.state.email)
   }
 
-
   renderRoom(room, { history }) {
-    console.log("rendering room", room)
-
+    let { checked } = this.state;
     return (
+      <Fade in={checked} style={{ transitionDelay: checked ? '150ms' : '0ms' }}>
+      <div>
       <Room
         room={room}
         roomname= {room.name}
+        ownerEmail={room.email}
         username={this.state.username}
+        userEmail={this.state.email}
         onLeave={
           () => this.onLeaveRoom(
             room.name,
@@ -69,16 +74,37 @@ export default class Main extends Component {
           )
         }
       />
+      </div>
+      </Fade>
     );
   }
 
   render() {
+    let { checked } = this.state;
+    let page;
 
-    return (
-      <div>
-        <Navbar/>        
+    const is_authenticated = this.state.username;
+    if (is_authenticated) {
+      page = <div>
+        <Fade in={checked} style={{ transitionDelay: checked ? '150ms' : '0ms' }}>
+          <div>
+            <Navbar/>
+          </div>
+        </Fade>
         <BrowserRouter>
-          { !this.state.rooms ? (<div> wait.</div>): (
+          { (!this.state.rooms || !this.state.email) ? (
+            <div className='sweet-loading'>
+              <ClipLoader
+                className='loader-page'
+                sizeUnit={"em"}
+                size={10}
+                color={'purple'}
+                loading='true'
+              />
+            </div>
+        ) : (
+          <Fade in={checked} style={{ transitionDelay: checked ? '250ms' : '0ms' }}>
+            <div>
             <Switch>
               <Route
                 exact
@@ -87,6 +113,8 @@ export default class Main extends Component {
                   () => (
                     <RoomsList
                       rooms={this.state.rooms}
+                      username={this.state.username}
+                      email={this.state.email}
                     />
                   )
                 }
@@ -97,16 +125,27 @@ export default class Main extends Component {
                     key={room.name}
                     exact
                     path={`/${room.name}`}
-                    render={props => this.renderRoom(room, props)}
+                    render={ props => this.renderRoom(room, props)}
                   />
                 ))
               }
             </Switch>
+            </div>
+          </Fade>
           )
         }
         </BrowserRouter>
-        
+
       </div>
-    );
+    } else {
+      page = (
+        <Fade in={checked} style={{ transitionDelay: checked ? '200ms' : '0ms' }}>
+          <div>
+          <Authenticate />
+          </div>
+        </Fade>
+      )
+    }
+    return page;
   }
 }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import Fade from '@material-ui/core/Fade';
+import Collapse from '@material-ui/core/Collapse';
 import socket from '../../socket';
+import '../../styles/browse.css'
 
 export default class CreateRoom extends Component {
 
@@ -9,25 +12,18 @@ constructor(props, context) {
     		
     this.state = {
     	client: socket(),
-    	roomName: null,
-    	showForm: false,
-    	showButton: true      	
+			roomName: null,
+			username: this.props.username,
+			email: this.props.email,
+			showButton: true,
+			checked: true,
+			fade: true
     };
   }
 
-  showForm = () =>{
-  	this.setState({
-  		showForm: true,
-  		showButton: false
-  	})
-  }
-
-  hideForm = () =>{
-  	this.setState({
-  		showForm: false,
-  		showButton: false
-  	})
-  }
+  handleChange = () => {
+    this.setState(state => ({ checked: !state.checked }));
+  };
 
   handleEnterName = (event) =>{
   	this.setState({
@@ -37,29 +33,39 @@ constructor(props, context) {
 
   sendRoomData = () =>{
   	console.log(this.state.roomName)
-  	let room = this.state.roomName
-		// let user = this.props.user
-		let user = "user"
-  	this.state.client.createRoom(room,user)
+    if(this.state.roomName){
+    	let room = this.state.roomName
+  		let email = this.state.email
+  		let username = this.state.username
+    	this.state.client.createRoom(room, username, email)
+			this.handleChange()
+    }
   }
 
   render() {
-
-  	const styleForm = this.state.showForm ? {}:{display: 'none'};
-  	const styleButton = this.state.showButton ? {display: 'none'}:{};
+		let { checked, fade } = this.state;
+  	const styleButton = this.state.showButton ? {}:{display: 'none'};
     return (
-    	<div>
-    		<button className="create-button" onClick={this.showForm}>Create Room</button>
-        	<form className="create-room" onSubmit={this.sendRoomData}>
-  				<label>
-    			Room Name:
-   				 <input type="text" name="name" onChange={this.handleEnterName} />
-  				</label>
-  				<input type="submit" value="Submit" />
-			</form>
-
+    	<div className='create-form-container'>
+				<Fade in={fade} style={{ transitionDelay: checked ? '350ms' : '0ms' }}>
+      	  <button type="button" className="btn btn-primary" id='create-room-button' onClick={this.handleChange} style={styleButton}>
+      	   Create Room
+      	  </button>
+				</Fade>
+				<Collapse in={!checked}>
+					<div>
+						<Fade in={!checked}>
+        			<form className="create-room" onSubmit={this.sendRoomData}>
+        			  <label className='roomname-label'>
+    							Room Name:
+        			  </label>
+   							<input className='room-name' type="text" placeholder='Enter room name'name="name" onChange={this.handleEnterName} />
+  							<button className='btn btn-secondary' type="submit" id='room-input'>Create</button>
+			  			</form>
+						</Fade>
+					</div>
+				</Collapse>
     	</div>
-    
     );
   }
 
