@@ -2,7 +2,7 @@ const io = require('socket.io-client')
 
 export default function () {
 
-  const socket = io.connect('http://172.46.0.193:3000')
+  const socket = io.connect('http://10.167.34.80:3000')
 
   function messageHandler(onMessageReceived) {
     socket.on('message', onMessageReceived)
